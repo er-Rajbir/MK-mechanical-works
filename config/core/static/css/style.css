@@ -1,0 +1,229 @@
+/* =========================
+GENERAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:#0b0f17;
+
+    color:white;
+
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+.navbar{
+
+    background:rgba(10,10,10,.90);
+
+    backdrop-filter:blur(12px);
+
+    padding:10px 0;
+
+    transition:.4s;
+
+    border-bottom:1px solid rgba(255,165,0,.2);
+
+}
+
+.logo{
+
+    width:80px;
+
+    height:80px;
+
+    object-fit:contain;
+
+    transition:.4s;
+
+}
+
+.navbar-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-decoration:none;
+
+}
+
+.navbar-brand h5{
+
+    color:#FFA500;
+
+    margin:0;
+
+    font-weight:bold;
+
+}
+
+.navbar-brand small{
+
+    color:#ddd;
+
+    font-size:12px;
+
+}
+
+.navbar-brand:hover .logo{
+
+    transform:rotate(360deg);
+
+}
+
+.nav-link{
+
+    color:white !important;
+
+    margin-left:15px;
+
+    font-weight:600;
+
+    position:relative;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:#FFA500 !important;
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:#FFA500;
+
+    transition:.4s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+/* Toggle */
+
+.navbar-toggler{
+
+    border:1px solid #FFA500;
+
+}
+
+.navbar-toggler:focus{
+
+    box-shadow:none;
+
+}
+
+.navbar-toggler-icon{
+
+    filter:invert(1);
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+
+    background:#050505;
+
+    text-align:center;
+
+    padding:50px 20px;
+
+    border-top:2px solid #FFA500;
+
+}
+
+footer h4{
+
+    color:#FFA500;
+
+}
+
+footer p{
+
+    color:#ccc;
+
+}
+
+footer hr{
+
+    border-color:#333;
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:991px){
+
+.navbar-collapse{
+
+    background:#111;
+
+    padding:20px;
+
+    border-radius:10px;
+
+    margin-top:15px;
+
+}
+
+.nav-link{
+
+    margin:10px 0;
+
+}
+
+.logo{
+
+    width:45px;
+
+    height:45px;
+
+}
+
+.navbar-brand h5{
+
+    font-size:18px;
+
+}
+
+}

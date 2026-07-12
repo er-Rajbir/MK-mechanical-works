@@ -1,0 +1,894 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --steel: #1a1f2e;
+    --iron: #0d1117;
+    --amber: #f59e0b;
+    --amber-glow: #fbbf24;
+    --spark: #ff6b1a;
+    --chrome: #94a3b8;
+    --light-chrome: #cbd5e1;
+    --surface: #111827;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ===== HERO ===== */
+  .mk-hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    background: var(--iron);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Scrolling grid overlay */
+  .mk-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridScroll 8s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes gridScroll {
+    from { background-position: 0 0; }
+    to   { background-position: 60px 60px; }
+  }
+
+  /* Side gradient fades */
+  .mk-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, var(--iron) 80%);
+    z-index: 1;
+  }
+
+  /* ===== GEARS ===== */
+  .gear-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .gear {
+    position: absolute;
+    opacity: 0.15;
+  }
+
+  .gear svg { display: block; }
+
+  .gear-1 { top: -60px; left: -60px; width: 280px; animation: spinCW 12s linear infinite; }
+  .gear-2 { top: 40px;  left: 180px; width: 160px; animation: spinCCW 8s linear infinite; }
+  .gear-3 { bottom: -80px; right: -80px; width: 340px; animation: spinCW 18s linear infinite; }
+  .gear-4 { bottom: 60px;  right: 220px; width: 180px; animation: spinCCW 10s linear infinite; }
+  .gear-5 { top: 30%; left: -40px; width: 120px; animation: spinCW 6s linear infinite; }
+  .gear-6 { top: 20%; right: -30px; width: 100px; animation: spinCCW 5s linear infinite; }
+
+  @keyframes spinCW  { to { transform: rotate(360deg);  } }
+  @keyframes spinCCW { to { transform: rotate(-360deg); } }
+
+  /* ===== PISTON (left side) ===== */
+  .piston-wrap {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    opacity: 0.18;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+  }
+
+  .piston-rod {
+    width: 80px;
+    height: 18px;
+    background: linear-gradient(180deg, #94a3b8, #475569, #94a3b8);
+    border-radius: 4px;
+    animation: pistonMove 1.4s ease-in-out infinite;
+  }
+
+  .piston-head {
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(180deg, #64748b, #334155, #64748b);
+    border-radius: 6px;
+    border: 2px solid #94a3b8;
+  }
+
+  @keyframes pistonMove {
+    0%, 100% { transform: translateX(0); }
+    50%       { transform: translateX(30px); }
+  }
+
+  /* ===== OSCILLATING BARS (right side) ===== */
+  .osc-wrap {
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .osc-bar {
+    height: 10px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    border-radius: 5px;
+    animation: oscBar 1.8s ease-in-out infinite;
+  }
+
+  .osc-bar:nth-child(1) { width: 90px;  animation-delay: 0s; }
+  .osc-bar:nth-child(2) { width: 140px; animation-delay: .2s; }
+  .osc-bar:nth-child(3) { width: 80px;  animation-delay: .4s; }
+  .osc-bar:nth-child(4) { width: 120px; animation-delay: .6s; }
+  .osc-bar:nth-child(5) { width: 60px;  animation-delay: .8s; }
+  .osc-bar:nth-child(6) { width: 110px; animation-delay: 1s; }
+
+  @keyframes oscBar {
+    0%, 100% { transform: scaleX(1);    opacity: .5; }
+    50%       { transform: scaleX(1.4); opacity: 1;  }
+  }
+
+  /* ===== SPARKS ===== */
+  .sparks {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--amber);
+    border-radius: 50%;
+    animation: sparkFly 2.5s ease-out infinite;
+    opacity: 0;
+  }
+
+  .spark:nth-child(1)  { left: 20%; top: 70%; animation-delay: 0s;    --dx: 30px;  --dy: -80px; }
+  .spark:nth-child(2)  { left: 22%; top: 68%; animation-delay: .3s;   --dx: -20px; --dy: -60px; }
+  .spark:nth-child(3)  { left: 21%; top: 72%; animation-delay: .7s;   --dx: 50px;  --dy: -50px; }
+  .spark:nth-child(4)  { left: 75%; top: 65%; animation-delay: .4s;   --dx: -30px; --dy: -70px; }
+  .spark:nth-child(5)  { left: 77%; top: 67%; animation-delay: .9s;   --dx: 20px;  --dy: -90px; }
+  .spark:nth-child(6)  { left: 50%; top: 80%; animation-delay: 1.2s;  --dx: 40px;  --dy: -60px; }
+  .spark:nth-child(7)  { left: 52%; top: 79%; animation-delay: 1.6s;  --dx: -40px; --dy: -75px; }
+  .spark:nth-child(8)  { left: 35%; top: 75%; animation-delay: .5s;   --dx: 15px;  --dy: -85px; }
+  .spark:nth-child(9)  { left: 65%; top: 72%; animation-delay: 1.0s;  --dx: -25px; --dy: -65px; }
+  .spark:nth-child(10) { left: 48%; top: 82%; animation-delay: 2.0s;  --dx: 35px;  --dy: -55px; }
+
+  @keyframes sparkFly {
+    0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+  }
+
+  /* ===== HERO CONTENT ===== */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 780px;
+    padding: 0 20px;
+    animation: heroIn 1s ease both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--amber);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-block;
+    animation: blink 1.2s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: .4; }
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 9vw, 96px);
+    line-height: .95;
+    color: #fff;
+    margin: 0 0 8px;
+    letter-spacing: 2px;
+  }
+
+  .hero-title span {
+    color: var(--amber);
+    -webkit-text-stroke: 1px var(--amber);
+  }
+
+  .hero-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--chrome);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 20px 0 36px;
+    line-height: 1.6;
+  }
+
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-forge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 14px 32px;
+    background: var(--amber);
+    color: #000;
+    border: none;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background .2s, transform .2s;
+    text-transform: uppercase;
+  }
+
+  .btn-forge:hover {
+    background: var(--spark);
+    color: #fff;
+    transform: scale(1.04);
+  }
+
+  .btn-ghost {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    text-decoration: none;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background .2s, color .2s;
+  }
+
+  .btn-ghost:hover { background: var(--amber); color: #000; }
+
+  /* ===== TICKER ===== */
+  .ticker {
+    background: var(--amber);
+    color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: tickerScroll 22s linear infinite;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  @keyframes tickerScroll {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(-100%); }
+  }
+
+  /* ===== STATS ===== */
+  .stats-bar {
+    background: var(--steel);
+    padding: 48px 0;
+    border-bottom: 2px solid rgba(245,158,11,.2);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--amber);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--chrome);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ===== ABOUT ===== */
+  .mk-about {
+    background: var(--iron);
+    padding: 100px 0;
+  }
+
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .about-body {
+    font-family: 'Inter', sans-serif;
+    color: var(--chrome);
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .about-img-wrap {
+    position: relative;
+  }
+
+  .about-img-wrap img {
+    width: 100%;
+    border-radius: 0;
+    display: block;
+    filter: grayscale(20%);
+  }
+
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--amber);
+    z-index: 0;
+  }
+
+  .about-img-wrap img { position: relative; z-index: 1; }
+
+  /* ===== MACHINES ===== */
+  .mk-machines {
+    background: var(--surface);
+    padding: 100px 0;
+  }
+
+  .machine-card {
+    background: var(--steel);
+    border: 1px solid rgba(245,158,11,.15);
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+
+  .machine-card:hover {
+    border-color: var(--amber);
+    transform: translateY(-8px);
+  }
+
+  .machine-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    filter: grayscale(30%);
+    transition: filter .4s, transform .4s;
+    display: block;
+  }
+
+  .machine-card:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.04);
+  }
+
+  .machine-card-body {
+    padding: 24px;
+  }
+
+  .machine-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--amber);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .machine-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: #fff;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+  }
+
+  .machine-desc {
+    font-family: 'Inter', sans-serif;
+    color: var(--chrome);
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .machine-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--amber);
+    transition: width .4s;
+  }
+
+  .machine-card:hover::after { width: 100%; }
+
+  /* ===== PROCESS ===== */
+  .mk-process {
+    background: var(--iron);
+    padding: 100px 0;
+  }
+
+  .process-steps {
+    display: flex;
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--amber) 0, var(--amber) 12px, transparent 12px, transparent 24px);
+  }
+
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 12px;
+  }
+
+  .step-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--steel);
+    border: 2px solid var(--amber);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .process-step:nth-child(2) .step-icon { animation-delay: .5s; }
+  .process-step:nth-child(3) .step-icon { animation-delay: 1s; }
+  .process-step:nth-child(4) .step-icon { animation-delay: 1.5s; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,.4); }
+    50%       { box-shadow: 0 0 0 12px rgba(245,158,11,0); }
+  }
+
+  .step-icon svg { color: var(--amber); }
+
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--chrome);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ===== CTA ===== */
+  .mk-cta {
+    background: var(--amber);
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mk-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    color: #000;
+    position: relative;
+    z-index: 1;
+    margin: 0 0 12px;
+    letter-spacing: 2px;
+  }
+
+  .cta-sub {
+    font-family: 'Inter', sans-serif;
+    color: rgba(0,0,0,.7);
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+  }
+
+  .btn-dark-forge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 16px 40px;
+    background: #000;
+    color: var(--amber);
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: background .2s, transform .2s;
+  }
+
+  .btn-dark-forge:hover { background: var(--steel); transform: scale(1.04); color: var(--amber); }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .piston-wrap, .osc-wrap { display: none; }
+    .process-steps { flex-direction: column; gap: 40px; }
+    .process-steps::before { display: none; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .stat-item:last-child { border-bottom: none; }
+  }
+</style>
+
+<!-- ===== HERO ===== -->
+<section class="mk-hero">
+
+  <div class="gear-wrap">
+    <div class="gear gear-1">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+    <div class="gear gear-2">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+    <div class="gear gear-3">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+    <div class="gear gear-4">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+    <div class="gear gear-5">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+    <div class="gear gear-6">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="#94a3b8">
+        <path d="M43.4 5.1l-3.3 8.6a37 37 0 00-8.4 3.5L23 14.4l-8.5 8.5 2.8 8.7a37 37 0 00-3.5 8.4l-8.6 3.3v12l8.6 3.3a37 37 0 003.5 8.4L14.5 75l8.5 8.5 8.7-2.8a37 37 0 008.4 3.5l3.3 8.6h12l3.3-8.6a37 37 0 008.4-3.5l8.7 2.8 8.5-8.5-2.8-8.7a37 37 0 003.5-8.4l8.6-3.3v-12l-8.6-3.3a37 37 0 00-3.5-8.4l2.8-8.7-8.5-8.5-8.7 2.8a37 37 0 00-8.4-3.5L55.4 5H43.4zm6 20a25 25 0 110 50 25 25 0 010-50z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Piston -->
+  <div class="piston-wrap">
+    <div class="piston-rod"></div>
+    <div class="piston-head"></div>
+  </div>
+
+  <!-- Oscillating bars -->
+  <div class="osc-wrap">
+    <div class="osc-bar"></div>
+    <div class="osc-bar"></div>
+    <div class="osc-bar"></div>
+    <div class="osc-bar"></div>
+    <div class="osc-bar"></div>
+    <div class="osc-bar"></div>
+  </div>
+
+  <!-- Sparks -->
+  <div class="sparks">
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+  </div>
+
+  <!-- Main content -->
+  <div class="hero-content">
+    <span class="hero-eyebrow"> MK Mechanical works — Est. 1995</span>
+    <h1 class="hero-title">
+      Built to<br><span>Perform.</span><br>Made to Last.
+    </h1>
+    <p class="hero-sub">
+      Precision-engineered industrial machines for factories,<br>
+      production units & heavy-duty operations.
+    </p>
+    <div class="hero-btns">
+      <a href="#machines" class="btn-forge">Explore Machines</a>
+      <a href="#contact" class="btn-ghost">Request Quote</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker">
+  <span class="ticker-inner">
+    ★ HYDRAULIC PRESS &nbsp;&nbsp;&nbsp; ★ CNC CUTTING MACHINES &nbsp;&nbsp;&nbsp; ★ PACKAGING SYSTEMS &nbsp;&nbsp;&nbsp; ★ CONVEYOR SYSTEMS &nbsp;&nbsp;&nbsp; ★ INJECTION MOULDING &nbsp;&nbsp;&nbsp; ★ WELDING EQUIPMENT &nbsp;&nbsp;&nbsp; ★ PNEUMATIC SYSTEMS &nbsp;&nbsp;&nbsp; ★ INDUSTRIAL PRESSES &nbsp;&nbsp;&nbsp; ★ HYDRAULIC PRESS &nbsp;&nbsp;&nbsp; ★ CNC CUTTING MACHINES &nbsp;&nbsp;&nbsp; ★ PACKAGING SYSTEMS &nbsp;&nbsp;&nbsp; ★ CONVEYOR SYSTEMS &nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- ===== STATS ===== -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3 stat-item reveal">
+        <span class="stat-num" data-target="20">0</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="col-6 col-md-3 stat-item reveal" style="transition-delay:.1s">
+        <span class="stat-num" data-target="500">0</span>
+        <span class="stat-label">Machines Installed</span>
+      </div>
+      <div class="col-6 col-md-3 stat-item reveal" style="transition-delay:.2s">
+        <span class="stat-num" data-target="100">0</span>
+        <span class="stat-label">Quality Tested %</span>
+      </div>
+      <div class="col-6 col-md-3 stat-item reveal" style="transition-delay:.3s">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Support Available</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="mk-about" id="about">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-md-6 reveal">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=900" alt="Factory floor">
+        </div>
+      </div>
+      <div class="col-md-6 reveal" style="transition-delay:.2s">
+        <span class="section-tag">// About Us</span>
+        <h2 class="section-title">Engineering Strength Into Every Machine</h2>
+        <p class="about-body">
+          MK Industries has been at the forefront of industrial machine manufacturing for over two decades. From small workshop setups to large-scale production units, we deliver machines that don't just work — they outlast and outperform.
+        </p>
+        <p class="about-body mt-3">
+          Every machine we build goes through rigorous quality checks, engineered for precision, reliability, and ease of maintenance.
+        </p>
+        <div class="mt-4">
+          <a href="#contact" class="btn-forge">Talk to an Engineer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MACHINES ===== -->
+<section class="mk-machines" id="machines">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="section-tag">// Our Products</span>
+      <h2 class="section-title">Industrial Machines</h2>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-md-4 reveal">
+        <div class="machine-card">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600" alt="Hydraulic Press">
+          <div class="machine-card-body">
+            <span class="machine-tag">// Heavy Duty</span>
+            <h3 class="machine-name">Hydraulic Press</h3>
+            <p class="machine-desc">High-tonnage industrial press for metal forming, stamping, and deep drawing operations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal" style="transition-delay:.15s">
+        <div class="machine-card">
+          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600" alt="Cutting Machine">
+          <div class="machine-card-body">
+            <span class="machine-tag">// Precision</span>
+            <h3 class="machine-name">Cutting Machine</h3>
+            <p class="machine-desc">CNC-grade metal cutting with micron-level accuracy for complex geometries and profiles.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal" style="transition-delay:.3s">
+        <div class="machine-card">
+          <img src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=600" alt="Packaging Machine">
+          <div class="machine-card-body">
+            <span class="machine-tag">// Automation</span>
+            <h3 class="machine-name">Packaging Machine</h3>
+            <p class="machine-desc">Fully automated packaging lines for high-throughput production with minimal downtime.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section class="mk-process">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-tag">// How We Work</span>
+      <h2 class="section-title">From Design to Delivery</h2>
+    </div>
+    <div class="process-steps reveal" style="transition-delay:.2s">
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h4 class="step-title">Consult</h4>
+        <p class="step-desc">We understand your production requirements and machine specs in detail.</p>
+      </div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+          </svg>
+        </div>
+        <h4 class="step-title">Design</h4>
+        <p class="step-desc">Engineering drawings and CAD models created to your exact specifications.</p>
+      </div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <h4 class="step-title">Manufacture</h4>
+        <p class="step-desc">Built using precision tooling and quality-grade steel and components.</p>
+      </div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h4 class="step-title">Deliver & Install</h4>
+        <p class="step-desc">On-site installation, testing, and operator training included.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="mk-cta" id="contact">
+  <div class="container">
+    <h2 class="cta-title">Ready to Power Your Factory?</h2>
+    <p class="cta-sub">Talk to our engineers. Get a free consultation and custom quote.</p>
+    <a href="mailto:info@mkindustries.com" class="btn-dark-forge">Get a Free Quote</a>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    if (!target) return;
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + (target === 100 ? '%' : '+');
+      if (current >= target) clearInterval(interval);
+    }, 30);
+  }
+
+  const statNums = document.querySelectorAll('.stat-num[data-target]');
+  const statObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); statObserver.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  statNums.forEach(el => statObserver.observe(el));
+</script>
+
+{% endblock %}

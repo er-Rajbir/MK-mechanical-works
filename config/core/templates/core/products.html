@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h1 class="text-center mb-5">
+
+Our Machines
+
+</h1>
+
+<div class="row">
+
+{% for machine in machines %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card h-100 shadow">
+
+<img src="{{ machine.image.url }}"
+class="card-img-top"
+height="250">
+
+<div class="card-body">
+
+<h4>
+
+{{ machine.name }}
+
+</h4>
+
+<p>
+
+{{ machine.description|truncatewords:20 }}
+
+</p>
+
+<h5>
+
+₹ {{ machine.price }}
+
+</h5>
+
+<a href="#"
+class="btn btn-primary">
+
+View Details
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}
