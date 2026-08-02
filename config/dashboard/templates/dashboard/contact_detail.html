@@ -1,0 +1,221 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Contact Details
+{% endblock %}
+
+{% block page_title %}
+Contact Details
+{% endblock %}
+
+{% block content %}
+
+<div class="form-card">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3>
+
+            Customer Enquiry
+
+        </h3>
+
+        <a href="{% url 'dashboard:contact_list' %}"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back
+
+        </a>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-6 mb-4">
+
+            <label class="form-label">
+
+                Customer Name
+
+            </label>
+
+            <div class="form-control">
+
+                {{ contact.name }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 mb-4">
+
+            <label class="form-label">
+
+                Email Address
+
+            </label>
+
+            <div class="form-control">
+
+                {{ contact.email }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 mb-4">
+
+            <label class="form-label">
+
+                Phone Number
+
+            </label>
+
+            <div class="form-control">
+
+                {{ contact.phone }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 mb-4">
+
+            <label class="form-label">
+
+                Subject
+
+            </label>
+
+            <div class="form-control">
+
+                {{ contact.subject }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="mb-4">
+
+        <label class="form-label">
+
+            Message
+
+        </label>
+
+        <div class="form-control"
+             style="min-height:220px;white-space:pre-wrap;">
+
+            {{ contact.message }}
+
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <label class="form-label">
+
+                Submitted On
+
+            </label>
+
+            <div class="form-control">
+
+                {{ contact.created_at|date:"d M Y • h:i A" }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <label class="form-label">
+
+                Status
+
+            </label>
+
+            <div class="form-control">
+
+                {% if contact.is_read %}
+
+                    <span class="badge-featured">
+
+                        Read
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge-normal">
+
+                        Unread
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <hr class="my-5">
+
+
+    <div class="d-flex gap-3 flex-wrap">
+
+        {% if not contact.is_read %}
+
+        <a href="{% url 'dashboard:contact_mark_read' contact.id %}"
+           class="btn btn-success">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            Mark as Read
+
+        </a>
+
+        {% endif %}
+
+
+        <a href="mailto:{{ contact.email }}"
+           class="btn btn-primary">
+
+            <i class="bi bi-envelope-fill"></i>
+
+            Reply by Email
+
+        </a>
+
+
+        <a href="{% url 'dashboard:contact_delete' contact.id %}"
+           class="btn btn-danger">
+
+            <i class="bi bi-trash-fill"></i>
+
+            Delete
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

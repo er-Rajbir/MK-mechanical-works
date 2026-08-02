@@ -1,528 +1,605 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}Our Products{% endblock %}
+{% block title %}Our Machines | MK Mechanicals{% endblock %}
 
 {% block content %}
 
-<!--
-  NOTE: The two Google Font <link> tags below ideally belong in base.html's
-  <head> (for faster font loading on every page). They're left here so this
-  template works standalone — feel free to move them up if you'd rather.
--->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+/*==========================================================
+  MK MECHANICALS — MACHINE CATALOG
+  Token system
+  --navy-900 #0A1F38   deep navy — headline text
+  --navy-700 #123A63   brand navy (from logo)
+  --blue-500 #1C7ED6   action blue — CTAs, links, active states
+  --blue-100 #E8F2FC   light tint — chips, hovers, section washes
+  --paper    #F7FAFC   page background
+  --slate    #5B7085   muted body text
+  --line     #DCE6F0   hairline borders
+  Type: Sora (display/labels) + Inter (body)
+  Signature: riveted "spec plate" cards — machinery nameplate motif
+==========================================================*/
 
-    /* ============================================
-       TOKENS — industrial nameplate palette
-    ============================================ */
-    .products-section {
-        --bg: #14181c;
-        --bg-panel: #1b2126;
-        --tray: #10151a;
-        --steel: #333c46;
-        --steel-light: #4a5561;
-        --text: #eceef0;
-        --text-dim: #8a94a0;
-        --accent: #f5a623;
-        --accent-dim: #b97f1e;
-        --led: #58e07a;
+.mk-products-page{
+    --navy-900:#0A1F38;
+    --navy-700:#123A63;
+    --blue-500:#1C7ED6;
+    --blue-100:#E8F2FC;
+    --paper:#F7FAFC;
+    --slate:#5B7085;
+    --line:#DCE6F0;
 
-        --cat-mixing: #f5a623;
-        --cat-packing: #2fb6a8;
-        --cat-conveyor: #ff6b35;
-        --cat-crusher: #e5484d;
-        --cat-dryer: #4c8dff;
-        --cat-other: #8a94a0;
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--navy-900);
+    position:relative;
+    overflow:hidden;
+}
 
-        --font-display: 'Oswald', sans-serif;
-        --font-body: 'Inter', sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
+.mk-products-page *{
+    box-sizing:border-box;
+}
 
-        background: var(--bg);
-        background-image:
-            linear-gradient(var(--steel) 1px, transparent 1px),
-            linear-gradient(90deg, var(--steel) 1px, transparent 1px);
-        background-size: 42px 42px;
-        background-position: -1px -1px;
-        position: relative;
-        padding: 5rem 0 6rem;
-        overflow: hidden;
-        font-family: var(--font-body);
-        color: var(--text);
+/*==========================
+  BLUEPRINT BACKDROP
+==========================*/
+
+.mk-blueprint{
+    position:absolute;
+    inset:0;
+    background:
+        repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(18,58,99,.055) 40px),
+        repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(18,58,99,.055) 40px);
+    pointer-events:none;
+}
+
+.mk-blueprint::after{
+    content:"";
+    position:absolute;
+    width:640px;
+    height:640px;
+    right:-220px;
+    top:-260px;
+    border-radius:50%;
+    background:radial-gradient(circle,var(--blue-100) 0%,transparent 68%);
+    animation:mk-drift 18s ease-in-out infinite;
+}
+
+@keyframes mk-drift{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-30px,25px) scale(1.06); }
+}
+
+.mk-container{
+    position:relative;
+    z-index:2;
+    width:92%;
+    max-width:1280px;
+    margin:0 auto;
+    padding:110px 0 70px;
+}
+
+/*==========================
+  HERO
+==========================*/
+
+.mk-hero{
+    text-align:center;
+    margin-bottom:56px;
+}
+
+.mk-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--blue-500);
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-family:'Sora',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+}
+
+.mk-eyebrow::before,
+.mk-eyebrow::after{
+    content:"";
+    width:26px;
+    height:2px;
+    background:var(--blue-500);
+    border-radius:2px;
+}
+
+.mk-hero h1{
+    margin-top:18px;
+    font-family:'Sora',sans-serif;
+    font-weight:800;
+    font-size:clamp(34px,5vw,54px);
+    color:var(--navy-900);
+    letter-spacing:-.5px;
+}
+
+.mk-hero p{
+    max-width:680px;
+    margin:20px auto 0;
+    color:var(--slate);
+    font-size:16.5px;
+    line-height:1.75;
+}
+
+/*==========================
+  SEARCH
+==========================*/
+
+.mk-search{
+    max-width:600px;
+    margin:38px auto 0;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:6px 6px 6px 20px;
+    box-shadow:0 10px 30px -14px rgba(10,31,56,.18);
+    transition:.3s;
+}
+
+.mk-search:focus-within{
+    border-color:var(--blue-500);
+    box-shadow:0 10px 30px -12px rgba(28,126,214,.3);
+}
+
+.mk-search svg{
+    flex-shrink:0;
+    color:var(--slate);
+}
+
+.mk-search input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    padding:14px 14px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--navy-900);
+}
+
+.mk-search input::placeholder{
+    color:#9AAAB9;
+}
+
+.mk-search button{
+    border:none;
+    cursor:pointer;
+    background:var(--blue-500);
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:13px 26px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.mk-search button:hover{
+    background:var(--navy-700);
+}
+
+/*==========================
+  CATEGORY FILTERS
+==========================*/
+
+.mk-filters{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:44px 0 52px;
+}
+
+.mk-filters button{
+    padding:10px 24px;
+    background:#fff;
+    color:var(--navy-700);
+    border:1.5px solid var(--line);
+    border-radius:40px;
+    cursor:pointer;
+    font-family:'Sora',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    transition:.25s;
+}
+
+.mk-filters button:hover{
+    border-color:var(--blue-500);
+    color:var(--blue-500);
+}
+
+.mk-filters button.active{
+    background:var(--navy-700);
+    border-color:var(--navy-700);
+    color:#fff;
+}
+
+/*==========================
+  PRODUCT GRID — SPEC PLATE CARDS
+==========================*/
+
+.mk-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.mk-card{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity .7s, transform .7s, box-shadow .35s, border-color .35s;
+}
+
+.mk-card.mk-show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.mk-card:hover{
+    border-color:var(--blue-500);
+    box-shadow:0 22px 44px -20px rgba(10,31,56,.28);
+}
+
+/* rivet corners — the nameplate signature */
+.mk-card::before,
+.mk-card::after,
+.mk-rivet-tl,
+.mk-rivet-tr{
+    content:"";
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--line);
+    z-index:3;
+    transition:background .3s;
+}
+
+.mk-card::before{ top:12px; left:12px; }
+.mk-card::after{ top:12px; right:12px; }
+.mk-rivet-tl{ bottom:12px; left:12px; }
+.mk-rivet-tr{ bottom:12px; right:12px; }
+
+.mk-card:hover::before,
+.mk-card:hover::after,
+.mk-card:hover .mk-rivet-tl,
+.mk-card:hover .mk-rivet-tr{
+    background:var(--blue-500);
+}
+
+.mk-image{
+    position:relative;
+    height:210px;
+    overflow:hidden;
+    background:var(--blue-100);
+}
+
+.mk-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .9s cubic-bezier(.2,.8,.2,1);
+}
+
+.mk-card:hover .mk-image img{
+    transform:scale(1.08);
+}
+
+.mk-badge{
+    position:absolute;
+    top:16px;
+    left:16px;
+    background:rgba(10,31,56,.85);
+    backdrop-filter:blur(4px);
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:6px 12px;
+    border-radius:6px;
+}
+
+.mk-content{
+    padding:24px 22px 22px;
+}
+
+.mk-content h3{
+    font-family:'Sora',sans-serif;
+    font-size:19px;
+    font-weight:700;
+    color:var(--navy-900);
+    margin-bottom:10px;
+}
+
+.mk-content p{
+    color:var(--slate);
+    font-size:14.5px;
+    line-height:1.65;
+    margin-bottom:20px;
+}
+
+.mk-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:16px;
+    border-top:1px dashed var(--line);
+}
+
+.mk-spec{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:'Sora',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    color:var(--slate);
+}
+
+.mk-spec svg{ color:var(--blue-500); }
+
+.mk-details-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    color:var(--blue-500);
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    transition:.25s;
+}
+
+.mk-details-btn svg{
+    transition:transform .25s;
+}
+
+.mk-details-btn:hover{
+    color:var(--navy-700);
+}
+
+.mk-details-btn:hover svg{
+    transform:translateX(4px);
+}
+
+/*==========================
+  EMPTY STATE
+==========================*/
+
+.mk-empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:70px 20px;
+    background:#fff;
+    border:1.5px dashed var(--line);
+    border-radius:18px;
+}
+
+.mk-empty img{
+    width:150px;
+    opacity:.7;
+    margin-bottom:20px;
+}
+
+.mk-empty h2{
+    font-family:'Sora',sans-serif;
+    color:var(--navy-900);
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.mk-empty p{
+    color:var(--slate);
+    font-size:14.5px;
+}
+
+/*==========================
+  WAVE DIVIDER
+==========================*/
+
+.mk-waves{
+    position:relative;
+    width:100%;
+    height:90px;
+    margin-top:60px;
+    line-height:0;
+}
+
+.mk-waves svg{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+.mk-wave-1{ opacity:.35; animation:mk-wave-move 9s ease-in-out infinite; }
+.mk-wave-2{ opacity:.55; animation:mk-wave-move 7s ease-in-out infinite reverse; }
+.mk-wave-3{ opacity:.9; animation:mk-wave-move 11s ease-in-out infinite; }
+
+@keyframes mk-wave-move{
+    0%,100%{ transform:translateX(0); }
+    50%{ transform:translateX(-3%); }
+}
+
+/*==========================
+  RESPONSIVE
+==========================*/
+
+@media(max-width:768px){
+    .mk-hero h1{ font-size:32px; }
+    .mk-search{ flex-wrap:wrap; border-radius:16px; }
+    .mk-search input{ width:100%; }
+    .mk-search button{ width:100%; margin-top:8px; }
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+    .mk-card, .mk-image img, .mk-details-btn svg,
+    .mk-blueprint::after, .mk-wave-1, .mk-wave-2, .mk-wave-3{
+        animation:none !important;
+        transition:none !important;
     }
-
-    .products-section::before {
-        /* vignette so the blueprint grid doesn't compete with content */
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at 50% 0%, rgba(20,24,28,0.2) 0%, var(--bg) 72%);
-        pointer-events: none;
-    }
-
-    .products-section .container {
-        max-width: 1240px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* ============================================
-       HERO / SECTION TITLE
-    ============================================ */
-    .section-title {
-        text-align: center;
-        max-width: 680px;
-        margin: 0 auto 3rem;
-    }
-
-    .section-title .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 1.1rem;
-    }
-
-    .section-title .eyebrow::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--led);
-        box-shadow: 0 0 0 3px rgba(88, 224, 122, 0.15);
-        animation: led-pulse 2.4s ease-in-out infinite;
-    }
-
-    .section-title h1 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: clamp(2.1rem, 5vw, 3.1rem);
-        letter-spacing: 0.01em;
-        text-transform: uppercase;
-        line-height: 1.1;
-        margin: 0 0 1rem;
-        color: var(--text);
-    }
-
-    .section-title p {
-        color: var(--text-dim);
-        font-size: 1.02rem;
-        line-height: 1.65;
-        margin: 0;
-    }
-
-    /* hazard-stripe divider — slow ambient motion under the hero */
-    .hazard-divider {
-        width: 100%;
-        max-width: 220px;
-        height: 6px;
-        margin: 2.2rem auto 0;
-        border-radius: 3px;
-        background: repeating-linear-gradient(
-            135deg,
-            var(--accent) 0 10px,
-            #1a1a1a 10px 20px
-        );
-        background-size: 200% 100%;
-        animation: stripe-scroll 6s linear infinite;
-        opacity: 0.85;
-    }
-
-    /* ============================================
-       GRID
-    ============================================ */
-    .products-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-        gap: 2rem;
-    }
-
-    /* ============================================
-       CARD — machine nameplate
-    ============================================ */
-    .product-card {
-        position: relative;
-        background: var(--bg-panel);
-        border: 1px solid var(--steel);
-        border-radius: 10px;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(22px);
-        animation: card-reveal 0.6s ease forwards;
-        animation-play-state: paused;
-        transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .product-card.in-view {
-        animation-play-state: running;
-    }
-
-    /* staggered reveal for the first couple of rows */
-    .product-card:nth-child(1)  { animation-delay: 0ms;   }
-    .product-card:nth-child(2)  { animation-delay: 70ms;  }
-    .product-card:nth-child(3)  { animation-delay: 140ms; }
-    .product-card:nth-child(4)  { animation-delay: 210ms; }
-    .product-card:nth-child(5)  { animation-delay: 280ms; }
-    .product-card:nth-child(6)  { animation-delay: 350ms; }
-    .product-card:nth-child(n+7) { animation-delay: 400ms; }
-
-    .product-card:hover {
-        transform: translateY(-7px);
-        border-color: var(--steel-light);
-        box-shadow: 0 18px 34px -14px rgba(0, 0, 0, 0.55);
-    }
-
-    /* rivets at the corners — the nameplate signature */
-    .bolt {
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 35% 30%, #7c8794, #2b3239 70%);
-        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
-        z-index: 2;
-    }
-    .bolt.tl { top: 10px; left: 10px; }
-    .bolt.tr { top: 10px; right: 10px; }
-    .bolt.bl { bottom: 10px; left: 10px; }
-    .bolt.br { bottom: 10px; right: 10px; }
-
-    /* ---- image tray : FIXED SIZE, image kept small & centered ---- */
-    .product-image {
-        position: relative;
-        height: 190px;
-        background:
-            linear-gradient(145deg, var(--tray), #161b20);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid var(--steel);
-        overflow: hidden;
-    }
-
-    .product-image img {
-        max-width: 90%;
-        max-height: 90%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: drop-shadow(0 8px 14px rgba(0,0,0,0.5));
-        transition: transform 0.4s ease;
-    }
-
-    .product-card:hover .product-image img {
-        transform: scale(1.06) translateY(-2px);
-    }
-
-    /* scanning sweep on hover */
-    .product-image::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -60%;
-        width: 40%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(245, 166, 35, 0.09),
-            transparent
-        );
-        transform: skewX(-20deg);
-        transition: left 0.7s ease;
-    }
-
-    .product-card:hover .product-image::after {
-        left: 130%;
-    }
-
-    .category {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        font-family: var(--font-mono);
-        font-size: 0.66rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #10151a;
-        background: var(--cat-other);
-        padding: 0.3rem 0.6rem;
-        border-radius: 4px;
-        z-index: 2;
-    }
-
-    .category[data-category="Mixing"]   { background: var(--cat-mixing); }
-    .category[data-category="Packing"]  { background: var(--cat-packing); }
-    .category[data-category="Conveyor"] { background: var(--cat-conveyor); }
-    .category[data-category="Crusher"]  { background: var(--cat-crusher); color: #fff; }
-    .category[data-category="Dryer"]    { background: var(--cat-dryer); }
-    .category[data-category="Other"]    { background: var(--cat-other); }
-
-    .status-led {
-        position: absolute;
-        top: 16px;
-        right: 14px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--led);
-        box-shadow: 0 0 8px 1px rgba(88, 224, 122, 0.7);
-        animation: led-pulse 2.4s ease-in-out infinite;
-        z-index: 2;
-    }
-
-    /* ---- body ---- */
-    .product-body {
-        padding: 1.3rem 1.3rem 1.5rem;
-    }
-
-    .product-body h3 {
-        font-family: var(--font-display);
-        font-size: 1.15rem;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-        text-transform: uppercase;
-        margin: 0 0 0.5rem;
-        color: var(--text);
-    }
-
-    .product-body p {
-        font-size: 0.9rem;
-        line-height: 1.55;
-        color: var(--text-dim);
-        margin: 0 0 1.1rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .product-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        border-top: 1px dashed var(--steel);
-        padding-top: 0.9rem;
-        margin-bottom: 1.2rem;
-    }
-
-    .product-info .spec-label {
-        font-family: var(--font-mono);
-        font-size: 0.66rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--text-dim);
-    }
-
-    .product-info .spec-value {
-        font-family: var(--font-mono);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--accent);
-    }
-
-    .btn-product {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.4rem;
-        width: 100%;
-        padding: 0.7rem 1rem;
-        background: transparent;
-        border: 1px solid var(--steel-light);
-        border-radius: 6px;
-        color: var(--text);
-        font-family: var(--font-body);
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-    }
-
-    .btn-product .arrow {
-        transition: transform 0.25s ease;
-    }
-
-    .btn-product:hover {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #14181c;
-    }
-
-    .btn-product:hover .arrow {
-        transform: translateX(4px);
-    }
-
-    /* ============================================
-       EMPTY STATE
-    ============================================ */
-    .no-products {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 4rem 1.5rem;
-        border: 1px dashed var(--steel);
-        border-radius: 10px;
-        background: var(--bg-panel);
-    }
-
-    .no-products h2 {
-        font-family: var(--font-display);
-        text-transform: uppercase;
-        font-size: 1.3rem;
-        color: var(--text);
-        margin: 0 0 0.5rem;
-    }
-
-    .no-products p {
-        color: var(--text-dim);
-        font-size: 0.92rem;
-        margin: 0;
-    }
-
-    /* ============================================
-       KEYFRAMES
-    ============================================ */
-    @keyframes led-pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.35; }
-    }
-
-    @keyframes stripe-scroll {
-        0%   { background-position: 0 0; }
-        100% { background-position: 40px 0; }
-    }
-
-    @keyframes card-reveal {
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* respect reduced-motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-        .status-led,
-        .section-title .eyebrow::before,
-        .hazard-divider,
-        .product-card {
-            animation: none !important;
-        }
-        .product-card { opacity: 1; transform: none; }
-        .product-image img,
-        .product-image::after,
-        .btn-product .arrow {
-            transition: none !important;
-        }
-    }
-
+}
 </style>
 
-<section class="products-section">
+<section class="mk-products-page">
 
-    <div class="container">
+    <div class="mk-blueprint"></div>
 
-        <div class="section-title">
-            <span class="eyebrow">Product Catalog</span>
-            <h1>Our Industrial Machines</h1>
+    <div class="mk-container">
+
+        <div class="mk-hero">
+            <span class="mk-eyebrow">MK Mechanicals</span>
+            <h1>Industrial Machinery Collection</h1>
             <p>
-                Explore our high-quality industrial machines designed for
-                durability, efficiency, and superior performance.
+                Precision-engineered machines built for performance, durability and
+                uptime. Every unit leaving our floor is manufactured with
+                high-grade materials to hold up in demanding industrial environments.
             </p>
-            <div class="hazard-divider"></div>
+
+            <div class="mk-search">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="mkSearchInput" placeholder="Search machines by name or type…">
+                <button type="button">Search</button>
+            </div>
         </div>
 
-        <div class="products-grid">
+        <div class="mk-filters">
+            <button class="active">All</button>
+            <button>Mixing</button>
+            <button>Packing</button>
+            <button>Conveyor</button>
+            <button>Crusher</button>
+            <button>Dryer</button>
+        </div>
 
-            {% for product in products %}
+        <div class="mk-grid">
+            {% for machine in machines %}
 
-            <div class="product-card">
+            <div class="mk-card">
+                <span class="mk-rivet-tl"></span>
+                <span class="mk-rivet-tr"></span>
 
-                <span class="bolt tl"></span>
-                <span class="bolt tr"></span>
-                <span class="bolt bl"></span>
-                <span class="bolt br"></span>
+                <div class="mk-image">
+                    {% if machine.image %}
+                        <img src="{{ machine.image.url }}" alt="{{ machine.name }}">
+                    {% else %}
+                        <img src="{% static 'images/no-image.png' %}" alt="No Image">
+                    {% endif %}
 
-                <div class="product-image">
-
-                    <img src="{{ product.image.url }}"
-                        alt="{{ product.name }}"
-                        loading="lazy">
-
-                    <span class="category" data-category="{{ product.category }}">
-                        {{ product.get_category_display }}
-                    </span>
-
-                    <span class="status-led" aria-hidden="true"></span>
-
+                    <span class="mk-badge category">{{ machine.category.name }}</span>
                 </div>
 
-                <div class="product-body">
+                <div class="mk-content">
+                    <h3>{{ machine.name }}</h3>
 
-                    <h3>{{ product.name }}</h3>
+                    <p>
+                        {% if machine.short_description %}
+                            {{ machine.short_description|truncatewords:18 }}
+                        {% else %}
+                            {{ machine.description|truncatewords:18 }}
+                        {% endif %}
+                    </p>
 
-                    <p>{{ product.short_description }}</p>
-
-                    <div class="product-info">
-                        <span class="spec-label">Price Range</span>
-                        <span class="spec-value">
-                            {% if product.price_range %}{{ product.price_range }}{% else %}On Request{% endif %}
+                    <div class="mk-footer">
+                        <span class="mk-spec">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            {{ machine.category.name }}
                         </span>
+
+                        <a href="{% url 'product_detail' machine.id %}" class="mk-details-btn">
+                            View Details
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
                     </div>
-
-                    <a href="{% url 'product_detail' product.id %}" class="btn-product">
-                        View Details <span class="arrow">→</span>
-                    </a>
-
                 </div>
-
             </div>
 
             {% empty %}
 
-            <div class="no-products">
-                <h2>No Machines On The Floor Yet</h2>
-                <p>Add a product from the admin panel and it'll show up here.</p>
+            <div class="mk-empty">
+                <img src="{% static 'images/empty-machine.svg' %}" alt="">
+                <h2>No Machines Available</h2>
+                <p>Products added from the dashboard will appear here.</p>
             </div>
 
             {% endfor %}
-
         </div>
 
+    </div>
+
+    <div class="mk-waves">
+        <svg class="mk-wave-3" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#123A63" d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z"></path>
+        </svg>
+        <svg class="mk-wave-2" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#1C7ED6" d="M0,60 C240,20 480,90 720,55 C960,20 1200,80 1440,45 L1440,100 L0,100 Z"></path>
+        </svg>
+        <svg class="mk-wave-1" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#E8F2FC" d="M0,70 C240,40 480,95 720,65 C960,35 1200,85 1440,60 L1440,100 L0,100 Z"></path>
+        </svg>
     </div>
 
 </section>
 
 <script>
-    // Reveal cards as they scroll into view (staggered by their animation-delay above).
-    document.addEventListener('DOMContentLoaded', function () {
-        var cards = document.querySelectorAll('.product-card');
+(function(){
+    const searchInput = document.getElementById("mkSearchInput");
+    const cards = document.querySelectorAll(".mk-card");
 
-        if (!('IntersectionObserver' in window) || cards.length === 0) {
-            cards.forEach(function (c) { c.classList.add('in-view'); });
-            return;
-        }
-
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target);
-                }
+    if(searchInput){
+        searchInput.addEventListener("keyup", function(){
+            const value = this.value.toLowerCase();
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(value) ? "" : "none";
             });
-        }, { threshold: 0.15 });
+        });
+    }
 
-        cards.forEach(function (card) { observer.observe(card); });
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add("mk-show");
+            }
+        });
+    }, { threshold: .15 });
+
+    cards.forEach(card => observer.observe(card));
+
+    document.querySelectorAll(".mk-filters button").forEach(button => {
+        button.addEventListener("click", function(){
+            document.querySelector(".mk-filters .active")?.classList.remove("active");
+            this.classList.add("active");
+
+            const category = this.innerText.toLowerCase();
+
+            cards.forEach(card => {
+                const badge = card.querySelector(".mk-badge");
+                const cardCategory = badge ? badge.innerText.toLowerCase() : "";
+                card.style.display = (category === "all" || cardCategory === category) ? "" : "none";
+            });
+        });
     });
+})();
 </script>
 
 {% endblock %}

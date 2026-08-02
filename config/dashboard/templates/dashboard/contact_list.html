@@ -1,0 +1,447 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}
+Contact Enquiries
+{% endblock %}
+
+{% block page_title %}
+Contact Enquiries
+{% endblock %}
+
+{% block content %}
+
+<div class="table-card">
+
+    <!-- Header -->
+
+    <div class="table-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+        <h4 class="mb-0">
+
+            Customer Enquiries
+
+        </h4>
+
+        <div class="d-flex gap-2">
+
+            <a href="?status="
+               class="btn btn-outline-secondary">
+
+                All
+
+            </a>
+
+            <a href="?status=unread"
+               class="btn btn-danger">
+
+                Unread
+
+            </a>
+
+            <a href="?status=read"
+               class="btn btn-success">
+
+                Read
+
+            </a>
+
+        </div>
+
+    </div>
+
+<div class="d-flex justify-content-end mb-3">
+
+    <a href="{% url 'dashboard:export_contacts_excel' %}"
+       class="btn btn-success">
+
+        <i class="bi bi-file-earmark-excel"></i>
+
+        Export Excel
+
+    </a>
+
+</div>
+
+    <!-- Search -->
+
+    <form method="GET"
+          class="mb-4">
+
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="search"
+                    placeholder="Search by Name, Email or Phone..."
+                    value="{{ search|default:'' }}">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <button class="btn btn-primary w-100">
+
+                    <i class="bi bi-search"></i>
+
+                    Search
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <a href="{% url 'dashboard:contact_list' %}"
+                   class="btn btn-secondary w-100">
+
+                    Reset
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+    <!-- Table -->
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Phone</th>
+
+                    <th>Machine</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                    <th width="260">
+
+                        Actions
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for contact in contacts %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+
+                            {{ contact.full_name }}
+
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{ contact.company_name }}
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        {{ contact.email }}
+
+                    </td>
+
+                    <td>
+
+                        {{ contact.phone }}
+
+                    </td>
+
+                    <td>
+
+                        {{ contact.machine }}
+
+                    </td>
+
+                    <td>
+
+                        {% if contact.is_read %}
+
+                            <span class="badge bg-success">
+
+                                Read
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+
+                                Unread
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ contact.created_at|date:"d M Y" }}
+
+                    </td>
+
+                    <td>
+
+                        <!-- View -->
+
+                        <button
+                            class="btn btn-sm btn-info text-white"
+                            data-bs-toggle="modal"
+                            data-bs-target="#message{{ contact.id }}">
+
+                            <i class="bi bi-eye"></i>
+
+                        </button>
+
+                        <!-- Reply -->
+
+                        <a href="mailto:{{ contact.email }}"
+                           class="btn btn-sm btn-primary">
+
+                            <i class="bi bi-reply"></i>
+
+                        </a>
+
+                        <!-- Read / Unread -->
+
+                        {% if contact.is_read %}
+
+                        <a href="{% url 'dashboard:contact_unread' contact.id %}"
+                           class="btn btn-sm btn-warning">
+
+                            <i class="bi bi-arrow-counterclockwise"></i>
+
+                        </a>
+
+                        {% else %}
+
+                        <a href="{% url 'dashboard:contact_read' contact.id %}"
+                           class="btn btn-sm btn-success">
+
+                            <i class="bi bi-check-circle"></i>
+
+                        </a>
+
+                        {% endif %}
+
+                        <!-- Delete -->
+
+                        <a href="{% url 'dashboard:contact_delete' contact.id %}"
+                           onclick="return confirm('Delete this enquiry?')"
+                           class="btn btn-sm btn-danger">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+
+                <!-- Message Modal -->
+
+                <div class="modal fade"
+                     id="message{{ contact.id }}"
+                     tabindex="-1">
+
+                    <div class="modal-dialog modal-lg">
+
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+
+                                <h5>
+
+                                    Message from
+
+                                    {{ contact.full_name }}
+
+                                </h5>
+
+                                <button
+                                    class="btn-close"
+                                    data-bs-dismiss="modal">
+
+                                </button>
+
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+
+                                    <strong>
+
+                                        Company :
+
+                                    </strong>
+
+                                    {{ contact.company_name }}
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <strong>
+
+                                        Email :
+
+                                    </strong>
+
+                                    {{ contact.email }}
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <strong>
+
+                                        Phone :
+
+                                    </strong>
+
+                                    {{ contact.phone }}
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <strong>
+
+                                        Machine :
+
+                                    </strong>
+
+                                    {{ contact.machine }}
+
+                                </div>
+
+                                <hr>
+
+                                <p>
+
+                                    {{ contact.message|linebreaks }}
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="7"
+                        class="text-center py-5">
+
+                        No enquiries found.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- Pagination -->
+
+    {% if page_obj.has_other_pages %}
+
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+            {% if page_obj.has_previous %}
+
+            <li class="page-item">
+
+                <a class="page-link"
+                   href="?page={{ page_obj.previous_page_number }}">
+
+                    Previous
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+            <li class="page-item active">
+
+                <span class="page-link">
+
+                    {{ page_obj.number }}
+
+                </span>
+
+            </li>
+
+            {% if page_obj.has_next %}
+
+            <li class="page-item">
+
+                <a class="page-link"
+                   href="?page={{ page_obj.next_page_number }}">
+
+                    Next
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

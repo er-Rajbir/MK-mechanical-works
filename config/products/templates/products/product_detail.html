@@ -7,67 +7,127 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-    .product-detail-section {
-        --bg: #14181c;
-        --bg-panel: #1b2126;
-        --tray: #10151a;
-        --steel: #333c46;
-        --steel-light: #4a5561;
-        --text: #eceef0;
-        --text-dim: #8a94a0;
-        --accent: #f5a623;
-        --led: #58e07a;
+/*==========================================================
+  MK MECHANICALS — PRODUCT DETAIL
+  Same token system as the catalog page, so the two pages
+  read as one brand:
+  --navy-900 #0A1F38   headline text
+  --navy-700 #123A63   brand navy
+  --blue-500 #1C7ED6   action blue
+  --blue-100 #E8F2FC   light tint / panels
+  --paper    #F7FAFC   page background
+  --slate    #5B7085   muted body text
+  --line     #DCE6F0   hairline borders
+  --led      #2FBE6B   status indicator (kept green — reads as
+                        "operational", the one deliberate accent
+                        that departs from the blue family)
+  Type: Sora (display/labels) + Inter (body) + JetBrains Mono
+  (spec sheet values — keeps the "engineered readout" feel)
+  Signature: rivet-corner panels, matching the spec-plate
+  cards on the catalog page.
+==========================================================*/
 
-        --font-display: 'Oswald', sans-serif;
-        --font-body: 'Inter', sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
+.product-detail-section {
+    --navy-900:#0A1F38;
+    --navy-700:#123A63;
+    --blue-500:#1C7ED6;
+    --blue-100:#E8F2FC;
+    --paper:#F7FAFC;
+    --slate:#5B7085;
+    --line:#DCE6F0;
+    --led:#2FBE6B;
 
-        background: var(--bg);
-        color: var(--text);
-        font-family: var(--font-body);
-        padding: 4rem 0 6rem;
-    }
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
-    .product-detail-section .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: var(--text-dim);
-        text-decoration: none;
-        margin-bottom: 2rem;
-        transition: color 0.2s ease;
-    }
-    .back-link:hover { color: var(--accent); }
-
-    .detail-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        align-items: start;
-    }
-
-    @media (max-width: 820px) {
-        .detail-grid { grid-template-columns: 1fr; }
-    }
-
-    .detail-image{
-    background:linear-gradient(145deg,#10151a,#1a2128);
-    border:1px solid var(--steel);
-    border-radius:16px;
-    padding:20px;
-    box-shadow:0 20px 45px rgba(0,0,0,.35);
+    background: var(--paper);
+    color: var(--navy-900);
+    font-family: var(--font-body);
+    padding: 4rem 0 6rem;
+    position: relative;
+    overflow: hidden;
 }
+
+.product-detail-section *{
+    box-sizing: border-box;
+}
+
+.product-detail-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(18,58,99,.05) 40px),
+        repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(18,58,99,.05) 40px);
+    pointer-events:none;
+}
+
+.product-detail-section .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--slate);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s ease, gap 0.2s ease;
+}
+.back-link:hover { color: var(--blue-500); gap: 0.6rem; }
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+@media (max-width: 820px) {
+    .detail-grid { grid-template-columns: 1fr; }
+}
+
+/*==========================
+  IMAGE PANEL — rivet plate
+==========================*/
+
+.detail-image{
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 20px 45px -22px rgba(10,31,56,.25);
+}
+
+.detail-image::before,
+.detail-image::after,
+.detail-image .rivet-bl,
+.detail-image .rivet-br{
+    content:"";
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background: var(--line);
+    z-index: 4;
+}
+.detail-image::before{ top:14px; left:14px; }
+.detail-image::after{ top:14px; right:14px; }
+.detail-image .rivet-bl{ bottom:14px; left:14px; }
+.detail-image .rivet-br{ bottom:14px; right:14px; }
 
 .image-viewer{
     position:relative;
@@ -77,20 +137,20 @@
     justify-content:center;
     overflow:hidden;
     border-radius:12px;
-    background:#0f1418;
+    background: var(--blue-100);
 }
 
 .image-viewer img{
-    max-width:100%;
-    max-height:100%;
+    max-width:88%;
+    max-height:88%;
     object-fit:contain;
     transition:.4s ease;
     cursor:zoom-in;
-    filter:drop-shadow(0 15px 30px rgba(0,0,0,.45));
+    filter: drop-shadow(0 14px 24px rgba(10,31,56,.18));
 }
 
 .image-viewer:hover img{
-    transform:scale(1.08);
+    transform:scale(1.06);
 }
 
 .thumbnail-gallery{
@@ -106,70 +166,66 @@
 }
 
 .thumbnail-gallery::-webkit-scrollbar-thumb{
-    background:#555;
+    background: var(--line);
     border-radius:20px;
 }
 
 .gallery-thumb{
-    width:90px;
-    height:90px;
+    width:84px;
+    height:84px;
     object-fit:cover;
     border-radius:10px;
     cursor:pointer;
-    border:2px solid transparent;
-    transition:.3s;
+    border:2px solid var(--line);
+    transition:.25s;
     flex-shrink:0;
     background:#fff;
 }
 
 .gallery-thumb:hover{
     transform:translateY(-4px);
-    border-color:var(--accent);
+    border-color:var(--blue-500);
 }
 
 .gallery-thumb.active{
-    border-color:var(--accent);
+    border-color:var(--blue-500);
+    box-shadow: 0 0 0 3px var(--blue-100);
 }
 
 .gallery-btn{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    width:45px;
-    height:45px;
+    width:42px;
+    height:42px;
     border:none;
     border-radius:50%;
-    background:rgba(0,0,0,.55);
+    background:rgba(10,31,56,.55);
     color:#fff;
-    font-size:24px;
+    font-size:22px;
+    line-height: 1;
     cursor:pointer;
-    transition:.3s;
+    transition:.25s;
     z-index:5;
 }
 
 .gallery-btn:hover{
-    background:var(--accent);
-    color:#111;
+    background: var(--blue-500);
 }
 
-.prev-btn{
-    left:15px;
-}
-
-.next-btn{
-    right:15px;
-}
+.prev-btn{ left:15px; }
+.next-btn{ right:15px; }
 
 .image-counter{
     position:absolute;
     bottom:15px;
     right:15px;
-    background:rgba(0,0,0,.75);
+    background: rgba(10,31,56,.78);
     color:#fff;
     padding:6px 12px;
     border-radius:25px;
-    font-family:var(--font-mono);
-    font-size:.75rem;
+    font-family: var(--font-mono);
+    font-size:.72rem;
 }
 
 .status-led{
@@ -179,140 +235,159 @@
     width:10px;
     height:10px;
     border-radius:50%;
-    background:#58e07a;
-    box-shadow:0 0 10px #58e07a;
+    background: var(--led);
+    box-shadow: 0 0 0 4px #fff, 0 0 10px 1px rgba(47,190,107,.6);
+    animation: led-pulse 2.4s ease-in-out infinite;
 }
-    .detail-image img {
-        max-width: 90%;
-        max-height: 90%;
-        object-fit: contain;
-        filter: drop-shadow(0 10px 18px rgba(0,0,0,0.5));
-    }
 
-    .detail-image .status-led {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: var(--led);
-        box-shadow: 0 0 8px 1px rgba(88, 224, 122, 0.7);
-        animation: led-pulse 2.4s ease-in-out infinite;
-    }
+@keyframes led-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
 
-    .detail-category {
-        display: inline-block;
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--accent);
-        border: 1px solid var(--accent);
-        border-radius: 4px;
-        padding: 0.25rem 0.6rem;
-        margin-bottom: 1rem;
-    }
+/*==========================
+  BODY / SPEC SHEET
+==========================*/
 
-    .detail-body h1 {
-        font-family: var(--font-display);
-        font-size: clamp(1.8rem, 4vw, 2.4rem);
-        text-transform: uppercase;
-        margin: 0 0 1rem;
-    }
+.detail-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-500);
+    background: var(--blue-100);
+    border: 1px solid #cfe3fa;
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1.1rem;
+}
 
-    .detail-body .short-desc {
-        color: var(--text-dim);
-        font-size: 1rem;
-        line-height: 1.6;
-        margin-bottom: 1.8rem;
-    }
+.detail-body h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    letter-spacing: -.3px;
+    color: var(--navy-900);
+    margin: 0 0 1rem;
+}
 
-    .spec-table {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.9rem 1.5rem;
-        border-top: 1px dashed var(--steel);
-        padding-top: 1.4rem;
-        margin-bottom: 2rem;
-    }
+.detail-body .short-desc {
+    color: var(--slate);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+}
 
-    .spec-item .spec-label {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--text-dim);
-        margin-bottom: 0.25rem;
-    }
+.spec-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2.2rem;
+}
 
-    .spec-item .spec-value {
-        font-family: var(--font-mono);
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text);
-    }
+.spec-item {
+    background: #fff;
+    padding: 0.9rem 1.1rem;
+}
 
-    .cta-row {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
+.spec-item .spec-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 0.3rem;
+}
 
-    .btn-primary, .btn-secondary {
-        font-family: var(--font-body);
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        padding: 0.8rem 1.4rem;
-        border-radius: 6px;
-        text-decoration: none;
-        transition: all 0.25s ease;
-    }
+.spec-item .spec-value {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--navy-900);
+}
 
-    .btn-primary {
-        background: var(--accent);
-        color: #14181c;
-        border: 1px solid var(--accent);
-    }
-    .btn-primary:hover { filter: brightness(1.1); }
+.cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
-    .btn-secondary {
-        border: 1px solid var(--steel-light);
-        color: var(--text);
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary, .btn-secondary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    padding: 0.85rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
 
-    .long-desc {
-        margin-top: 3rem;
-        border-top: 1px solid var(--steel);
-        padding-top: 2.5rem;
-        max-width: 800px;
-    }
+.btn-primary {
+    background: var(--blue-500);
+    color: #fff;
+    border: 1px solid var(--blue-500);
+    box-shadow: 0 12px 26px -12px rgba(28,126,214,.55);
+}
+.btn-primary:hover { background: var(--navy-700); border-color: var(--navy-700); }
 
-    .long-desc h2 {
-        font-family: var(--font-display);
-        text-transform: uppercase;
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-    }
+.btn-secondary {
+    border: 1px solid var(--line);
+    color: var(--navy-900);
+    background: #fff;
+}
+.btn-secondary:hover { border-color: var(--blue-500); color: var(--blue-500); }
 
-    .long-desc p {
-        color: var(--text-dim);
-        line-height: 1.7;
-        white-space: pre-line;
-    }
+/*==========================
+  LONG-FORM SECTIONS
+==========================*/
 
-    @keyframes led-pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.35; }
-    }
+.long-desc {
+    margin-top: 3rem;
+    border-top: 1px dashed var(--line);
+    padding-top: 2.3rem;
+    max-width: 800px;
+}
 
-    @media (prefers-reduced-motion: reduce) {
-        .detail-image .status-led { animation: none !important; }
-    }
+.long-desc h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--navy-900);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.long-desc h2::before{
+    content:"";
+    width: 22px;
+    height: 3px;
+    background: var(--blue-500);
+    border-radius: 2px;
+}
+
+.long-desc p {
+    color: var(--slate);
+    line-height: 1.75;
+    white-space: pre-line;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-led,
+    .image-viewer img,
+    .gallery-thumb,
+    .back-link { animation: none !important; transition: none !important; }
+}
 </style>
 
 <section class="product-detail-section">
@@ -323,57 +398,58 @@
         <div class="detail-grid">
 
             <div class="detail-image">
+                <span class="rivet-bl"></span>
+                <span class="rivet-br"></span>
 
-    <div class="image-viewer">
+                <div class="image-viewer">
 
-        <button class="gallery-btn prev-btn" onclick="changeImage(-1)">
-            &#10094;
-        </button>
+                    <button class="gallery-btn prev-btn" onclick="changeImage(-1)">
+                        &#10094;
+                    </button>
 
-        <img
-            id="mainProductImage"
-            src="{{ product.image.url }}"
-            alt="{{ product.name }}"
-        >
+                    <img
+                        id="mainProductImage"
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}"
+                    >
 
-        <button class="gallery-btn next-btn" onclick="changeImage(1)">
-            &#10095;
-        </button>
+                    <button class="gallery-btn next-btn" onclick="changeImage(1)">
+                        &#10095;
+                    </button>
 
-        <span class="status-led"></span>
+                    <span class="status-led"></span>
 
-        <div class="image-counter">
-            <span id="currentImage">1</span> /
-            <span id="totalImages">
-                {{ product.images.count|add:1 }}
-            </span>
-        </div>
+                    <div class="image-counter">
+                        <span id="currentImage">1</span> /
+                        <span id="totalImages">
+                            {{ product.images.count|add:1 }}
+                        </span>
+                    </div>
 
-    </div>
+                </div>
 
-    <div class="thumbnail-gallery">
+                <div class="thumbnail-gallery">
 
-        <img
-            class="gallery-thumb active"
-            src="{{ product.image.url }}"
-            onclick="showImage(this)"
-            alt="{{ product.name }}"
-        >
+                    <img
+                        class="gallery-thumb active"
+                        src="{{ product.image.url }}"
+                        onclick="showImage(this)"
+                        alt="{{ product.name }}"
+                    >
 
-        {% for image in product.images.all %}
+                    {% for image in product.images.all %}
 
-        <img
-            class="gallery-thumb"
-            src="{{ image.image.url }}"
-            onclick="showImage(this)"
-            alt=""
-        >
+                    <img
+                        class="gallery-thumb"
+                        src="{{ image.image.url }}"
+                        onclick="showImage(this)"
+                        alt=""
+                    >
 
-        {% endfor %}
+                    {% endfor %}
 
-    </div>
-
-</div>
+                </div>
+            </div>
 
             <div class="detail-body">
 
@@ -489,46 +565,30 @@
 
     </div>
 </section>
+
 <script>
+const thumbs = document.querySelectorAll(".gallery-thumb");
+const mainImage = document.getElementById("mainProductImage");
 
-const thumbs=document.querySelectorAll(".gallery-thumb");
-const mainImage=document.getElementById("mainProductImage");
-
-let currentIndex=0;
+let currentIndex = 0;
 
 function updateGallery(){
-
-    thumbs.forEach(img=>img.classList.remove("active"));
-
+    thumbs.forEach(img => img.classList.remove("active"));
     thumbs[currentIndex].classList.add("active");
-
-    mainImage.src=thumbs[currentIndex].src;
-
-    document.getElementById("currentImage").innerText=currentIndex+1;
-
+    mainImage.src = thumbs[currentIndex].src;
+    document.getElementById("currentImage").innerText = currentIndex + 1;
 }
 
 function showImage(img){
-
-    currentIndex=[...thumbs].indexOf(img);
-
+    currentIndex = [...thumbs].indexOf(img);
     updateGallery();
-
 }
 
 function changeImage(step){
-
-    currentIndex+=step;
-
-    if(currentIndex<0)
-        currentIndex=thumbs.length-1;
-
-    if(currentIndex>=thumbs.length)
-        currentIndex=0;
-
+    currentIndex += step;
+    if (currentIndex < 0) currentIndex = thumbs.length - 1;
+    if (currentIndex >= thumbs.length) currentIndex = 0;
     updateGallery();
-
 }
-
 </script>
 {% endblock %}

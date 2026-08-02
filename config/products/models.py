@@ -1,111 +1,134 @@
 from django.db import models
 
 
-class Product(models.Model):
 
-    CATEGORY_CHOICES = [
-        ("Mixing", "Mixing Machine"),
-        ("Packing", "Packing Machine"),
-        ("Conveyor", "Conveyor"),
-        ("Crusher", "Crusher"),
-        ("Dryer", "Dryer"),
-        ("Other", "Other"),
-    ]
+# ==========================================
+# CATEGORY
+# ==========================================
 
-    name = models.CharField(max_length=200)
+class Category(models.Model):
 
-    category = models.CharField(
-        max_length=50,
-        choices=CATEGORY_CHOICES,
-        default="Other"
-    )
+    name = models.CharField(max_length=100, unique=True)
 
-    image = models.ImageField(upload_to="products/")
-
-    short_description = models.CharField(max_length=300)
-
-    description = models.TextField()
-
-    price_range = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    model_number = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    weight = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    height = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    dimensions = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    power = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    voltage = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    capacity = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    material = models.CharField(
-        max_length=150,
-        blank=True
-    )
-
-    warranty = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    applications = models.TextField(blank=True)
-
-    features = models.TextField(blank=True)
-
-
-    working_principle = models.TextField(blank=True)
-
-    video_link = models.URLField(blank=True)
-
-    is_featured = models.BooleanField(default=False)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
 
 
-class ProductImage(models.Model):
+# ==========================================
+# MACHINE
+# ==========================================
 
-    product = models.ForeignKey(
-        Product,
+class Machine(models.Model):
+
+    category = models.ForeignKey(
+        Category,
         on_delete=models.CASCADE,
-        related_name="images"
+        related_name="machines"
+    )
+
+    name = models.CharField(max_length=200)
+
+    image = models.ImageField(
+        upload_to="machines/"
+    )
+
+    short_description = models.CharField(
+        max_length=250,
+        blank=True
+    )
+
+    description = models.TextField()
+
+    specification = models.TextField(
+        blank=True
+    )
+
+    brochure = models.FileField(
+        upload_to="brochures/",
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        ordering = ["-created_at"]
+
+    def __str__(self):
+
+        return self.name
+
+
+# ==========================================
+# MACHINE GALLERY
+# ==========================================
+
+class MachineImage(models.Model):
+
+    machine = models.ForeignKey(
+        Machine,
+        on_delete=models.CASCADE,
+        related_name="gallery"
     )
 
     image = models.ImageField(
-        upload_to="products/gallery/"
+        upload_to="machines/gallery/"
     )
 
     def __str__(self):
-        return f"{self.product.name} Image"
+
+        return f"{self.machine.name} Image"
+
+
+# ==========================================
+# CONTACT
+# ==========================================
+
+class Contact(models.Model):
+
+    full_name = models.CharField(max_length=120)
+
+    company_name = models.CharField(
+        max_length=150,
+        blank=True
+    )
+
+    email = models.EmailField()
+
+    phone = models.CharField(max_length=20)
+
+    machine = models.ForeignKey(
+        Machine,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+
+    message = models.TextField()
+
+    is_read = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        ordering = ["-created_at"]
+
+    def __str__(self):
+
+        return self.full_name

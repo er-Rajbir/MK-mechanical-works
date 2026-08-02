@@ -1,30 +1,58 @@
 from django.contrib import admin
-from .models import Product, ProductImage
+
+from .models import Category, Machine, MachineImage, Contact
 
 
-class ProductImageInline(admin.TabularInline):
-    model = ProductImage
-    extra = 3
+class MachineImageInline(admin.TabularInline):
+    model = MachineImage
+    extra = 1
 
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
 
+
+@admin.register(Machine)
+class MachineAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "category",
-        "price_range",
-        "is_featured",
+        "created_at",
     )
 
     list_filter = (
         "category",
-        "is_featured",
+        "created_at",
     )
 
     search_fields = (
         "name",
-        "model_number",
+        "description",
     )
 
-    inlines = [ProductImageInline]
+    inlines = [MachineImageInline]
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        "full_name",
+        "email",
+        "phone",
+        "machine",
+        "is_read",
+        "created_at",
+    )
+
+    list_filter = (
+        "is_read",
+        "created_at",
+    )
+
+    search_fields = (
+        "full_name",
+        "email",
+        "phone",
+    )

@@ -3,15 +3,28 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from products.models import Machine
 
-from .models import Machine
 from .forms import ContactForm
+from products.models import Contact
+
+
+
 
 
 def home(request):
-    return render(request, "core/home.html")
+    machines = Machine.objects.all()
 
+    if not machines.exists():
+        machines = Machine.objects.none()
 
+    return render(
+        request,
+        "core/home.html",
+        {
+            "machines": machines[:6]
+        }
+    )
 def about(request):
     return render(request, "core/about.html")
 

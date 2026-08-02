@@ -5,125 +5,652 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MK Industries</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% block title %}
+
+            MK Mechanicals | Industrial Machine Manufacturer
+
+        {% endblock %}
+
+    </title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <!-- Google Fonts: Big Shoulders Display (headings) / IBM Plex Sans (body) / IBM Plex Mono (labels) -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}
+
+    {% endblock %}
 
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-expand-lg fixed-top">
+
+<!--=====================================
+            TOP HEADER
+======================================-->
+
+<div class="top-bar">
 
     <div class="container">
 
-        <!-- Logo -->
+        <div class="row align-items-center">
 
-        <a class="navbar-brand" href="{% url 'home' %}">
+            <div class="col-lg-7 d-none d-lg-flex">
 
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+                <div class="top-info">
 
-            <div>
+                    <span>
 
-                <h5>Mechanical Works</h5>
+                        <i class="bi bi-geo-alt-fill"></i>
 
+                        Punjab, India
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        info@mkmechanicals.com
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-clock-fill"></i>
+
+                        Tue - Sun : 9:00 AM - 7:00 PM
+
+                    </span>
+
+                </div>
 
             </div>
 
+
+
+            <div class="col-lg-5">
+
+                <div class="top-social">
+
+                    <a href="#">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                    
+
+                   
+                    <a href="{% url 'admin:login' %}" class="admin-btn">
+
+    <i class="bi bi-shield-lock"></i>
+
+    
+
+</a>
+
+                </div>
+                
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!--=====================================
+            NAVBAR
+======================================-->
+
+<nav class="navbar navbar-expand-lg custom-navbar "style="height:90px; ">
+
+    <div class="container-fluid" style="
+    height: 110px;
+    width: 1524px;
+">
+
+        <!-- Logo -->
+
+        <a href="{% url 'core:home' %}" class="navbar-brand">
+
+            <img src="{% static 'images/logo.png' %}"
+                 alt="MK Mechanicals"
+                 class="brand-logo" style="height: 100px;">
+
+            <span class="brand-text">
+
+                <strong>MK Mechanicals</strong>
+
+                <small>Machine Making Solutions</small>
+
+            </span>
+
         </a>
 
-        <!-- Toggle -->
+
+
+        <!-- Mobile -->
 
         <button class="navbar-toggler"
+
                 type="button"
+
                 data-bs-toggle="collapse"
+
                 data-bs-target="#navbarMenu">
 
             <span class="navbar-toggler-icon"></span>
 
         </button>
 
-        <!-- Menu -->
 
-        <div class="collapse navbar-collapse" id="navbarMenu">
+<div class="collapse navbar-collapse" id="navbarMenu">
 
-            <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto align-items-center">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:about' %}">About</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'product_list' %}">Products</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'product_list' %}">
+                Products
+            </a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Gallery</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Gallery</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:contact' %}">
+                Contact
+            </a>
+        </li>
 
-            </ul>
+        <li class="nav-item ms-4">
+
+            <a href="{% url 'core:contact' %}"
+               class="btn-quote">
+
+                <i class="bi bi-lightning-fill"></i>
+
+                Get Quote
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+</nav>
+
+
+
+<!--=====================================
+            MAIN CONTENT
+======================================-->
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+<!--=====================================
+                FOOTER
+======================================-->
+
+<footer class="footer">
+
+    <!-- Top Footer -->
+
+    <div class="container">
+
+        <div class="row gy-5">
+
+            <!-- Company -->
+
+            <div class="col-lg-4">
+
+                <a href="{% url 'core:home' %}" class="footer-brand">
+
+                    <img src="{% static 'images/logo.png' %}"
+                         alt="MK Mechanicals"
+                         class="footer-logo">
+
+                    <div>
+
+                        <h4>MK Mechanicals</h4>
+
+                        <span>Industrial Machine Manufacturer</span>
+
+                    </div>
+
+                </a>
+
+                <p class="footer-about">
+
+                    MK Mechanicals specializes in manufacturing
+                    high-performance industrial machines designed
+                    for precision, durability and maximum
+                    productivity across various industries.
+
+                </p>
+
+                <div class="social-links">
+
+                    <a href="#">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-linkedin"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="bi bi-youtube"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Quick Links -->
+
+            <div class="col-lg-2 col-md-6">
+
+                <h5>
+
+                    Quick Links
+
+                </h5>
+
+                <ul class="footer-links">
+
+                    <li>
+
+                        <a href="{% url 'core:home' %}">
+
+                            Home
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'core:about' %}">
+
+                            About
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'product_list' %}">
+
+                            Products
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="#">
+
+                            Gallery
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'core:contact' %}">
+
+                            Contact
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- Services -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <h5>
+
+                    Our Services
+
+                </h5>
+
+                <ul class="footer-links">
+
+                    <li>
+
+                        Industrial Machines
+
+                    </li>
+
+                    <li>
+
+                        Machine Installation
+
+                    </li>
+
+                    <li>
+
+                        Preventive Maintenance
+
+                    </li>
+
+                    <li>
+
+                        Custom Fabrication
+
+                    </li>
+
+                    <li>
+
+                        Technical Support
+
+                    </li>
+
+                    <li>
+
+                        Spare Parts Supply
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- Contact -->
+
+            <div class="col-lg-3">
+
+                <h5>
+
+                    Contact Us
+
+                </h5>
+
+                <div class="footer-contact">
+
+                    <div>
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <span>
+
+                            Punjab, India
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <span>
+
+                            info@mkmechanicals.com
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <span>
+
+                            +91 XXXXX XXXXX
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <i class="bi bi-clock-fill"></i>
+
+                        <span>
+
+                            Mon – Sat : 9:00 AM – 7:00 PM
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-</nav>
 
-<!-- ================= CONTENT ================= -->
 
-{% block content %}
+    <!-- Newsletter -->
 
-{% endblock %}
+    <div class="footer-newsletter">
 
-<!-- ================= FOOTER ================= -->
+        <div class="container">
 
-<footer>
+            <div class="row align-items-center gy-3">
 
-    <div class="container">
+                <div class="col-lg-6">
 
-        <h4>MK Mechanical works</h4>
+                    <h4>
 
-        <p>
+                        Stay Updated
 
-            Manufacturing Industrial Machines with Precision & Quality
+                    </h4>
 
-        </p>
+                    <p>
 
-        <hr>
+                        Subscribe to receive updates about new
+                        industrial machines and company news.
 
-        <p>
+                    </p>
 
-            © 2026 MK Industries. All Rights Reserved.
+                </div>
 
-        </p>
+                <div class="col-lg-6">
+
+                    <form class="newsletter-form">
+
+                        <input type="email"
+
+                               placeholder="Enter your email address">
+
+                        <button type="submit">
+
+                            Subscribe
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Bottom Footer -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        © 2026 MK Mechanicals. All Rights Reserved.
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-6 text-md-end">
+
+                    <p>
+
+                        Designed with ❤️ for Industrial Excellence
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </footer>
+<!--=====================================
+        WHATSAPP FLOAT BUTTON
+======================================-->
+
+<a href="https://wa.me/91XXXXXXXXXX"
+   class="whatsapp-btn"
+   target="_blank"
+   aria-label="WhatsApp">
+
+    <i class="bi bi-whatsapp"></i>
+
+</a>
+
+
+
+<!--=====================================
+        BACK TO TOP
+======================================-->
+
+<button id="backToTop"
+        class="back-top"
+        aria-label="Back To Top">
+
+    <i class="bi bi-arrow-up"></i>
+
+</button>
+
+
+
+<!--=====================================
+        LOADER (Optional)
+======================================-->
+
+<div class="page-loader">
+
+    <div class="loader-circle"></div>
+
+</div>
+
+
+
+<!--=====================================
+        BOOTSTRAP JS
+======================================-->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="{% static 'js/script.js' %}"></script>
+
+
+<!--=====================================
+        CUSTOM JS
+======================================-->
+
+<script src="{% static 'js/scripts.js' %}"></script>
+
+{% block extra_js %}
+
+{% endblock %}
 
 </body>
 
