@@ -1,0 +1,1997 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+Gallery | MK Mechanicals
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   MK MECHANICALS — PREMIUM INDUSTRIAL GALLERY
+========================================================= */
+
+.mk-gallery-page {
+
+    --mk-navy: #08233f;
+    --mk-navy-light: #103e67;
+    --mk-blue: #1479d1;
+    --mk-blue-dark: #075ca8;
+    --mk-blue-soft: #eaf5ff;
+
+    --mk-text: #102a43;
+    --mk-muted: #667b8f;
+
+    --mk-border: #dce8f2;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7fbff 0%,
+            #ffffff 45%,
+            #f3f8fd 100%
+        );
+
+    min-height: 100vh;
+
+    position: relative;
+
+    overflow: hidden;
+
+    color: var(--mk-text);
+
+}
+
+
+/* =========================================================
+   BLUEPRINT BACKGROUND
+========================================================= */
+
+.mk-gallery-page::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .55;
+
+    background:
+
+        linear-gradient(
+            rgba(20,121,209,.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(20,121,209,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 42px 42px;
+
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.mk-gallery-container {
+
+    width: min(
+        1260px,
+        calc(100% - 40px)
+    );
+
+    margin: auto;
+
+    position: relative;
+
+    z-index: 2;
+
+    padding:
+
+        70px
+        0
+        100px;
+
+}
+
+
+/* =========================================================
+   HERO / HEADER
+========================================================= */
+
+.mk-gallery-header {
+
+    max-width: 780px;
+
+    margin:
+
+        0
+        auto
+        55px;
+
+    text-align: center;
+
+}
+
+
+/* Small label */
+
+.mk-gallery-eyebrow {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+
+        8px
+        14px;
+
+    background: var(--mk-blue-soft);
+
+    border: 1px solid #cfe5f8;
+
+    border-radius: 30px;
+
+    color: var(--mk-blue-dark);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .12em;
+
+    text-transform: uppercase;
+
+    margin-bottom: 18px;
+
+}
+
+.mk-gallery-eyebrow span {
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--mk-blue);
+
+    box-shadow:
+
+        0 0 0 4px
+        rgba(20,121,209,.10);
+
+}
+
+
+/* Heading */
+
+.mk-gallery-header h1 {
+
+    margin: 0;
+
+    color: var(--mk-navy);
+
+    font-size:
+
+        clamp(
+            2.6rem,
+            5vw,
+            4.8rem
+        );
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+
+}
+
+.mk-gallery-header h1 span {
+
+    color: var(--mk-blue);
+
+}
+
+
+/* Description */
+
+.mk-gallery-header p {
+
+    max-width: 650px;
+
+    margin:
+
+        20px
+        auto
+        0;
+
+    color: var(--mk-muted);
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   GALLERY STATS
+========================================================= */
+
+.mk-gallery-stats {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+}
+
+.mk-gallery-stat {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+
+        8px
+        13px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--mk-border);
+
+    border-radius: 10px;
+
+    color: var(--mk-muted);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    box-shadow:
+
+        0 8px 20px
+        rgba(8,35,63,.04);
+
+}
+
+.mk-gallery-stat i {
+
+    color: var(--mk-blue);
+
+}
+
+
+/* =========================================================
+   COLLAGE GRID
+========================================================= */
+
+.mk-gallery-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12, 1fr);
+
+    grid-auto-rows: 110px;
+
+    gap: 16px;
+
+}
+
+
+/* =========================================================
+   GALLERY ITEM
+========================================================= */
+
+.mk-gallery-item {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #e9f2fa;
+
+    border: 1px solid
+        rgba(8,35,63,.08);
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(8,35,63,.08);
+
+    cursor: pointer;
+
+    isolation: isolate;
+
+}
+
+
+/* =========================================================
+   COLLAGE POSITIONS
+========================================================= */
+
+.mk-gallery-item:nth-child(1) {
+
+    grid-column:
+        span 6;
+
+    grid-row:
+        span 4;
+
+}
+
+.mk-gallery-item:nth-child(2) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(3) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(4) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(5) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(6) {
+
+    grid-column:
+        span 6;
+
+    grid-row:
+        span 4;
+
+}
+
+.mk-gallery-item:nth-child(7) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(8) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(9) {
+
+    grid-column:
+        span 6;
+
+    grid-row:
+        span 4;
+
+}
+
+.mk-gallery-item:nth-child(10) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(11) {
+
+    grid-column:
+        span 3;
+
+    grid-row:
+        span 3;
+
+}
+
+.mk-gallery-item:nth-child(12) {
+
+    grid-column:
+        span 6;
+
+    grid-row:
+        span 4;
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.mk-gallery-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+
+        transform .65s
+        cubic-bezier(.2,.7,.2,1),
+
+        filter .45s ease;
+
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.mk-gallery-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    padding: 24px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            transparent 35%,
+            rgba(3,19,35,.08) 45%,
+            rgba(3,19,35,.84) 100%
+        );
+
+    opacity: .92;
+
+    transition: .4s ease;
+
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.mk-gallery-item:hover
+.mk-gallery-image {
+
+    transform: scale(1.08);
+
+    filter:
+        saturate(1.08)
+        contrast(1.03);
+
+}
+
+.mk-gallery-item:hover
+.mk-gallery-overlay {
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(8,35,63,.03) 25%,
+            rgba(8,35,63,.92) 100%
+        );
+
+}
+
+
+/* =========================================================
+   ITEM INFO
+========================================================= */
+
+.mk-gallery-info {
+
+    transform:
+        translateY(10px);
+
+    transition: .4s ease;
+
+}
+
+.mk-gallery-item:hover
+.mk-gallery-info {
+
+    transform:
+        translateY(0);
+
+}
+
+.mk-gallery-category {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 7px;
+
+    color: #75c8ff;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+
+}
+
+.mk-gallery-title {
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   VIEW ICON
+========================================================= */
+
+.mk-gallery-view {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 18px;
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(255,255,255,.94);
+
+    color: var(--mk-navy);
+
+    font-size: 17px;
+
+    transform:
+        scale(.75)
+        translateY(-5px);
+
+    opacity: 0;
+
+    transition: .35s ease;
+
+    box-shadow:
+
+        0 10px 25px
+        rgba(0,0,0,.18);
+
+}
+
+.mk-gallery-item:hover
+.mk-gallery-view {
+
+    opacity: 1;
+
+    transform:
+        scale(1)
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   NUMBER BADGE
+========================================================= */
+
+.mk-gallery-number {
+
+    position: absolute;
+
+    top: 18px;
+
+    left: 18px;
+
+    z-index: 4;
+
+    width: 31px;
+
+    height: 31px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(8,35,63,.72);
+
+    backdrop-filter:
+        blur(8px);
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.mk-gallery-empty {
+
+    grid-column:
+        1 / -1;
+
+    min-height: 350px;
+
+    border-radius: 24px;
+
+    border: 1px dashed #c9dbe9;
+
+    background: rgba(255,255,255,.75);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 40px;
+
+}
+
+.mk-gallery-empty-icon {
+
+    width: 72px;
+
+    height: 72px;
+
+    border-radius: 20px;
+
+    background: var(--mk-blue-soft);
+
+    color: var(--mk-blue);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 30px;
+
+    margin:
+        0
+        auto
+        18px;
+
+}
+
+.mk-gallery-empty h3 {
+
+    margin: 0 0 8px;
+
+    color: var(--mk-navy);
+
+    font-size: 22px;
+
+}
+
+.mk-gallery-empty p {
+
+    margin: 0;
+
+    color: var(--mk-muted);
+
+}
+
+
+/* =========================================================
+   BOTTOM CTA
+========================================================= */
+
+.mk-gallery-cta {
+
+    margin-top: 65px;
+
+    padding:
+        42px
+        48px;
+
+    border-radius: 24px;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #08233f,
+            #0d4777
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+
+        0 25px 55px
+        rgba(8,35,63,.15);
+
+}
+
+.mk-gallery-cta::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+
+    height: 350px;
+
+    right: -130px;
+
+    top: -180px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(83,190,255,.25),
+            transparent 70%
+        );
+
+}
+
+.mk-gallery-cta-content {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.mk-gallery-cta h2 {
+
+    color: #ffffff;
+
+    margin: 0 0 8px;
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+}
+
+.mk-gallery-cta p {
+
+    color: #bcd3e7;
+
+    margin: 0;
+
+    font-size: 14px;
+
+}
+
+.mk-gallery-cta-btn {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+        13px
+        20px;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: var(--mk-navy);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition: .25s ease;
+
+}
+
+.mk-gallery-cta-btn:hover {
+
+    color: var(--mk-blue-dark);
+
+    background: #eaf5ff;
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.mk-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 35px;
+
+    background:
+        rgba(2,15,29,.93);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+.mk-lightbox.active {
+
+    display: flex;
+
+}
+
+
+/* Main lightbox image */
+
+.mk-lightbox-image {
+
+    max-width: min(
+        1100px,
+        88vw
+    );
+
+    max-height: 82vh;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+    box-shadow:
+
+        0 30px 80px
+        rgba(0,0,0,.4);
+
+    animation:
+
+        lightboxIn
+        .3s ease;
+
+}
+
+@keyframes lightboxIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.94);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* Close */
+
+.mk-lightbox-close {
+
+    position: fixed;
+
+    top: 25px;
+
+    right: 28px;
+
+    width: 48px;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.12);
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+}
+
+.mk-lightbox-close:hover {
+
+    background: var(--mk-blue);
+
+    transform:
+        rotate(90deg);
+
+}
+
+
+/* Lightbox navigation */
+
+.mk-lightbox-nav {
+
+    position: fixed;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 52px;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.12);
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+}
+
+.mk-lightbox-nav:hover {
+
+    background: var(--mk-blue);
+
+}
+
+.mk-lightbox-prev {
+
+    left: 25px;
+
+}
+
+.mk-lightbox-next {
+
+    right: 25px;
+
+}
+
+
+/* Counter */
+
+.mk-lightbox-counter {
+
+    position: fixed;
+
+    bottom: 25px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        8px
+        15px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .06em;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .mk-gallery-grid {
+
+        grid-auto-rows: 95px;
+
+    }
+
+    .mk-gallery-item:nth-child(1),
+    .mk-gallery-item:nth-child(6),
+    .mk-gallery-item:nth-child(9),
+    .mk-gallery-item:nth-child(12) {
+
+        grid-column:
+            span 6;
+
+        grid-row:
+            span 4;
+
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .mk-gallery-container {
+
+        width:
+            calc(100% - 24px);
+
+        padding:
+            45px
+            0
+            70px;
+
+    }
+
+    .mk-gallery-header {
+
+        margin-bottom: 35px;
+
+    }
+
+    .mk-gallery-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        grid-auto-rows:
+            180px;
+
+        gap: 10px;
+
+    }
+
+    .mk-gallery-item:nth-child(n) {
+
+        grid-column:
+            span 1;
+
+        grid-row:
+            span 1;
+
+    }
+
+    .mk-gallery-item:nth-child(1),
+    .mk-gallery-item:nth-child(6),
+    .mk-gallery-item:nth-child(9),
+    .mk-gallery-item:nth-child(12) {
+
+        grid-column:
+            span 2;
+
+        grid-row:
+            span 2;
+
+    }
+
+    .mk-gallery-title {
+
+        font-size: 15px;
+
+    }
+
+    .mk-gallery-overlay {
+
+        padding: 16px;
+
+    }
+
+    .mk-gallery-view {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+    .mk-gallery-cta {
+
+        padding:
+            30px
+            25px;
+
+        flex-direction: column;
+
+        align-items:
+            flex-start;
+
+    }
+
+    .mk-lightbox {
+
+        padding:
+            20px;
+
+    }
+
+    .mk-lightbox-image {
+
+        max-width:
+            94vw;
+
+        max-height:
+            75vh;
+
+    }
+
+    .mk-lightbox-nav {
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+    .mk-lightbox-prev {
+
+        left: 10px;
+
+    }
+
+    .mk-lightbox-next {
+
+        right: 10px;
+
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .mk-gallery-grid {
+
+        grid-auto-rows:
+            145px;
+
+    }
+
+    .mk-gallery-number {
+
+        top: 10px;
+
+        left: 10px;
+
+    }
+
+    .mk-gallery-view {
+
+        top: 10px;
+
+        right: 10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .mk-gallery-image,
+    .mk-gallery-overlay,
+    .mk-gallery-info,
+    .mk-gallery-view,
+    .mk-gallery-cta-btn {
+
+        transition: none !important;
+
+    }
+
+}
+
+</style>
+
+<section class="mk-gallery-page">
+
+```
+<div class="mk-gallery-container">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="mk-gallery-header">
+
+        <div class="mk-gallery-eyebrow">
+
+            <span></span>
+
+            MK MECHANICALS
+
+        </div>
+
+
+        <h1>
+
+            Our
+
+            <span>Gallery</span>
+
+        </h1>
+
+
+        <p>
+
+            Explore our machinery, manufacturing capabilities
+            and industrial work through a collection of
+            photographs from MK Mechanicals.
+
+        </p>
+
+
+        <div class="mk-gallery-stats">
+
+            <div class="mk-gallery-stat">
+
+                <i class="bi bi-images"></i>
+
+                Machine Portfolio
+
+            </div>
+
+
+            <div class="mk-gallery-stat">
+
+                <i class="bi bi-gear-wide-connected"></i>
+
+                Industrial Machinery
+
+            </div>
+
+
+            <div class="mk-gallery-stat">
+
+                <i class="bi bi-building"></i>
+
+                Manufacturing
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         COLLAGE
+    ================================================== -->
+
+    <div class="mk-gallery-grid">
+
+
+        {% for machine in machines %}
+
+
+            <!-- Main Machine Image -->
+
+            {% if machine.image %}
+
+                <article
+                    class="mk-gallery-item"
+                    data-image="{{ machine.image.url }}"
+                    data-title="{{ machine.name }}"
+                    data-category="{{ machine.category.name|default:'Industrial Machinery' }}"
+                    onclick="openGallery(this)"
+                >
+
+                    <img
+                        src="{{ machine.image.url }}"
+                        alt="{{ machine.name }}"
+                        class="mk-gallery-image"
+                        loading="{% if forloop.counter <= 3 %}eager{% else %}lazy{% endif %}"
+                    >
+
+
+                    <span class="mk-gallery-number">
+
+                        {{ forloop.counter|stringformat:"02d" }}
+
+                    </span>
+
+
+                    <span class="mk-gallery-view">
+
+                        <i class="bi bi-arrows-fullscreen"></i>
+
+                    </span>
+
+
+                    <div class="mk-gallery-overlay">
+
+                        <div class="mk-gallery-info">
+
+                            <div class="mk-gallery-category">
+
+                                <i class="bi bi-gear-fill"></i>
+
+                                {{ machine.category.name|default:"Machinery" }}
+
+                            </div>
+
+                            <h2 class="mk-gallery-title">
+
+                                {{ machine.name }}
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endif %}
+
+
+            <!-- Machine Gallery Images -->
+
+            {% for gallery_image in machine.gallery.all %}
+
+                <article
+                    class="mk-gallery-item"
+                    data-image="{{ gallery_image.image.url }}"
+                    data-title="{{ machine.name }}"
+                    data-category="{{ machine.category.name|default:'Industrial Machinery' }}"
+                    onclick="openGallery(this)"
+                >
+
+                    <img
+                        src="{{ gallery_image.image.url }}"
+                        alt="{{ machine.name }} — gallery image"
+                        class="mk-gallery-image"
+                        loading="lazy"
+                    >
+
+
+                    <span class="mk-gallery-number">
+
+                        {{ forloop.parentloop.counter|stringformat:"02d" }}
+
+                    </span>
+
+
+                    <span class="mk-gallery-view">
+
+                        <i class="bi bi-arrows-fullscreen"></i>
+
+                    </span>
+
+
+                    <div class="mk-gallery-overlay">
+
+                        <div class="mk-gallery-info">
+
+                            <div class="mk-gallery-category">
+
+                                <i class="bi bi-camera-fill"></i>
+
+                                {{ machine.category.name|default:"Machinery" }}
+
+                            </div>
+
+                            <h2 class="mk-gallery-title">
+
+                                {{ machine.name }}
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+
+        {% empty %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="mk-gallery-empty">
+
+                <div>
+
+                    <div class="mk-gallery-empty-icon">
+
+                        <i class="bi bi-images"></i>
+
+                    </div>
+
+                    <h3>
+
+                        Gallery Coming Soon
+
+                    </h3>
+
+                    <p>
+
+                        Machine photographs will appear here
+                        once they are added from the owner dashboard.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =================================================
+         CTA
+    ================================================== -->
+
+    <div class="mk-gallery-cta">
+
+        <div class="mk-gallery-cta-content">
+
+            <h2>
+
+                Looking for a specific machine?
+
+            </h2>
+
+            <p>
+
+                Explore our complete machine portfolio
+                and discover detailed technical information.
+
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'product_list' %}"
+            class="mk-gallery-cta-btn"
+        >
+
+            Explore Machines
+
+            <i class="bi bi-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =========================================================
+     LIGHTBOX
+========================================================= -->
+
+<div
+    class="mk-lightbox"
+    id="mkLightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image viewer"
+>
+
+```
+<button
+    type="button"
+    class="mk-lightbox-close"
+    onclick="closeGallery()"
+    aria-label="Close gallery"
+>
+
+    <i class="bi bi-x-lg"></i>
+
+</button>
+
+
+<button
+    type="button"
+    class="mk-lightbox-nav mk-lightbox-prev"
+    onclick="changeGalleryImage(-1)"
+    aria-label="Previous image"
+>
+
+    <i class="bi bi-chevron-left"></i>
+
+</button>
+
+
+<img
+    id="mkLightboxImage"
+    class="mk-lightbox-image"
+    src=""
+    alt=""
+>
+
+
+<button
+    type="button"
+    class="mk-lightbox-nav mk-lightbox-next"
+    onclick="changeGalleryImage(1)"
+    aria-label="Next image"
+>
+
+    <i class="bi bi-chevron-right"></i>
+
+</button>
+
+
+<div
+    class="mk-lightbox-counter"
+    id="mkLightboxCounter"
+>
+
+    1 / 1
+
+</div>
+```
+
+</div>
+
+<script>
+
+/* =========================================================
+   MK MECHANICALS GALLERY LIGHTBOX
+========================================================= */
+
+(function () {
+
+    const galleryItems =
+        Array.from(
+            document.querySelectorAll(
+                ".mk-gallery-item"
+            )
+        );
+
+    const lightbox =
+        document.getElementById(
+            "mkLightbox"
+        );
+
+    const lightboxImage =
+        document.getElementById(
+            "mkLightboxImage"
+        );
+
+    const counter =
+        document.getElementById(
+            "mkLightboxCounter"
+        );
+
+    let currentIndex = 0;
+
+
+    /* =====================================================
+       OPEN
+    ===================================================== */
+
+    window.openGallery =
+        function (item) {
+
+            currentIndex =
+                galleryItems.indexOf(item);
+
+            if (
+                currentIndex < 0
+            ) {
+
+                currentIndex = 0;
+
+            }
+
+            updateLightbox();
+
+            lightbox.classList.add(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "hidden";
+
+        };
+
+
+    /* =====================================================
+       UPDATE
+    ===================================================== */
+
+    function updateLightbox() {
+
+        const item =
+            galleryItems[currentIndex];
+
+        if (!item) {
+
+            return;
+
+        }
+
+
+        const image =
+            item.dataset.image;
+
+        const title =
+            item.dataset.title ||
+            "MK Mechanicals";
+
+        const category =
+            item.dataset.category ||
+            "Industrial Machinery";
+
+
+        lightboxImage.src =
+            image;
+
+        lightboxImage.alt =
+            title;
+
+
+        counter.textContent =
+            `${currentIndex + 1} / ${galleryItems.length}`;
+
+    }
+
+
+    /* =====================================================
+       CLOSE
+    ===================================================== */
+
+    window.closeGallery =
+        function () {
+
+            lightbox.classList.remove(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "";
+
+        };
+
+
+    /* =====================================================
+       NEXT / PREVIOUS
+    ===================================================== */
+
+    window.changeGalleryImage =
+        function (direction) {
+
+            if (
+                galleryItems.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            currentIndex +=
+                direction;
+
+
+            if (
+                currentIndex < 0
+            ) {
+
+                currentIndex =
+                    galleryItems.length - 1;
+
+            }
+
+
+            if (
+                currentIndex >=
+                galleryItems.length
+            ) {
+
+                currentIndex = 0;
+
+            }
+
+
+            updateLightbox();
+
+        };
+
+
+    /* =====================================================
+       CLICK OUTSIDE IMAGE
+    ===================================================== */
+
+    lightbox.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                lightbox
+            ) {
+
+                closeGallery();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       KEYBOARD
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                !lightbox.classList.contains(
+                    "active"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeGallery();
+
+            }
+
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+
+                changeGalleryImage(-1);
+
+            }
+
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                changeGalleryImage(1);
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       TOUCH SWIPE
+    ===================================================== */
+
+    let touchStartX = 0;
+
+
+    lightbox.addEventListener(
+        "touchstart",
+        function (event) {
+
+            touchStartX =
+                event.changedTouches[0].screenX;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    lightbox.addEventListener(
+        "touchend",
+        function (event) {
+
+            const touchEndX =
+                event.changedTouches[0].screenX;
+
+            const difference =
+                touchStartX -
+                touchEndX;
+
+
+            if (
+                Math.abs(difference) < 50
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                difference > 0
+            ) {
+
+                changeGalleryImage(1);
+
+            } else {
+
+                changeGalleryImage(-1);
+
+            }
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+})();
+
+</script>
+
+{% endblock %}

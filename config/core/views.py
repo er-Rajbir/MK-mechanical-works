@@ -8,8 +8,38 @@ from products.models import Machine
 from .forms import ContactForm
 from products.models import Contact
 
+from django.shortcuts import render
+
+from products.models import Machine
 
 
+def gallery(request):
+    """
+    Public gallery page.
+
+    Displays:
+    - Main image of every machine
+    - Additional MachineImage gallery images
+    - Machine category
+    - Machine name
+    """
+
+    machines = (
+        Machine.objects
+        .select_related("category")
+        .prefetch_related("gallery")
+        .order_by("-created_at")
+    )
+
+    context = {
+        "machines": machines,
+    }
+
+    return render(
+        request,
+        "core/gallery.html",
+        context
+    )
 
 
 def home(request):
