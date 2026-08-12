@@ -33,8 +33,7 @@ ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get(
         "ALLOWED_HOSTS",
-        "127.0.0.1,localhost",
-        "mk-mechanical-worksconfig-production.up.railway.app"
+        "127.0.0.1,localhost"
     ).split(",")
     if host.strip()
 ]
