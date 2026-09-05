@@ -312,14 +312,7 @@ if not DEBUG:
 # ============================================================
 
 CSRF_TRUSTED_ORIGINS = [
-
-    origin.strip()
-    for origin in os.environ.get(
-        "CSRF_TRUSTED_ORIGINS",
-        ""
-    ).split(",")
-
-    if origin.strip()
+    "https://mk-mechanical-worksconfig-production.up.railway.app"
 ]
 
 
