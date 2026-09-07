@@ -137,97 +137,88 @@
             NAVBAR
 ======================================-->
 
-<nav class="navbar navbar-expand-lg custom-navbar "style="height:90px; ">
-
-    <div class="container-fluid" style="
-    height: 110px;
-    width: 1524px;
-">
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
 
         <!-- Logo -->
-
         <a href="{% url 'core:home' %}" class="navbar-brand">
-
             <img src="{% static 'images/logo.png' %}"
                  alt="MK Mechanicals"
-                 class="brand-logo" style="height: 100px;">
+                 class="brand-logo">
 
             <span class="brand-text">
-
                 <strong>MK Mechanicals</strong>
-
                 <small>Machine Making Solutions</small>
-
             </span>
-
         </a>
 
-
-
-        <!-- Mobile -->
-
+        <!-- Mobile Toggle -->
         <button class="navbar-toggler"
-
                 type="button"
-
                 data-bs-toggle="collapse"
-
-                data-bs-target="#navbarMenu">
-
+                data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="navbarMenu">
 
-<div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
 
-    <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:home' %}">
+                        Home
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:home' %}">Home</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:about' %}">
+                        About
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:about' %}">About</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_list' %}">
+                        Products
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'product_list' %}">
-                Products
-            </a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Services
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:gallery' %}">
+                        Gallery
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:gallery' %}">Gallery</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:contact' %}">
+                        Contact
+                    </a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:contact' %}">
-                Contact
-            </a>
-        </li>
+                <li class="nav-item quote-item">
+                    <a href="{% url 'core:contact' %}" class="btn-quote">
+                        <i class="bi bi-lightning-fill"></i>
+                        Get Quote
+                    </a>
+                </li>
 
-        <li class="nav-item ms-4">
+            </ul>
 
-            <a href="{% url 'core:contact' %}"
-               class="btn-quote">
+        </div>
 
-                <i class="bi bi-lightning-fill"></i>
-
-                Get Quote
-
-            </a>
-
-        </li>
-
-    </ul>
-
-</div>
+    </div>
 </nav>
+
+
 
 
 
