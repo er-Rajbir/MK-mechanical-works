@@ -191,7 +191,7 @@ Website : www.mkindustries.com
                     "Your inquiry was received successfully, but we could not send the email notification right now."
                 )
 
-            return redirect("contact")
+            return redirect("core:contact")
 
     else:
 
@@ -199,7 +199,7 @@ Website : www.mkindustries.com
 
     return render(
         request,
-        "core:contact.html",
+        "core/contact.html",
         {
             "form": form
         }
