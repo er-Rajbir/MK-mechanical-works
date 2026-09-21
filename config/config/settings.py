@@ -253,7 +253,7 @@ EMAIL_HOST = os.environ.get(
 EMAIL_PORT = int(
     os.environ.get(
         "EMAIL_PORT",
-        "587"
+        "465"
     )
 )
 
