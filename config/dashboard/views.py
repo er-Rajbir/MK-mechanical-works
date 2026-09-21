@@ -572,3 +572,111 @@ def export_contacts_excel(request):
     workbook.save(response)
 
     return response
+
+# ===========================
+# CATEGORY MANAGEMENT
+# ===========================
+
+@login_required
+def category_list(request):
+
+    # ADD CATEGORY
+    if request.method == "POST":
+
+        name = request.POST.get("name", "").strip()
+
+        # Add
+        if "add_category" in request.POST:
+
+            if not name:
+                messages.error(
+                    request,
+                    "Category name is required."
+                )
+
+            elif Category.objects.filter(
+                name__iexact=name
+            ).exists():
+
+                messages.error(
+                    request,
+                    "This category already exists."
+                )
+
+            else:
+
+                Category.objects.create(
+                    name=name
+                )
+
+                messages.success(
+                    request,
+                    "Category added successfully."
+                )
+
+        # EDIT CATEGORY
+        elif "edit_category" in request.POST:
+
+            category_id = request.POST.get("category_id")
+
+            category = get_object_or_404(
+                Category,
+                pk=category_id
+            )
+
+            if not name:
+
+                messages.error(
+                    request,
+                    "Category name is required."
+                )
+
+            elif Category.objects.filter(
+                name__iexact=name
+            ).exclude(
+                pk=category_id
+            ).exists():
+
+                messages.error(
+                    request,
+                    "This category already exists."
+                )
+
+            else:
+
+                category.name = name
+                category.save()
+
+                messages.success(
+                    request,
+                    "Category updated successfully."
+                )
+
+        # DELETE CATEGORY
+        elif "delete_category" in request.POST:
+
+            category_id = request.POST.get("category_id")
+
+            category = get_object_or_404(
+                Category,
+                pk=category_id
+            )
+
+            category.delete()
+
+            messages.success(
+                request,
+                "Category deleted successfully."
+            )
+
+        return redirect("dashboard:category_list")
+
+    categories = Category.objects.all().order_by("name")
+
+    return render(
+        request,
+        "dashboard/category_list.html",
+        {
+            "categories": categories
+        }
+    )

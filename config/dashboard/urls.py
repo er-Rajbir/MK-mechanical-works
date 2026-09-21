@@ -3,8 +3,7 @@ from . import views
 
 app_name = "dashboard"
 
-urlpatterns = [
-
+urlpatterns =[
     # Authentication
     path("login/", views.dashboard_login, name="login"),
     path("logout/", views.dashboard_logout, name="logout"),
@@ -24,7 +23,9 @@ urlpatterns = [
         views.product_gallery,
         name="product_gallery",
     ),
-
+        # Category Management
+    path("categories/", views.category_list, name="category_list"),
+    
     # Contact Queries
     path("contacts/", views.contact_list, name="contact_list"),
 

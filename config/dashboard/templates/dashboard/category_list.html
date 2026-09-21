@@ -1,0 +1,482 @@
+
+{% extends "dashboard/dashboard.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="mb-1">Category Management</h2>
+
+            <p class="text-muted mb-0">
+                Add and manage machine categories
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert
+                {% if message.tags == 'success' %}
+                    alert-success
+                {% elif message.tags == 'error' %}
+                    alert-danger
+                {% else %}
+                    alert-info
+                {% endif %}
+                alert-dismissible fade show"
+                role="alert">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+    <!-- ADD CATEGORY -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-0">
+                Add New Category
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row align-items-end">
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="categoryName"
+                            class="form-label fw-semibold">
+
+                            Category Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            id="categoryName"
+                            class="form-control"
+                            placeholder="Enter category name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4 mt-3 mt-md-0">
+
+                        <button
+                            type="submit"
+                            name="add_category"
+                            class="btn btn-primary w-100">
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            Add Category
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CATEGORY LIST -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Existing Categories
+                </h5>
+
+                <span class="badge bg-primary">
+
+                    {{ categories.count }} Categories
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body p-0">
+
+            {% if categories %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th
+                                    style="width: 80px;"
+                                    class="text-center">
+
+                                    #
+
+                                </th>
+
+                                <th>
+                                    Category Name
+                                </th>
+
+                                <th
+                                    style="width: 220px;"
+                                    class="text-center">
+
+                                    Actions
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for category in categories %}
+
+                                <tr>
+
+                                    <!-- NUMBER -->
+
+                                    <td class="text-center">
+
+                                        {{ forloop.counter }}
+
+                                    </td>
+
+
+                                    <!-- CATEGORY NAME -->
+
+                                    <td>
+
+                                        <strong>
+                                            {{ category.name }}
+                                        </strong>
+
+                                    </td>
+
+
+                                    <!-- ACTIONS -->
+
+                                    <td>
+
+                                        <div class="d-flex justify-content-center gap-2">
+
+                                            <!-- EDIT -->
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editModal{{ category.id }}">
+
+                                                <i class="bi bi-pencil"></i>
+
+                                                Edit
+
+                                            </button>
+
+
+                                            <!-- DELETE -->
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ category.id }}">
+
+                                                <i class="bi bi-trash"></i>
+
+                                                Delete
+
+                                            </button>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <!-- ========================= -->
+                                <!-- EDIT MODAL -->
+                                <!-- ========================= -->
+
+                                <div
+                                    class="modal fade"
+                                    id="editModal{{ category.id }}"
+                                    tabindex="-1"
+                                    aria-hidden="true">
+
+                                    <div class="modal-dialog">
+
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+
+                                                <h5 class="modal-title">
+
+                                                    Edit Category
+
+                                                </h5>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal">
+                                                </button>
+
+                                            </div>
+
+
+                                            <form method="POST">
+
+                                                {% csrf_token %}
+
+                                                <div class="modal-body">
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="category_id"
+                                                        value="{{ category.id }}"
+                                                    >
+
+                                                    <label
+                                                        class="form-label fw-semibold">
+
+                                                        Category Name
+
+                                                    </label>
+
+                                                    <input
+                                                        type="text"
+                                                        name="name"
+                                                        value="{{ category.name }}"
+                                                        class="form-control"
+                                                        required
+                                                    >
+
+                                                </div>
+
+
+                                                <div class="modal-footer">
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+
+                                                        Cancel
+
+                                                    </button>
+
+
+                                                    <button
+                                                        type="submit"
+                                                        name="edit_category"
+                                                        class="btn btn-primary">
+
+                                                        Save Changes
+
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- ========================= -->
+                                <!-- DELETE MODAL -->
+                                <!-- ========================= -->
+
+                                <div
+                                    class="modal fade"
+                                    id="deleteModal{{ category.id }}"
+                                    tabindex="-1"
+                                    aria-hidden="true">
+
+                                    <div class="modal-dialog modal-dialog-centered">
+
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+
+                                                <h5 class="modal-title text-danger">
+
+                                                    Delete Category
+
+                                                </h5>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal">
+                                                </button>
+
+                                            </div>
+
+
+                                            <form method="POST">
+
+                                                {% csrf_token %}
+
+                                                <input
+                                                    type="hidden"
+                                                    name="category_id"
+                                                    value="{{ category.id }}"
+                                                >
+
+
+                                                <div class="modal-body">
+
+                                                    <p class="mb-2">
+
+                                                        Are you sure you want to delete:
+
+                                                    </p>
+
+                                                    <h5>
+                                                        "{{ category.name }}"
+                                                    </h5>
+
+                                                    <p class="text-muted mb-0">
+
+                                                        This action cannot be undone.
+
+                                                    </p>
+
+                                                </div>
+
+
+                                                <div class="modal-footer">
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+
+                                                        Cancel
+
+                                                    </button>
+
+
+                                                    <button
+                                                        type="submit"
+                                                        name="delete_category"
+                                                        class="btn btn-danger">
+
+                                                        Delete Category
+
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+
+                <div class="text-center py-5">
+
+                    <div class="mb-3">
+
+                        <i
+                            class="bi bi-folder2-open"
+                            style="font-size: 50px;">
+                        </i>
+
+                    </div>
+
+                    <h5>
+                        No Categories Yet
+                    </h5>
+
+                    <p class="text-muted mb-0">
+
+                        Add your first machine category using the form above.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
