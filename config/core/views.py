@@ -199,7 +199,7 @@ Website : www.mkindustries.com
 
     return render(
         request,
-        "core/contact.html",
+        "core:contact.html",
         {
             "form": form
         }
