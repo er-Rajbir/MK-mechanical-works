@@ -68,6 +68,7 @@ def products(request):
     )
 
 
+
 def contact(request):
 
     if request.method == "POST":
@@ -76,16 +77,19 @@ def contact(request):
 
         if form.is_valid():
 
+            # Save enquiry first
             inquiry = form.save()
 
-            # ==========================
-            # Email to Website Owner
-            # ==========================
+            try:
 
-            send_mail(
-                subject=f"New Inquiry from {inquiry.full_name}",
+                # ==========================================
+                # EMAIL TO WEBSITE OWNER
+                # ==========================================
 
-                message=f"""
+                send_mail(
+                    subject=f"New Inquiry from {inquiry.full_name}",
+
+                    message=f"""
 New Contact Inquiry
 
 Name: {inquiry.full_name}
@@ -100,23 +104,23 @@ Message:
 {inquiry.message}
 """,
 
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
 
-                recipient_list=[
-                    "mandeepsingh88406@gmail.com"
-                ],
+                    recipient_list=[
+                        "mandeepsingh88406@gmail.com"
+                    ],
 
-                fail_silently=False,
-            )
+                    fail_silently=False,
+                )
 
-            # ==========================
-            # Confirmation Email to Customer
-            # ==========================
+                # ==========================================
+                # CONFIRMATION EMAIL TO CUSTOMER
+                # ==========================================
 
-            send_mail(
-                subject="Thank You for Contacting MK Industries",
+                send_mail(
+                    subject="Thank You for Contacting MK Industries",
 
-                message=f"""
+                    message=f"""
 Dear {inquiry.full_name},
 
 Greetings from MK Industries!
@@ -132,24 +136,20 @@ Our technical team will carefully review your requirements and contact you as so
 YOUR SUBMITTED DETAILS
 
 Name : {inquiry.full_name}
-
 Company : {inquiry.company_name}
-
 Email : {inquiry.email}
-
 Phone : {inquiry.phone}
-
 Machine : {inquiry.machine}
 
 --------------------------------------------------
 
 Why Choose MK Industries?
 
-✔ Premium Quality Machines
-✔ Reliable Technical Support
-✔ Competitive Pricing
-✔ Timely Delivery
-✔ Customized Manufacturing Solutions
+- Premium Quality Machines
+- Reliable Technical Support
+- Competitive Pricing
+- Timely Delivery
+- Customized Manufacturing Solutions
 
 If you have any urgent questions, feel free to reply to this email or call us directly.
 
@@ -165,19 +165,31 @@ Phone : +91 XXXXX XXXXX
 Website : www.mkindustries.com
 """,
 
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
 
-                recipient_list=[
-                    inquiry.email
-                ],
+                    recipient_list=[
+                        inquiry.email
+                    ],
 
-                fail_silently=False,
-            )
+                    fail_silently=False,
+                )
 
-            messages.success(
-                request,
-                "Thank you! Your inquiry has been submitted successfully. A confirmation email has been sent to your email address."
-            )
+                messages.success(
+                    request,
+                    "Thank you! Your inquiry has been submitted successfully. A confirmation email has been sent to your email address."
+                )
+
+            except Exception as e:
+
+                # The enquiry is already saved.
+                # Only the email failed.
+
+                print("EMAIL ERROR:", e)
+
+                messages.warning(
+                    request,
+                    "Your inquiry was received successfully, but we could not send the email notification right now."
+                )
 
             return redirect("contact")
 

@@ -238,13 +238,12 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
+
 # ============================================================
 # EMAIL
 # ============================================================
 
-EMAIL_BACKEND = (
-    "django.core.mail.backends.smtp.EmailBackend"
-)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = os.environ.get(
     "EMAIL_HOST",
@@ -262,8 +261,7 @@ EMAIL_USE_TLS = (
     os.environ.get(
         "EMAIL_USE_TLS",
         "True"
-    ).lower()
-    == "true"
+    ).lower() == "true"
 )
 
 EMAIL_HOST_USER = os.environ.get(
@@ -280,6 +278,11 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     EMAIL_HOST_USER
 )
+
+# Prevent the website from waiting forever
+# if Gmail SMTP cannot be reached.
+EMAIL_TIMEOUT = 20
+
 
 
 # ============================================================
