@@ -5,6 +5,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from products.models import Machine
 
+import os
+import requests
+
 from .forms import ContactForm
 from products.models import Contact
 
@@ -69,6 +72,7 @@ def products(request):
 
 
 
+
 def contact(request):
 
     if request.method == "POST":
@@ -83,13 +87,31 @@ def contact(request):
             try:
 
                 # ==========================================
+                # RESEND API
+                # ==========================================
+
+                resend_api_key = os.environ.get("RESEND_API_KEY")
+
+                headers = {
+                    "Authorization": f"Bearer {resend_api_key}",
+                    "Content-Type": "application/json",
+                }
+
+                # ==========================================
                 # EMAIL TO WEBSITE OWNER
                 # ==========================================
 
-                send_mail(
-                    subject=f"New Inquiry from {inquiry.full_name}",
+                owner_email = {
 
-                    message=f"""
+                    "from": "MK Industries <onboarding@resend.dev>",
+
+                    "to": [
+                        "mandeepsingh88406@gmail.com"
+                    ],
+
+                    "subject": f"New Inquiry from {inquiry.full_name}",
+
+                    "text": f"""
 New Contact Inquiry
 
 Name: {inquiry.full_name}
@@ -102,25 +124,31 @@ Machine:
 
 Message:
 {inquiry.message}
-""",
+"""
+                }
 
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-
-                    recipient_list=[
-                        "mandeepsingh88406@gmail.com"
-                    ],
-
-                    fail_silently=False,
+                owner_response = requests.post(
+                    "https://api.resend.com/emails",
+                    headers=headers,
+                    json=owner_email,
+                    timeout=20
                 )
 
                 # ==========================================
                 # CONFIRMATION EMAIL TO CUSTOMER
                 # ==========================================
 
-                send_mail(
-                    subject="Thank You for Contacting MK Industries",
+                customer_email = {
 
-                    message=f"""
+                    "from": "MK Industries <onboarding@resend.dev>",
+
+                    "to": [
+                        inquiry.email
+                    ],
+
+                    "subject": "Thank You for Contacting MK Industries",
+
+                    "text": f"""
 Dear {inquiry.full_name},
 
 Greetings from MK Industries!
@@ -151,7 +179,7 @@ Why Choose MK Industries?
 - Timely Delivery
 - Customized Manufacturing Solutions
 
-If you have any urgent questions, feel free to reply to this email or call us directly.
+If you have any urgent questions, feel free to reply to this email or contact us directly.
 
 Thank you for choosing MK Industries.
 
@@ -163,21 +191,45 @@ Industrial Machinery Manufacturer
 Email : info@mkindustries.com
 Phone : +91 XXXXX XXXXX
 Website : www.mkindustries.com
-""",
+"""
+                }
 
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-
-                    recipient_list=[
-                        inquiry.email
-                    ],
-
-                    fail_silently=False,
+                customer_response = requests.post(
+                    "https://api.resend.com/emails",
+                    headers=headers,
+                    json=customer_email,
+                    timeout=20
                 )
 
-                messages.success(
-                    request,
-                    "Thank you! Your inquiry has been submitted successfully. A confirmation email has been sent to your email address."
+                # ==========================================
+                # CHECK EMAIL RESULTS
+                # ==========================================
+
+                print(
+                    "OWNER EMAIL:",
+                    owner_response.status_code,
+                    owner_response.text
                 )
+
+                print(
+                    "CUSTOMER EMAIL:",
+                    customer_response.status_code,
+                    customer_response.text
+                )
+
+                if owner_response.ok and customer_response.ok:
+
+                    messages.success(
+                        request,
+                        "Thank you! Your inquiry has been submitted successfully. A confirmation email has been sent to your email address."
+                    )
+
+                else:
+
+                    messages.warning(
+                        request,
+                        "Your inquiry was received successfully, but we could not send the email notification right now."
+                    )
 
             except Exception as e:
 
@@ -204,3 +256,4 @@ Website : www.mkindustries.com
             "form": form
         }
     )
+
