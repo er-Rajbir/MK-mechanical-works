@@ -22,7 +22,7 @@ from openpyxl.styles import Font
 def dashboard_login(request):
 
     if request.user.is_authenticated:
-        return redirect("dashboard:home")
+        return redirect("dashboard:profile")
 
     if request.method == "POST":
 
