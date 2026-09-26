@@ -103,7 +103,9 @@ def contact(request):
 
                 owner_email = {
 
-                    "from": "MK Industries <onboarding@resend.dev>",
+                    "from": "MK Industries <anandrajbir13@gmail.com>",
+                    
+                    
 
                     "to": [
                         "mandeepsingh88406@gmail.com"
@@ -140,7 +142,7 @@ Message:
 
                 customer_email = {
 
-                    "from": "MK Industries <onboarding@resend.dev>",
+                    "from": "MK Industries <anandrajbir13@gmail.com>",
 
                     "to": [
                         inquiry.email
