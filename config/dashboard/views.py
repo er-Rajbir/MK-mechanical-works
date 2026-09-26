@@ -44,7 +44,7 @@ def dashboard_login(request):
                 f"Welcome {user.username}"
             )
 
-            return redirect("dashboard:home")
+            return redirect("dashboard:profile")
 
         messages.error(
             request,
