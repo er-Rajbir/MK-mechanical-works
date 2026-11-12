@@ -8,2083 +8,828 @@
 {% block content %}
 
 <style>
-
 /* =========================================================
-   MK MECHANICALS — MACHINE DETAIL PAGE
-   Public / Visitor Facing
+   MK MECHANICALS — ADVANCED CYBERNETIC MACHINE DETAIL PAGE
 ========================================================= */
-
 .machine-detail-page {
-
     --navy: #08233f;
     --navy-2: #0d355c;
     --blue: #1479d1;
     --blue-dark: #075ca8;
     --blue-light: #eaf5ff;
     --blue-soft: #f4f9fe;
-
+    --neon-cyan: #0ff0fc;
+    --neon-green: #19a765;
+    
     --text: #102a43;
     --muted: #61758a;
-    --line: #dce7f1;
+    --line: rgba(20, 121, 209, 0.18);
 
-    --success: #19a765;
-
-    background:
-        linear-gradient(
-            180deg,
-            #f8fbff 0%,
-            #ffffff 55%,
-            #f4f9fe 100%
-        );
-
-    color: var(--text);
-
+    background: radial-gradient(circle at 50% -20%, #0d355c 0%, #08233f 45%, #051424 100%);
+    color: #ffffff;
     position: relative;
-
     overflow: hidden;
-
     min-height: 100vh;
-
-    font-family:
-        "Inter",
-        "Segoe UI",
-        sans-serif;
-
+    font-family: "Inter", "Segoe UI", sans-serif;
 }
 
-
-/* =========================================================
-   BLUEPRINT BACKGROUND
-========================================================= */
-
+/* CYBERNETIC GRID BACKGROUND */
 .machine-detail-page::before {
-
     content: "";
-
     position: absolute;
-
     inset: 0;
-
     pointer-events: none;
-
-    opacity: .55;
-
-    background:
-
-        linear-gradient(
-            rgba(20,121,209,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(20,121,209,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 42px 42px;
-
+    opacity: 0.35;
+    background: 
+        linear-gradient(rgba(20, 121, 209, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 121, 209, 0.12) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
 }
 
+/* AMBIENT GLOW ORBS */
+.ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(20, 121, 209, 0.22) 0%, transparent 70%);
+    top: -100px;
+    right: -200px;
+    z-index: 1;
+    pointer-events: none;
+    animation: pulseGlow 8s ease-in-out infinite alternate;
+}
 
-/* =========================================================
-   MAIN CONTAINER
-========================================================= */
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(1.2); opacity: 0.8; }
+}
 
 .machine-detail-container {
-
-    width: min(1240px, calc(100% - 40px));
-
+    width: min(1320px, calc(100% - 40px));
     margin: auto;
-
     position: relative;
-
-    z-index: 2;
-
-    padding:
-
-        45px
-        0
-        90px;
-
+    z-index: 3;
+    padding: 40px 0 90px;
 }
 
-
-/* =========================================================
-   BACK BUTTON
-========================================================= */
-
+/* BACK BUTTON */
 .machine-back {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 10px;
-
-    color: var(--muted);
-
+    color: #8ca0b2;
     text-decoration: none;
-
     font-size: 14px;
-
     font-weight: 600;
-
-    margin-bottom: 30px;
-
-    transition: .25s ease;
-
+    margin-bottom: 25px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.machine-back i {
-
-    font-size: 18px;
-
-    transition: .25s ease;
-
-}
-
 .machine-back:hover {
-
-    color: var(--blue);
-
-}
-
-.machine-back:hover i {
-
+    color: var(--neon-cyan);
     transform: translateX(-5px);
-
 }
 
-
-/* =========================================================
-   MAIN GRID
-========================================================= */
-
+/* MAIN LAYOUT GRID */
 .machine-main-grid {
-
     display: grid;
-
-    grid-template-columns:
-
-        minmax(0, 1.05fr)
-        minmax(0, .95fr);
-
-    gap: 55px;
-
-    align-items: start;
-
-}
-
-
-/* =========================================================
-   IMAGE CARD
-========================================================= */
-
-.machine-gallery-card {
-
-    position: relative;
-
-    background: #ffffff;
-
-    border: 1px solid var(--line);
-
-    border-radius: 26px;
-
-    padding: 18px;
-
-    box-shadow:
-
-        0 25px 60px rgba(8,35,63,.09);
-
-    overflow: hidden;
-
-}
-
-
-/* decorative top line */
-
-.machine-gallery-card::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-
-    left: 0;
-
-    right: 0;
-
-    height: 4px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--blue),
-            #55b6ff,
-            var(--navy)
-        );
-
-}
-
-
-/* corner screws */
-
-.machine-screw {
-
-    position: absolute;
-
-    width: 9px;
-
-    height: 9px;
-
-    border-radius: 50%;
-
-    background:
-
-        radial-gradient(
-            circle at 35% 30%,
-            #ffffff,
-            #8ca0b2 45%,
-            #526879 100%
-        );
-
-    box-shadow:
-
-        inset 0 0 0 1px rgba(0,0,0,.12);
-
-    z-index: 5;
-
-}
-
-.machine-screw.top-left {
-
-    top: 15px;
-
-    left: 15px;
-
-}
-
-.machine-screw.top-right {
-
-    top: 15px;
-
-    right: 15px;
-
-}
-
-.machine-screw.bottom-left {
-
-    bottom: 15px;
-
-    left: 15px;
-
-}
-
-.machine-screw.bottom-right {
-
-    bottom: 15px;
-
-    right: 15px;
-
-}
-
-
-/* =========================================================
-   MAIN IMAGE VIEWER
-========================================================= */
-
-.machine-image-viewer {
-
-    position: relative;
-
-    height: 500px;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    background:
-
-        radial-gradient(
-            circle at center,
-            #ffffff 0%,
-            #eef7ff 55%,
-            #dceeff 100%
-        );
-
-    display: flex;
-
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 45px;
     align-items: center;
+}
 
+/* HOVER-LIFT GALLERY CARD */
+.machine-gallery-card {
+    position: relative;
+    background: rgba(13, 53, 92, 0.65);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(85, 182, 255, 0.3);
+    border-radius: 26px;
+    padding: 18px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+}
+.machine-gallery-card:hover {
+    box-shadow: 0 40px 80px rgba(20, 121, 209, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* VIEWER CONTAINER */
+.machine-image-viewer {
+    position: relative;
+    height: 480px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #0d355c 0%, #06192e 100%);
+    display: flex;
+    align-items: center;
     justify-content: center;
-
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-
-/* subtle grid inside image */
-
-.machine-image-viewer::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-
-        linear-gradient(
-            rgba(20,121,209,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(20,121,209,.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 32px 32px;
-
-    pointer-events: none;
-
-}
-
-
-/* Main image */
 
 #machineMainImage {
-
     position: relative;
-
     z-index: 2;
-
-    max-width: 88%;
-
-    max-height: 88%;
-
+    max-width: 86%;
+    max-height: 86%;
     object-fit: contain;
-
-    filter:
-
-        drop-shadow(
-            0 20px 25px rgba(8,35,63,.18)
-        );
-
-    transition:
-
-        transform .45s ease,
-        opacity .25s ease;
-
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
 }
-
 .machine-image-viewer:hover #machineMainImage {
-
-    transform: scale(1.045);
-
+    transform: scale(1.06);
 }
 
-
-/* =========================================================
-   IMAGE CONTROLS
-========================================================= */
-
-.machine-gallery-btn {
-
+/* ANIMATED DATA STREAM LINES OVER IMAGE */
+.cyber-stream-lines {
     position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background-image: radial-gradient(circle, var(--neon-cyan) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.15;
+    animation: panGrid 20s linear infinite;
+}
+@keyframes panGrid {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
 
+/* GALLERY CONTROLS */
+.machine-gallery-btn {
+    position: absolute;
     top: 50%;
-
     transform: translateY(-50%);
-
-    width: 48px;
-
-    height: 48px;
-
-    border: none;
-
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 50%;
-
-    background: rgba(8,35,63,.78);
-
+    background: rgba(8, 35, 63, 0.85);
     color: #ffffff;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    font-size: 21px;
-
+    font-size: 20px;
     cursor: pointer;
-
     z-index: 5;
-
-    transition: .25s ease;
-
-    box-shadow:
-
-        0 8px 20px rgba(8,35,63,.18);
-
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
 }
-
 .machine-gallery-btn:hover {
-
     background: var(--blue);
-
-    transform:
-
-        translateY(-50%)
-        scale(1.08);
-
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(15, 240, 252, 0.5);
+    transform: translateY(-50%) scale(1.1);
 }
-
-.machine-prev {
-
-    left: 18px;
-
-}
-
-.machine-next {
-
-    right: 18px;
-
-}
-
-
-/* =========================================================
-   IMAGE COUNTER
-========================================================= */
+.machine-prev { left: 16px; }
+.machine-next { right: 16px; }
 
 .machine-image-counter {
-
     position: absolute;
-
     right: 18px;
-
     bottom: 18px;
-
     z-index: 5;
-
-    padding: 7px 13px;
-
+    padding: 6px 14px;
     border-radius: 30px;
-
-    background: rgba(8,35,63,.82);
-
-    color: #ffffff;
-
+    background: rgba(8, 35, 63, 0.85);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--neon-cyan);
     font-size: 12px;
-
-    font-weight: 700;
-
-    letter-spacing: .04em;
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.machine-status {
-
-    position: absolute;
-
-    top: 18px;
-
-    right: 18px;
-
-    z-index: 5;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    padding: 7px 12px;
-
-    border-radius: 30px;
-
-    background: rgba(255,255,255,.94);
-
-    color: var(--success);
-
-    font-size: 11px;
-
     font-weight: 800;
+    letter-spacing: .05em;
+}
 
+/* PULSING STATUS BADGE */
+.machine-status {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 30px;
+    background: rgba(8, 35, 63, 0.9);
+    border: 1px solid rgba(25, 167, 101, 0.4);
+    color: var(--neon-green);
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-
-    letter-spacing: .07em;
-
-    box-shadow:
-
-        0 8px 18px rgba(8,35,63,.1);
-
+    letter-spacing: .08em;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(25, 167, 101, 0.2);
 }
-
 .machine-status-dot {
-
-    width: 7px;
-
-    height: 7px;
-
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-
-    background: var(--success);
-
-    box-shadow:
-
-        0 0 0 4px rgba(25,167,101,.12);
-
+    background: var(--neon-green);
+    box-shadow: 0 0 12px var(--neon-green);
+    animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 167, 101, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(25, 167, 101, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 167, 101, 0); }
 }
 
-
-/* =========================================================
-   THUMBNAILS
-========================================================= */
-
+/* THUMBNAILS */
 .machine-thumbnails {
-
     display: flex;
-
     gap: 12px;
-
     overflow-x: auto;
-
-    padding:
-
-        16px
-        3px
-        4px;
-
+    padding: 16px 2px 4px;
 }
-
-.machine-thumbnails::-webkit-scrollbar {
-
-    height: 5px;
-
-}
-
-.machine-thumbnails::-webkit-scrollbar-thumb {
-
-    background: #c8d8e7;
-
-    border-radius: 20px;
-
-}
+.machine-thumbnails::-webkit-scrollbar { height: 5px; }
+.machine-thumbnails::-webkit-scrollbar-thumb { background: rgba(20, 121, 209, 0.4); border-radius: 20px; }
 
 .machine-thumbnail {
-
-    width: 82px;
-
-    height: 68px;
-
-    flex: 0 0 82px;
-
+    width: 80px;
+    height: 66px;
+    flex: 0 0 80px;
     object-fit: cover;
-
     border-radius: 12px;
-
-    border: 2px solid var(--line);
-
-    background: #ffffff;
-
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: #06192e;
     cursor: pointer;
-
-    transition: .25s ease;
-
+    transition: all 0.3s ease;
     padding: 2px;
-
 }
-
 .machine-thumbnail:hover {
-
-    border-color: #8bc5f4;
-
-    transform: translateY(-3px);
-
-}
-
-.machine-thumbnail.active {
-
     border-color: var(--blue);
-
-    box-shadow:
-
-        0 0 0 3px rgba(20,121,209,.12);
-
+    transform: translateY(-3px);
+}
+.machine-thumbnail.active {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(15, 240, 252, 0.4);
 }
 
-
-/* =========================================================
-   INFORMATION SIDE
-========================================================= */
-
-.machine-info {
-
-    padding-top: 8px;
-
-}
-
-
-/* Category */
+/* INFORMATION SIDE */
+.machine-info { padding-top: 4px; }
 
 .machine-category {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 8px;
-
-    padding: 8px 13px;
-
-    border-radius: 9px;
-
-    background: var(--blue-light);
-
-    border: 1px solid #cde5f9;
-
-    color: var(--blue-dark);
-
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(20, 121, 209, 0.15);
+    border: 1px solid rgba(85, 182, 255, 0.3);
+    color: #5fc1ff;
     font-size: 12px;
-
     font-weight: 800;
-
     text-transform: uppercase;
-
     letter-spacing: .08em;
-
-    margin-bottom: 17px;
-
+    margin-bottom: 16px;
+    backdrop-filter: blur(4px);
 }
-
-.machine-category i {
-
-    font-size: 14px;
-
-}
-
-
-/* Machine name */
 
 .machine-info h1 {
-
-    margin: 0 0 17px;
-
-    color: var(--navy);
-
-    font-size: clamp(2.2rem, 4vw, 3.7rem);
-
-    line-height: 1.08;
-
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: clamp(2.2rem, 3.8vw, 3.5rem);
+    line-height: 1.1;
     font-weight: 800;
-
-    letter-spacing: -.035em;
-
+    letter-spacing: -.03em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
-
-
-/* Short description */
 
 .machine-short-description {
-
-    color: var(--muted);
-
+    color: #b0c4de;
     font-size: 16px;
-
     line-height: 1.75;
-
-    margin-bottom: 28px;
-
+    margin-bottom: 25px;
 }
 
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
+/* ACTION BUTTONS WITH NEON GLOW */
 .machine-actions {
-
     display: flex;
-
     flex-wrap: wrap;
-
-    gap: 12px;
-
+    gap: 14px;
     margin-bottom: 30px;
-
 }
-
 .machine-btn {
-
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
-    gap: 9px;
-
-    min-height: 48px;
-
-    padding: 0 20px;
-
-    border-radius: 12px;
-
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 24px;
+    border-radius: 14px;
     text-decoration: none;
-
     font-size: 14px;
-
     font-weight: 700;
-
-    transition: .25s ease;
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
 }
-
 .machine-btn-primary {
-
-    background:
-
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--blue-dark)
-        );
-
+    background: linear-gradient(135deg, #1479d1 0%, #075ca8 100%);
     color: #ffffff;
-
-    box-shadow:
-
-        0 12px 25px rgba(20,121,209,.22);
-
+    box-shadow: 0 10px 25px rgba(20, 121, 209, 0.4);
+    border: 1px solid rgba(85, 182, 255, 0.4);
 }
-
 .machine-btn-primary:hover {
-
     color: #ffffff;
-
     transform: translateY(-3px);
-
-    box-shadow:
-
-        0 17px 30px rgba(20,121,209,.28);
-
+    box-shadow: 0 15px 35px rgba(15, 240, 252, 0.3);
+    border-color: var(--neon-cyan);
 }
-
 .machine-btn-outline {
-
-    border: 1px solid #cbdceb;
-
-    background: #ffffff;
-
-    color: var(--navy);
-
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(13, 53, 92, 0.4);
+    color: #ffffff;
+    backdrop-filter: blur(6px);
 }
-
 .machine-btn-outline:hover {
-
-    color: var(--blue);
-
-    border-color: var(--blue);
-
+    color: var(--neon-cyan);
+    border-color: var(--neon-cyan);
+    background: rgba(13, 53, 92, 0.8);
     transform: translateY(-3px);
-
+    box-shadow: 0 0 20px rgba(15, 240, 252, 0.2);
 }
 
-
-/* =========================================================
-   QUICK MACHINE INFO
-========================================================= */
-
+/* QUICK INFO MATRIX */
 .machine-quick-info {
-
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
-    border: 1px solid var(--line);
-
-    border-radius: 17px;
-
+    border: 1px solid rgba(85, 182, 255, 0.2);
+    border-radius: 18px;
     overflow: hidden;
-
-    background: #ffffff;
-
-    box-shadow:
-
-        0 15px 35px rgba(8,35,63,.055);
-
+    background: rgba(13, 53, 92, 0.45);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
-
 .machine-quick-item {
-
-    padding: 17px 18px;
-
-    border-bottom: 1px solid var(--line);
-
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(85, 182, 255, 0.15);
+    border-right: 1px solid rgba(85, 182, 255, 0.15);
+    transition: background 0.3s ease;
 }
-
-.machine-quick-item:nth-child(odd) {
-
-    border-right: 1px solid var(--line);
-
+.machine-quick-item:hover {
+    background: rgba(20, 121, 209, 0.15);
 }
-
-.machine-quick-item:nth-last-child(-n+2) {
-
-    border-bottom: none;
-
-}
+.machine-quick-item:nth-child(even) { border-right: none; }
+.machine-quick-item:nth-last-child(-n+2) { border-bottom: none; }
 
 .machine-quick-label {
-
     display: block;
-
-    color: #8195a8;
-
+    color: #7995b2;
     font-size: 11px;
-
     font-weight: 700;
-
     text-transform: uppercase;
-
-    letter-spacing: .07em;
-
-    margin-bottom: 5px;
-
+    letter-spacing: .08em;
+    margin-bottom: 6px;
 }
-
 .machine-quick-value {
-
-    color: var(--navy);
-
-    font-size: 14px;
-
+    color: #ffffff;
+    font-size: 15px;
     font-weight: 700;
-
+    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
-
-/* =========================================================
-   DETAILS SECTION
-========================================================= */
-
+/* LOWER CONTENT & SPECIFICATIONS */
 .machine-details-section {
-
-    margin-top: 75px;
-
+    margin-top: 65px;
     display: grid;
-
-    grid-template-columns:
-
-        minmax(0, 1.35fr)
-        minmax(280px, .65fr);
-
-    gap: 28px;
-
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+    gap: 30px;
 }
-
-
-/* =========================================================
-   CONTENT CARD
-========================================================= */
 
 .machine-content-card {
-
-    background: #ffffff;
-
-    border: 1px solid var(--line);
-
-    border-radius: 22px;
-
-    padding: 32px;
-
-    box-shadow:
-
-        0 20px 45px rgba(8,35,63,.06);
-
+    background: rgba(13, 53, 92, 0.5);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(85, 182, 255, 0.2);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
 }
 
 .machine-section-heading {
-
     display: flex;
-
     align-items: center;
-
-    gap: 13px;
-
-    margin-bottom: 20px;
-
+    gap: 14px;
+    margin-bottom: 22px;
 }
-
 .machine-section-icon {
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 12px;
-
-    background: var(--blue-light);
-
-    color: var(--blue);
-
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(20, 121, 209, 0.25);
+    border: 1px solid rgba(85, 182, 255, 0.4);
+    color: var(--neon-cyan);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    font-size: 19px;
-
+    font-size: 20px;
 }
-
 .machine-section-heading h2 {
-
     margin: 0;
-
-    color: var(--navy);
-
-    font-size: 22px;
-
+    color: #ffffff;
+    font-size: 23px;
     font-weight: 800;
-
 }
 
 .machine-description {
-
-    color: var(--muted);
-
+    color: #b0c4de;
     line-height: 1.85;
-
     font-size: 15px;
-
     white-space: pre-line;
-
 }
 
-
-/* =========================================================
-   SPECIFICATION CARD
-========================================================= */
-
+/* SPECIFICATIONS PANEL */
 .machine-spec-card {
-
-    background:
-
-        linear-gradient(
-            145deg,
-            var(--navy),
-            var(--navy-2)
-        );
-
-    border-radius: 22px;
-
-    padding: 30px;
-
+    background: linear-gradient(145deg, #0d355c 0%, #06192e 100%);
+    border-radius: 24px;
+    padding: 32px;
     color: #ffffff;
-
     position: relative;
-
     overflow: hidden;
-
-    box-shadow:
-
-        0 25px 50px rgba(8,35,63,.16);
-
+    border: 1px solid rgba(85, 182, 255, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
-
 .machine-spec-card::after {
-
     content: "";
-
     position: absolute;
-
-    width: 180px;
-
-    height: 180px;
-
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-
     right: -80px;
-
     top: -80px;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(85,182,255,.22),
-            transparent 70%
-        );
-
+    background: radial-gradient(circle, rgba(15, 240, 252, 0.18), transparent 70%);
 }
-
 .machine-spec-card h2 {
-
     position: relative;
-
     z-index: 2;
-
-    margin: 0 0 22px;
-
-    font-size: 21px;
-
+    margin: 0 0 20px;
+    font-size: 22px;
     font-weight: 800;
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-
-.machine-spec-card h2 i {
-
-    color: #5fc1ff;
-
-    margin-right: 8px;
-
-}
+.machine-spec-card h2 i { color: var(--neon-cyan); }
 
 .machine-specification {
-
     position: relative;
-
     z-index: 2;
-
     color: #c8dced;
-
     line-height: 1.85;
-
     font-size: 14px;
-
     white-space: pre-line;
-
 }
 
-
-/* =========================================================
-   BROCHURE
-========================================================= */
-
+/* BROCHURE DOWNLOAD BOX */
 .machine-brochure {
-
-    margin-top: 20px;
-
-    padding: 20px;
-
-    border-radius: 16px;
-
-    background: var(--blue-soft);
-
-    border: 1px solid #d6e8f8;
-
+    margin-top: 22px;
+    padding: 22px;
+    border-radius: 18px;
+    background: rgba(13, 53, 92, 0.6);
+    border: 1px solid rgba(85, 182, 255, 0.25);
+    backdrop-filter: blur(10px);
 }
-
 .machine-brochure-title {
-
-    color: var(--navy);
-
+    color: #ffffff;
     font-size: 13px;
-
     font-weight: 800;
-
     margin-bottom: 12px;
-
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+.machine-brochure-title i { color: var(--neon-cyan); }
 
 .machine-brochure-btn {
-
     width: 100%;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    gap: 9px;
-
-    padding: 12px 15px;
-
-    border-radius: 11px;
-
-    background: #ffffff;
-
-    border: 1px solid #cfe2f2;
-
-    color: var(--blue-dark);
-
+    gap: 10px;
+    padding: 13px 18px;
+    border-radius: 12px;
+    background: rgba(20, 121, 209, 0.2);
+    border: 1px solid rgba(85, 182, 255, 0.4);
+    color: #ffffff;
     text-decoration: none;
-
     font-size: 13px;
-
     font-weight: 700;
-
-    transition: .25s ease;
-
+    transition: all 0.3s ease;
 }
-
 .machine-brochure-btn:hover {
-
     background: var(--blue);
-
-    border-color: var(--blue);
-
+    border-color: var(--neon-cyan);
     color: #ffffff;
-
+    box-shadow: 0 0 20px rgba(15, 240, 252, 0.3);
 }
 
-
-/* =========================================================
-   BOTTOM CTA
-========================================================= */
-
+/* BOTTOM CTA BANNER */
 .machine-cta {
-
-    margin-top: 55px;
-
-    padding: 38px 42px;
-
-    border-radius: 24px;
-
-    background:
-
-        linear-gradient(
-            120deg,
-            #08233f,
-            #0e4778
-        );
-
+    margin-top: 60px;
+    padding: 40px 45px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, #0d355c 0%, #051424 100%);
     color: #ffffff;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 30px;
-
     position: relative;
-
     overflow: hidden;
-
+    border: 1px solid rgba(85, 182, 255, 0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
-
 .machine-cta::before {
-
     content: "";
-
     position: absolute;
-
-    width: 300px;
-
-    height: 300px;
-
+    width: 350px;
+    height: 350px;
     right: -100px;
-
-    top: -140px;
-
+    top: -150px;
     border-radius: 50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(83,190,255,.2),
-            transparent 70%
-        );
-
+    background: radial-gradient(circle, rgba(15, 240, 252, 0.15), transparent 70%);
 }
-
-.machine-cta-content {
-
-    position: relative;
-
-    z-index: 2;
-
-}
-
-.machine-cta h2 {
-
-    margin: 0 0 8px;
-
-    font-size: 25px;
-
-    font-weight: 800;
-
-}
-
-.machine-cta p {
-
-    margin: 0;
-
-    color: #bcd1e4;
-
-    font-size: 14px;
-
-}
-
+.machine-cta-content { position: relative; z-index: 2; }
+.machine-cta h2 { margin: 0 0 8px; font-size: 26px; font-weight: 800; }
+.machine-cta p { margin: 0; color: #a1b8d0; font-size: 14px; }
 .machine-cta .machine-btn {
-
     position: relative;
-
     z-index: 2;
-
     background: #ffffff;
-
     color: var(--navy);
-
     white-space: nowrap;
-
+    border: none;
 }
-
 .machine-cta .machine-btn:hover {
-
-    background: #eaf5ff;
-
-    color: var(--blue-dark);
-
+    background: var(--neon-cyan);
+    color: var(--navy);
+    box-shadow: 0 0 25px rgba(15, 240, 252, 0.5);
 }
 
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
+/* RESPONSIVE DESIGN */
 @media (max-width: 1000px) {
-
-    .machine-main-grid {
-
-        grid-template-columns: 1fr;
-
-        gap: 35px;
-
-    }
-
-    .machine-image-viewer {
-
-        height: 470px;
-
-    }
-
-    .machine-details-section {
-
-        grid-template-columns: 1fr;
-
-    }
-
+    .machine-main-grid { grid-template-columns: 1fr; gap: 35px; }
+    .machine-image-viewer { height: 420px; }
+    .machine-details-section { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 700px) {
-
-    .machine-detail-container {
-
-        width: min(100% - 24px, 1240px);
-
-        padding-top: 28px;
-
-    }
-
-    .machine-gallery-card {
-
-        padding: 10px;
-
-        border-radius: 18px;
-
-    }
-
-    .machine-image-viewer {
-
-        height: 350px;
-
-        border-radius: 13px;
-
-    }
-
-    .machine-info h1 {
-
-        font-size: 2.25rem;
-
-    }
-
-    .machine-quick-info {
-
-        grid-template-columns: 1fr;
-
-    }
-
-    .machine-quick-item {
-
-        border-right: none !important;
-
-        border-bottom: 1px solid var(--line) !important;
-
-    }
-
-    .machine-quick-item:last-child {
-
-        border-bottom: none !important;
-
-    }
-
-    .machine-details-section {
-
-        margin-top: 45px;
-
-    }
-
-    .machine-content-card,
-    .machine-spec-card {
-
-        padding: 23px;
-
-    }
-
-    .machine-cta {
-
-        padding: 28px 24px;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
+    .machine-detail-container { width: min(100% - 24px, 1240px); padding-top: 25px; }
+    .machine-gallery-card { padding: 10px; border-radius: 18px; }
+    .machine-image-viewer { height: 320px; border-radius: 14px; }
+    .machine-info h1 { font-size: 2.1rem; }
+    .machine-quick-info { grid-template-columns: 1fr; }
+    .machine-quick-item { border-right: none !important; border-bottom: 1px solid rgba(85, 182, 255, 0.15) !important; }
+    .machine-quick-item:last-child { border-bottom: none !important; }
+    .machine-content-card, .machine-spec-card { padding: 24px; }
+    .machine-cta { padding: 30px 24px; flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 480px) {
-
-    .machine-image-viewer {
-
-        height: 290px;
-
-    }
-
-    .machine-gallery-btn {
-
-        width: 40px;
-
-        height: 40px;
-
-        font-size: 17px;
-
-    }
-
-    .machine-prev {
-
-        left: 10px;
-
-    }
-
-    .machine-next {
-
-        right: 10px;
-
-    }
-
-    .machine-actions {
-
-        flex-direction: column;
-
-    }
-
-    .machine-btn {
-
-        width: 100%;
-
-    }
-
+    .machine-image-viewer { height: 260px; }
+    .machine-gallery-btn { width: 38px; height: 38px; font-size: 16px; }
+    .machine-actions { flex-direction: column; }
+    .machine-btn { width: 100%; }
 }
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .machine-image-viewer img,
-    .machine-thumbnail,
-    .machine-btn,
-    .machine-gallery-btn,
-    .machine-back {
-
-        transition: none !important;
-
-    }
-
-}
-
 </style>
 
 <section class="machine-detail-page">
+    <div class="ambient-glow"></div>
 
-```
-<div class="machine-detail-container">
+    <div class="machine-detail-container">
 
-    <!-- =================================================
-         BACK
-    ================================================== -->
-
-    <a href="{% url 'product_list' %}"
-       class="machine-back">
-
-        <i class="bi bi-arrow-left"></i>
-
-        Back to Machines
-
-    </a>
-
-
-    <!-- =================================================
-         MAIN MACHINE AREA
-    ================================================== -->
-
-    <div class="machine-main-grid">
-
-
-        <!-- =================================================
-             IMAGE / GALLERY
-        ================================================== -->
-
-        <div class="machine-gallery-card">
-
-            <span class="machine-screw top-left"></span>
-            <span class="machine-screw top-right"></span>
-            <span class="machine-screw bottom-left"></span>
-            <span class="machine-screw bottom-right"></span>
-
-
-            <div class="machine-image-viewer">
-
-
-                {% if machine.image %}
-
-                    <img
-                        id="machineMainImage"
-                        src="{{ machine.image.url }}"
-                        alt="{{ machine.name }}"
-                    >
-
-                {% else %}
-
-                    <div class="text-center text-muted">
-
-                        <i class="bi bi-image"
-                           style="font-size:60px;">
-                        </i>
-
-                        <p class="mt-2 mb-0">
-                            Machine image unavailable
-                        </p>
-
-                    </div>
-
-                {% endif %}
-
-
-                <!-- Status -->
-
-                <div class="machine-status">
-
-                    <span class="machine-status-dot"></span>
-
-                    Available
-
-                </div>
-
-
-                <!-- Previous -->
-
-                {% if machine.gallery.all %}
-
-                    <button
-                        type="button"
-                        class="machine-gallery-btn machine-prev"
-                        onclick="changeMachineImage(-1)"
-                        aria-label="Previous image"
-                    >
-
-                        <i class="bi bi-chevron-left"></i>
-
-                    </button>
-
-
-                    <!-- Next -->
-
-                    <button
-                        type="button"
-                        class="machine-gallery-btn machine-next"
-                        onclick="changeMachineImage(1)"
-                        aria-label="Next image"
-                    >
-
-                        <i class="bi bi-chevron-right"></i>
-
-                    </button>
-
-                {% endif %}
-
-
-                <!-- Counter -->
-
-                <div class="machine-image-counter">
-
-                    <span id="machineCurrentImage">1</span>
-
-                    /
-
-                    <span id="machineTotalImages">
-
-                        {{ machine.gallery.count|add:"1" }}
-
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 THUMBNAILS
-            ================================================== -->
-
-            <div class="machine-thumbnails">
-
-                {% if machine.image %}
-
-                    <img
-                        src="{{ machine.image.url }}"
-                        alt="{{ machine.name }}"
-                        class="machine-thumbnail active"
-                        onclick="selectMachineImage(this)"
-                    >
-
-                {% endif %}
-
-
-                {% for gallery_image in machine.gallery.all %}
-
-                    <img
-                        src="{{ gallery_image.image.url }}"
-                        alt="{{ machine.name }} gallery image"
-                        class="machine-thumbnail"
-                        onclick="selectMachineImage(this)"
-                        loading="lazy"
-                    >
-
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             MACHINE INFORMATION
-        ================================================== -->
-
-        <div class="machine-info">
-
-
-            <!-- Category -->
-
-            {% if machine.category %}
-
-                <div class="machine-category">
-
-                    <i class="bi bi-diagram-3-fill"></i>
-
-                    {{ machine.category.name }}
-
-                </div>
-
-            {% endif %}
-
-
-            <!-- Name -->
-
-            <h1>
-
-                {{ machine.name }}
-
-            </h1>
-
-
-            <!-- Short Description -->
-
-            {% if machine.short_description %}
-
-                <p class="machine-short-description">
-
-                    {{ machine.short_description }}
-
-                </p>
-
-            {% endif %}
-
-
-            <!-- Actions -->
-
-            <div class="machine-actions">
-
-                {% if machine.brochure %}
-
-                    <a
-                        href="{{ machine.brochure.url }}"
-                        target="_blank"
-                        rel="noopener"
-                        class="machine-btn machine-btn-primary"
-                    >
-
-                        <i class="bi bi-file-earmark-pdf-fill"></i>
-
-                        View Brochure
-
-                    </a>
-
-                {% endif %}
-
-
-                <a
-                    href="{% url 'product_list' %}"
-                    class="machine-btn machine-btn-outline"
-                >
-
-                    <i class="bi bi-grid-3x3-gap"></i>
-
-                    More Machines
-
-                </a>
-
-            </div>
-
-
-            <!-- =================================================
-                 QUICK INFORMATION
-            ================================================== -->
-
-            <div class="machine-quick-info">
-
-
-                <div class="machine-quick-item">
-
-                    <span class="machine-quick-label">
-
-                        Category
-
-                    </span>
-
-                    <span class="machine-quick-value">
-
-                        {% if machine.category %}
-
-                            {{ machine.category.name }}
-
-                        {% else %}
-
-                            Industrial Machinery
-
-                        {% endif %}
-
-                    </span>
-
-                </div>
-
-
-                <div class="machine-quick-item">
-
-                    <span class="machine-quick-label">
-
-                        Machine Status
-
-                    </span>
-
-                    <span class="machine-quick-value">
-
-                        Available
-
-                    </span>
-
-                </div>
-
-
-                <div class="machine-quick-item">
-
-                    <span class="machine-quick-label">
-
-                        Added
-
-                    </span>
-
-                    <span class="machine-quick-value">
-
-                        {{ machine.created_at|date:"d M Y" }}
-
-                    </span>
-
-                </div>
-
-
-                <div class="machine-quick-item">
-
-                    <span class="machine-quick-label">
-
-                        Gallery
-
-                    </span>
-
-                    <span class="machine-quick-value">
-
-                        {{ machine.gallery.count|add:"1" }}
-
-                        Images
-
-                    </span>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         DESCRIPTION + SPECIFICATION
-    ================================================== -->
-
-    <div class="machine-details-section">
-
-
-        <!-- DESCRIPTION -->
-
-        <div class="machine-content-card">
-
-            <div class="machine-section-heading">
-
-                <div class="machine-section-icon">
-
-                    <i class="bi bi-info-lg"></i>
-
-                </div>
-
-                <h2>
-
-                    Machine Overview
-
-                </h2>
-
-            </div>
-
-
-            {% if machine.description %}
-
-                <div class="machine-description">
-
-                    {{ machine.description }}
-
-                </div>
-
-            {% else %}
-
-                <div class="machine-description">
-
-                    Detailed information about this machine
-                    will be available soon.
-
-                </div>
-
-            {% endif %}
-
-        </div>
-
-
-        <!-- SPECIFICATIONS -->
-
-        <div>
-
-            <div class="machine-spec-card">
-
-                <h2>
-
-                    <i class="bi bi-sliders2"></i>
-
-                    Specifications
-
-                </h2>
-
-
-                {% if machine.specification %}
-
-                    <div class="machine-specification">
-
-                        {{ machine.specification }}
-
-                    </div>
-
-                {% else %}
-
-                    <div class="machine-specification">
-
-                        Specifications will be provided
-                        on request.
-
-                    </div>
-
-                {% endif %}
-
-            </div>
-
-
-            {% if machine.brochure %}
-
-                <div class="machine-brochure">
-
-                    <div class="machine-brochure-title">
-
-                        <i class="bi bi-file-earmark-text"></i>
-
-                        Technical Documentation
-
-                    </div>
-
-                    <a
-                        href="{{ machine.brochure.url }}"
-                        target="_blank"
-                        rel="noopener"
-                        class="machine-brochure-btn"
-                    >
-
-                        <i class="bi bi-download"></i>
-
-                        Open Machine Brochure
-
-                    </a>
-
-                </div>
-
-            {% endif %}
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         BOTTOM CTA
-    ================================================== -->
-
-    <div class="machine-cta">
-
-        <div class="machine-cta-content">
-
-            <h2>
-
-                Interested in this machine?
-
-            </h2>
-
-            <p>
-
-                Contact MK Mechanicals for machine details,
-                availability and technical information.
-
-            </p>
-
-        </div>
-
-
-        <a
-            href="{% url 'product_list' %}"
-            class="machine-btn"
-        >
-
-            Explore More Machines
-
-            <i class="bi bi-arrow-right"></i>
-
+        <!-- BACK BUTTON -->
+        <a href="{% url 'product_list' %}" class="machine-back">
+            <i class="bi bi-arrow-left"></i> Back to Machines
         </a>
 
+        <!-- MAIN MACHINE AREA -->
+        <div class="machine-main-grid">
+
+            <!-- IMAGE / GALLERY CARD -->
+            <div class="machine-gallery-card">
+                <div class="machine-image-viewer">
+                    <div class="cyber-stream-lines"></div>
+
+                    {% if machine.image %}
+                        <img id="machineMainImage" src="{{ machine.image.url }}" alt="{{ machine.name }}">
+                    {% else %}
+                        <div class="text-center text-muted">
+                            <i class="bi bi-image" style="font-size:60px; color: #5fc1ff;"></i>
+                            <p class="mt-2 mb-0" style="color: #a1b8d0;">Machine image unavailable</p>
+                        </div>
+                    {% endif %}
+
+                    <!-- Status Badge -->
+                    <div class="machine-status">
+                        <span class="machine-status-dot"></span>
+                        Available
+                    </div>
+
+                    <!-- Previous / Next Gallery Controls -->
+                    {% if machine.gallery.all %}
+                        <button type="button" class="machine-gallery-btn machine-prev" onclick="changeMachineImage(-1)" aria-label="Previous image">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button type="button" class="machine-gallery-btn machine-next" onclick="changeMachineImage(1)" aria-label="Next image">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    {% endif %}
+
+                    <!-- Counter -->
+                    <div class="machine-image-counter">
+                        <span id="machineCurrentImage">1</span> / <span id="machineTotalImages">{{ machine.gallery.count|add:"1" }}</span>
+                    </div>
+                </div>
+
+                <!-- THUMBNAILS -->
+                <div class="machine-thumbnails">
+                    {% if machine.image %}
+                        <img src="{{ machine.image.url }}" alt="{{ machine.name }}" class="machine-thumbnail active" onclick="selectMachineImage(this)">
+                    {% endif %}
+                    {% for gallery_image in machine.gallery.all %}
+                        <img src="{{ gallery_image.image.url }}" alt="{{ machine.name }} gallery image" class="machine-thumbnail" onclick="selectMachineImage(this)" loading="lazy">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- MACHINE INFORMATION -->
+            <div class="machine-info">
+                {% if machine.category %}
+                    <div class="machine-category">
+                        <i class="bi bi-diagram-3-fill"></i> {{ machine.category.name }}
+                    </div>
+                {% endif %}
+
+                <h1>{{ machine.name }}</h1>
+
+                {% if machine.short_description %}
+                    <p class="machine-short-description">{{ machine.short_description }}</p>
+                {% endif %}
+
+                <!-- ACTIONS -->
+                <div class="machine-actions">
+                    {% if machine.brochure %}
+                        <a href="{{ machine.brochure.url }}" target="_blank" rel="noopener" class="machine-btn machine-btn-primary">
+                            <i class="bi bi-file-earmark-pdf-fill"></i> View Brochure
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'product_list' %}" class="machine-btn machine-btn-outline">
+                        <i class="bi bi-grid-3x3-gap"></i> More Machines
+                    </a>
+                </div>
+
+                <!-- QUICK INFORMATION MATRIX -->
+                <div class="machine-quick-info">
+                    <div class="machine-quick-item">
+                        <span class="machine-quick-label">Category</span>
+                        <span class="machine-quick-value">
+                            {% if machine.category %}{{ machine.category.name }}{% else %}Industrial Machinery{% endif %}
+                        </span>
+                    </div>
+                    <div class="machine-quick-item">
+                        <span class="machine-quick-label">Machine Status</span>
+                        <span class="machine-quick-value" style="color: var(--neon-green);">Available</span>
+                    </div>
+                    <div class="machine-quick-item">
+                        <span class="machine-quick-label">Added</span>
+                        <span class="machine-quick-value">{{ machine.created_at|date:"d M Y" }}</span>
+                    </div>
+                    <div class="machine-quick-item">
+                        <span class="machine-quick-label">Gallery</span>
+                        <span class="machine-quick-value">{{ machine.gallery.count|add:"1" }} Images</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DESCRIPTION + SPECIFICATION SECTION -->
+        <div class="machine-details-section">
+
+            <!-- MACHINE OVERVIEW -->
+            <div class="machine-content-card">
+                <div class="machine-section-heading">
+                    <div class="machine-section-icon">
+                        <i class="bi bi-info-lg"></i>
+                    </div>
+                    <h2>Machine Overview</h2>
+                </div>
+                {% if machine.description %}
+                    <div class="machine-description">{{ machine.description }}</div>
+                {% else %}
+                    <div class="machine-description">Detailed information about this machine will be available soon.</div>
+                {% endif %}
+            </div>
+
+            <!-- SPECIFICATIONS PANEL -->
+            <div>
+                <div class="machine-spec-card">
+                    <h2><i class="bi bi-sliders2"></i> Specifications</h2>
+                    {% if machine.specification %}
+                        <div class="machine-specification">{{ machine.specification }}</div>
+                    {% else %}
+                        <div class="machine-specification">Specifications will be provided on request.</div>
+                    {% endif %}
+                </div>
+
+                {% if machine.brochure %}
+                    <div class="machine-brochure">
+                        <div class="machine-brochure-title">
+                            <i class="bi bi-file-earmark-text"></i> Technical Documentation
+                        </div>
+                        <a href="{{ machine.brochure.url }}" target="_blank" rel="noopener" class="machine-brochure-btn">
+                            <i class="bi bi-download"></i> Open Machine Brochure
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- BOTTOM CTA -->
+        <div class="machine-cta">
+            <div class="machine-cta-content">
+                <h2>Interested in this machine?</h2>
+                <p>Contact MK Mechanicals for machine details, availability and technical information.</p>
+            </div>
+            <a href="{% url 'product_list' %}" class="machine-btn">
+                Explore More Machines <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
     </div>
-
-</div>
-```
-
 </section>
 
 <script>
-
 /* =========================================================
-   MACHINE GALLERY
+   ADVANCED GALLERY & CARD INTERACTION SCRIPT
 ========================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+    const mainImage = document.getElementById("machineMainImage");
+    const thumbnails = Array.from(document.querySelectorAll(".machine-thumbnail"));
+    const currentCounter = document.getElementById("machineCurrentImage");
+    const galleryCard = document.querySelector(".machine-gallery-card");
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    if (!mainImage || thumbnails.length === 0) return;
 
-        const mainImage =
-            document.getElementById(
-                "machineMainImage"
-            );
+    window.selectMachineImage = function (thumbnail) {
+        const index = thumbnails.indexOf(thumbnail);
+        if (index === -1) return;
 
-        const thumbnails =
-            Array.from(
-                document.querySelectorAll(
-                    ".machine-thumbnail"
-                )
-            );
+        mainImage.style.opacity = "0";
+        mainImage.style.transform = "scale(0.95)";
 
-        const currentCounter =
-            document.getElementById(
-                "machineCurrentImage"
-            );
+        setTimeout(function () {
+            mainImage.src = thumbnail.src;
+            mainImage.alt = thumbnail.alt;
+            mainImage.style.opacity = "1";
+            mainImage.style.transform = "scale(1)";
+        }, 150);
 
-        if (!mainImage || thumbnails.length === 0) {
+        thumbnails.forEach(item => item.classList.remove("active"));
+        thumbnail.classList.add("active");
 
-            return;
-
+        if (currentCounter) {
+            currentCounter.textContent = index + 1;
         }
+    };
 
+    window.changeMachineImage = function (direction) {
+        const activeIndex = thumbnails.findIndex(item => item.classList.contains("active"));
+        let nextIndex = activeIndex + direction;
 
-        window.selectMachineImage =
-            function (thumbnail) {
+        if (nextIndex < 0) nextIndex = thumbnails.length - 1;
+        if (nextIndex >= thumbnails.length) nextIndex = 0;
 
-                const index =
-                    thumbnails.indexOf(
-                        thumbnail
-                    );
+        selectMachineImage(thumbnails[nextIndex]);
+    };
 
-                if (index === -1) {
+    /* 3D TILT EFFECT ON GALLERY CARD */
+    if (galleryCard) {
+        galleryCard.addEventListener("mousemove", (e) => {
+            const rect = galleryCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            const dx = (x - xc) / xc;
+            const dy = (y - yc) / yc;
 
-                    return;
+            galleryCard.style.transform = `perspective(1000px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) translateY(-4px)`;
+        });
 
-                }
-
-                mainImage.style.opacity = "0";
-
-                setTimeout(
-                    function () {
-
-                        mainImage.src =
-                            thumbnail.src;
-
-                        mainImage.alt =
-                            thumbnail.alt;
-
-                        mainImage.style.opacity = "1";
-
-                    },
-                    120
-                );
-
-
-                thumbnails.forEach(
-                    function (item) {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                thumbnail.classList.add(
-                    "active"
-                );
-
-
-                if (currentCounter) {
-
-                    currentCounter.textContent =
-                        index + 1;
-
-                }
-
-            };
-
-
-        window.changeMachineImage =
-            function (direction) {
-
-                const activeIndex =
-                    thumbnails.findIndex(
-                        function (item) {
-
-                            return item.classList.contains(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                let nextIndex =
-                    activeIndex + direction;
-
-
-                if (nextIndex < 0) {
-
-                    nextIndex =
-                        thumbnails.length - 1;
-
-                }
-
-
-                if (
-                    nextIndex >=
-                    thumbnails.length
-                ) {
-
-                    nextIndex = 0;
-
-                }
-
-
-                selectMachineImage(
-                    thumbnails[nextIndex]
-                );
-
-            };
-
-
-        /* Keyboard navigation */
-
-        document.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key === "ArrowLeft"
-                ) {
-
-                    changeMachineImage(-1);
-
-                }
-
-                if (
-                    event.key === "ArrowRight"
-                ) {
-
-                    changeMachineImage(1);
-
-                }
-
-            }
-        );
-
+        galleryCard.addEventListener("mouseleave", () => {
+            galleryCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)";
+        });
     }
-);
 
+    /* KEYBOARD NAVIGATION */
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft") changeMachineImage(-1);
+        if (event.key === "ArrowRight") changeMachineImage(1);
+    });
+});
 </script>
 
 {% endblock %}
