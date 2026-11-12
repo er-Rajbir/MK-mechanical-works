@@ -28,18 +28,14 @@ SECRET_KEY = os.environ.get(
 )
 
 DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
-
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get(
         "ALLOWED_HOSTS",
-        "127.0.0.1,localhost","mk.onvoroa.com",
-    "localhost",
-    "127.0.0.1",
+        "127.0.0.1,localhost,mk.onvoroa.com,mk-mechanical-worksconfig-production.up.railway.app"
     ).split(",")
     if host.strip()
 ]
-
 
 # ============================================================
 # APPLICATIONS
