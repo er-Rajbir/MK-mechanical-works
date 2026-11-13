@@ -1,1445 +1,602 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}
-Home | MK Mechanicals
-{% endblock %}
+{% block title %}MK Industries | Advanced Industrial Engineering & Heavy Machinery{% endblock %}
 
 {% block content %}
 
 <!-- ==========================================
-                HERO SECTION
+     HERO SECTION — 3D CANVAS & PRECISION MACHINERY
 =========================================== -->
+<section class="mk-hero-section">
+    <!-- Interactive 60fps 3D Canvas -->
+    <canvas id="heroInteractiveCanvas"></canvas>
 
-<section class="hero">
+    <!-- Ambient Glow Orbs -->
+    <div class="mk-hero-ambient-glow"></div>
+    <div class="mk-hero-ambient-cyan"></div>
 
-    <div class="grid-bg"></div>
-
-    <!-- Wavelike animated background — three drifting SVG layers -->
-    <div class="wave-wrap">
-        <svg class="wave-back" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-1)" d="M0,120 C200,180 400,60 600,110 C800,160 1000,50 1200,100 C1350,135 1500,90 1600,110 L1600,220 L0,220 Z"></path>
-        </svg>
-        <svg class="wave-mid" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-2)" d="M0,150 C220,90 420,190 640,140 C860,90 1060,180 1280,130 C1400,105 1520,140 1600,130 L1600,220 L0,220 Z"></path>
-        </svg>
-        <svg class="wave-front" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-3)" d="M0,180 C260,140 480,200 700,165 C920,130 1140,190 1360,155 C1450,140 1540,160 1600,150 L1600,220 L0,220 Z"></path>
-        </svg>
-    </div>
-
-    <div class="container">
-
+    <div class="container position-relative" style="z-index: 3;">
         <div class="row align-items-center gy-5">
-
-            <!-- Left Side -->
-
+            <!-- Left Hero Content -->
             <div class="col-lg-6">
-
-                <div class="hero-content">
-
-                    <!-- Small Badge -->
-
-                    <div class="hero-badge">
-
-                        <i class="bi bi-patch-check-fill"></i>
-
-                        Engineering Excellence Since 2010
-
-                    </div>
-
-
-                    <!-- Heading -->
-
-                    <h1 class="hero-title">
-
-                        Manufacturing Industrial
-                        Machines With
-                        <span>Precision & Innovation</span>
-
-                    </h1>
-
-
-                    <!-- Description -->
-
-                    <p class="hero-text">
-
-                        MK Mechanicals provides reliable industrial
-                        machinery designed for durability,
-                        efficiency and outstanding performance
-                        across multiple industries.
-
-                    </p>
-
-
-                    <!-- Buttons -->
-
-                    <div class="hero-buttons">
-
-                        <a href="{% url 'product_list' %}"
-                           class="btn btn-primary-custom">
-
-                            <i class="bi bi-grid-3x3-gap-fill me-2"></i>
-
-                            Explore Products
-
-                        </a>
-
-
-                        <a href="{% url 'core:contact' %}"
-                           class="btn btn-outline-custom">
-
-                            <i class="bi bi-telephone me-2"></i>
-
-                            Contact Us
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- Small Features -->
-
-                    <div class="hero-features mt-2">
-
-                        <div class="feature-item">
-
-                            <i class="bi bi-shield-check"></i>
-
-                            <div>
-
-                                <h6>
-
-                                    High Quality
-
-                                </h6>
-
-                                <small>
-
-                                    Products
-
-                                </small>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="feature-item">
-
-                            <i class="bi bi-gear-wide-connected"></i>
-
-                            <div>
-
-                                <h6>
-
-                                    Advanced
-
-                                </h6>
-
-                                <small>
-
-                                    Technology
-
-                                </small>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="feature-item">
-
-                            <i class="bi bi-people"></i>
-
-                            <div>
-
-                                <h6>
-
-                                    Expert
-
-                                </h6>
-
-                                <small>
-
-                                    Engineers
-
-                                </small>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="feature-item">
-
-                            <i class="bi bi-headset"></i>
-
-                            <div>
-
-                                <h6>
-
-                                    24/7 Support
-
-                                </h6>
-
-                                <small>
-
-                                    Assistance
-
-                                </small>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                <!-- Badge -->
+                <div class="mk-badge">
+                    <span class="mk-badge-radar"></span>
+                    <span>Engineering Excellence Since 2010</span>
                 </div>
 
-            </div>
-                        <!-- Right Side -->
+                <!-- Main Title -->
+                <h1 class="mk-hero-title">
+                    PRECISION HEAVY MACHINERY FOR <span class="gradient-text">FUTURE-READY</span> INDUSTRY.
+                </h1>
 
-            <div class="col-lg-6">
+                <!-- Subtitle / Lead -->
+                <p class="mk-hero-lead">
+                    MK Industries architects industrial-grade corrugation plants, rotary die cutters, and high-speed automated packaging machinery. Engineered with sub-millimeter tolerances for non-stop 24/7 manufacturing uptime.
+                </p>
 
-                <div class="hero-right">
-
-                    <!-- Main Machine Image -->
-
-                    <div class="hero-machine corner-frame">
-
-                        <img src="{% static 'images\Gemini_Generated_Image_c1y30qc1y30qc1y3.png' %}"
-                             alt="Industrial Machine"
-                             class="img-fluid">
-
-                    </div>
-
-
-                   
-
+                <!-- CTA Button Group -->
+                <div class="mk-hero-cta-group">
+                    <a href="{% url 'product_list' %}" class="btn-mk-primary btn-mk-lg">
+                        <i class="bi bi-cpu-fill"></i>
+                        <span>Explore Machines</span>
+                    </a>
+                    <a href="{% url 'core:contact' %}" class="btn-mk-outline btn-mk-lg">
+                        <i class="bi bi-chat-square-text-fill"></i>
+                        <span>Consult Engineers</span>
+                    </a>
                 </div>
 
+                <!-- Quick Hero Metrics -->
+                <div class="mk-hero-metrics">
+                    <div class="mk-metric-item">
+                        <h4><span class="counter">15</span><span class="accent">+</span></h4>
+                        <p>Years Pedigree</p>
+                    </div>
+                    <div class="mk-metric-item">
+                        <h4><span class="counter">350</span><span class="accent">+</span></h4>
+                        <p>Units Deployed</p>
+                    </div>
+                    <div class="mk-metric-item">
+                        <h4><span class="counter">99.8</span><span class="accent">%</span></h4>
+                        <p>Precision Uptime</p>
+                    </div>
+                </div>
             </div>
 
+            <!-- Right Hero Visual 3D Showcase Card -->
+            <div class="col-lg-6">
+                <div class="mk-hero-visual-card">
+                    <!-- Rotating Gear Widget -->
+                    <div class="mk-gear-widget" title="Kinematic Precision Transmission">
+                        <i class="bi bi-gear-wide-connected mk-gear-spin"></i>
+                    </div>
+
+                    <!-- HUD Blueprint Corners -->
+                    <div class="mk-hud-corner mk-hud-tl"></div>
+                    <div class="mk-hud-corner mk-hud-tr"></div>
+                    <div class="mk-hud-corner mk-hud-bl"></div>
+                    <div class="mk-hud-corner mk-hud-br"></div>
+
+                    <!-- Machinery Image Wrap -->
+                    <div class="mk-hero-img-wrap">
+                        <img src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}"
+                             alt="MK Industries Advanced Industrial Machinery"
+                             loading="eager">
+                    </div>
+
+                    <!-- Floating Metric Pill -->
+                    <div class="mk-hero-floating-pill">
+                        <i class="bi bi-shield-check mk-pill-icon"></i>
+                        <div>
+                            <div class="mk-pill-title">CNC Micro-Tolerance Guaranteed</div>
+                            <div class="mk-pill-desc">Tolerances &lt; 0.05mm &bull; High-Tensile Steel</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-
 </section>
-<div class="scroll-down">
 
-    <span></span>
-
+<!-- ==========================================
+     INDUSTRIAL MARQUEE TICKER
+=========================================== -->
+<div class="mk-marquee-band">
+    <div class="mk-marquee-content">
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> CORRUGATION PRODUCTION PLANTS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> HIGH-SPEED ROTARY DIE CUTTERS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> AUTOMATIC PAPER FEEDING SYSTEMS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> HEAVY-DUTY FLUTING &amp; SLITTING</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> PRECISION CNC HYDRAULIC PACKAGING</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> 24/7 NATIONWIDE SERVICE &amp; SPARES</div>
+        <!-- Duplicate for continuous loop -->
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> CORRUGATION PRODUCTION PLANTS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> HIGH-SPEED ROTARY DIE CUTTERS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> AUTOMATIC PAPER FEEDING SYSTEMS</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> HEAVY-DUTY FLUTING &amp; SLITTING</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> PRECISION CNC HYDRAULIC PACKAGING</div>
+        <div class="mk-marquee-item"><i class="bi bi-circle-fill"></i> 24/7 NATIONWIDE SERVICE &amp; SPARES</div>
+    </div>
 </div>
 
-<!-- ================= FEATURES ================= -->
-
-<section class="features-section py-5">
-
+<!-- ==========================================
+     DYNAMIC MACHINE SHOWCASE
+=========================================== -->
+<section class="mk-section" id="machines">
     <div class="container">
-
-        <div class="section-title text-center mb-5">
-
-            <span class="section-tag">
-                WHY CHOOSE US
-            </span>
-
-            <h2 class="section-heading">
-                Built For Performance & Reliability
-            </h2>
-
-            <p class="section-text">
-                We combine advanced engineering, quality manufacturing,
-                and dedicated customer support to deliver machines that
-                power industries with confidence.
+        <div class="mk-section-header text-center">
+            <span class="mk-section-tag">ENGINEERED FLEET</span>
+            <h2 class="mk-section-heading">High-Performance Industrial Machinery</h2>
+            <p class="mk-section-desc">
+                Every unit manufactured in our Punjab facility undergoes rigorous finite-element stress analysis and 72-hour continuous load testing prior to factory commissioning.
             </p>
-
         </div>
 
+        <!-- Filter Controls -->
+        <div class="mk-showcase-filter">
+            <button class="mk-filter-btn active" data-filter="all">All Machinery</button>
+            <button class="mk-filter-btn" data-filter="corrogation">Corrugation Lines</button>
+            <button class="mk-filter-btn" data-filter="heavy">Heavy Packaging</button>
+        </div>
+
+        <!-- Machine Cards Grid (Dynamically Populated from Database) -->
         <div class="row g-4">
-
-            <!-- 1 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-patch-check-fill"></i>
-
-                    <h4>Premium Quality</h4>
-
-                    <p>
-                        Manufactured using premium-grade materials with
-                        rigorous quality inspections at every stage.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- 2 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-cpu-fill"></i>
-
-                    <h4>Advanced Engineering</h4>
-
-                    <p>
-                        Modern technology and precision engineering ensure
-                        maximum efficiency with long operational life.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- 3 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-tools"></i>
-
-                    <h4>Custom Manufacturing</h4>
-
-                    <p>
-                        Machines are designed and customized according to
-                        your production capacity and business needs.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- 4 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-truck"></i>
-
-                    <h4>Fast Delivery</h4>
-
-                    <p>
-                        Efficient manufacturing process with secure packing
-                        and timely delivery across India.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- 5 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-headset"></i>
-
-                    <h4>24×7 Technical Support</h4>
-
-                    <p>
-                        Dedicated experts provide installation guidance,
-                        maintenance, and after-sales assistance.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- 6 -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-cash-stack"></i>
-
-                    <h4>Competitive Pricing</h4>
-
-                    <p>
-                        High-performance industrial machinery offered at
-                        affordable prices with exceptional value.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ==========================================
-        SHOWCASE SECTION
-========================================== -->
-
-<section class="showcase-banner">
-
-    <div class="container-fluid">
-
-        <div class="row align-items-center">
-
-            <!-- LEFT CONTENT -->
-
-            <div class="col-lg-6">
-
-                <div class="showcase-content">
-
-                    <span class="showcase-tag">
-                        Built In Our Facility
-                    </span>
-
-                    <h2>
-                        Machines Engineered For
-                        <span>Real Industrial Load</span>
-                    </h2>
-
-                    <p>
-                        Every unit that leaves our production floor is
-                        engineered for heavy industrial environments,
-                        ensuring maximum reliability, long service life,
-                        and exceptional performance.
-                    </p>
-
-                    <a href="{% url 'product_list' %}"
-                       class="btn btn-primary-custom">
-
-                        <i class="bi bi-grid-3x3-gap-fill me-2"></i>
-
-                        Explore Products
-
-                    </a>
-
-                    <div class="showcase-stats">
-
-                        <div>
-                            <h3>15+</h3>
-                            <span>Years Experience</span>
-                        </div>
-
-                        <div>
-                            <h3>500+</h3>
-                            <span>Machines Delivered</span>
-                        </div>
-
-                        <div>
-                            <h3>24/7</h3>
-                            <span>Technical Support</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RIGHT IMAGE -->
-
-            <div class="col-lg-6">
-
-                <div class="showcase-image">
-
-                    <img src="{% static 'images\Gemini_Generated_Image_c1y30qc1y30qc1y3.png' %}"
-                         alt="MK Industries Factory">
-
-                    <div class="image-glow"></div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <i class="bi bi-gear-fill showcase-gear"></i>
-
-</section>
-
-<!-- ==========================================
-                ABOUT SECTION
-========================================== -->
-
-<section class="about-section py-5">
-
-    <div class="container">
-
-        <div class="row align-items-center g-5">
-
-            <!-- Left Image -->
-
-            <div class="col-lg-5">
-
-                <div class="about-image corner-frame">
-
-                    <img src="{% static 'images\hero-machine.jpeg' %}"
-                         class="img-fluid"
-                         alt="MK Mechanicals">
-
-
-                    <!-- Experience Card -->
-
-                    <div class="experience-card">
-
-                        <div>
-
-                            <h2>15+</h2>
-
-                            <p>Years of Excellence</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Right Content -->
-
-            <div class="col-lg-7">
-
-                <span class="section-tag">
-
-                    ABOUT US
-
-                </span>
-
-                <h2 class="section-heading">
-
-                    Trusted Industrial Machine Manufacturer
-
-                </h2>
-
-                <p class="section-text">
-
-                    MK Mechanicals specializes in designing and manufacturing
-                    high-performance industrial machinery that improves
-                    productivity, efficiency and delivers long-lasting reliability.
-
-                </p>
-
-
-                <div class="row mt-4">
-
-                    <div class="col-md-6">
-
-                        <ul class="about-list">
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Precision Engineering
-
-                            </li>
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Experienced Technical Team
-
-                            </li>
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Custom Machine Manufacturing
-
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-
-                    <div class="col-md-6">
-
-                        <ul class="about-list">
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Excellent Customer Support
-
-                            </li>
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Timely Delivery
-
-                            </li>
-
-                            <li>
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                End-to-End Solutions
-
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-
-                <a href="{% url 'core:about' %}"
-                   class="btn btn-primary-custom mt-4">
-
-                    Read More About Us
-
-                    <i class="bi bi-arrow-right ms-2"></i>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ==========================================
-            COMPANY STATISTICS
-========================================== -->
-
-<section class="stats-section">
-
-    <div class="container">
-
-        <div class="stats-wrapper">
-
-            <div class="row text-center g-0">
-
-                <!-- Item -->
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="stat-box">
-
-                        <i class="bi bi-calendar-event"></i>
-
-                        <div>
-
-                            <h2 class="counter">15+</h2>
-
-                            <p>Years Experience</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Item -->
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="stat-box">
-
-                        <i class="bi bi-gear-wide-connected"></i>
-
-                        <div>
-
-                            <h2 class="counter">350+</h2>
-
-                            <p>Machines Delivered</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Item -->
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="stat-box">
-
-                        <i class="bi bi-people"></i>
-
-                        <div>
-
-                            <h2 class="counter">250+</h2>
-
-                            <p>Happy Clients</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Item -->
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="stat-box">
-
-                        <i class="bi bi-trophy"></i>
-
-                        <div>
-
-                            <h2 class="counter">100%</h2>
-
-                            <p>Quality Assurance</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================================
-        FEATURED PRODUCTS
-========================================== -->
-
-<section class="products-section py-5">
-
-    <div class="container">
-
-        <!-- Section Heading -->
-
-        <div class="section-title text-center mb-5">
-
-            <span class="section-tag">
-                OUR PRODUCTS
-            </span>
-
-            <h2 class="section-heading">
-                Featured Industrial Machines
-            </h2>
-
-            <p class="section-text">
-                Discover our premium range of industrial machinery designed
-                for maximum productivity, precision, and long-lasting performance.
-            </p>
-
-        </div>
-
-        <!-- Products Grid -->
-
-        <div class="row g-4">
-
-            {% for machine in machines|slice:":6" %}
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="product-card">
-
-                    <!-- Product Image -->
-
-                    <div class="product-image">
-
-                        {% if machine.image %}
-                            <img src="{{ machine.image.url }}" alt="{{ machine.name }}">
-                        {% else %}
-                            <img src="{% static 'images/default-machine.jpg' %}" alt="Machine">
-                        {% endif %}
-
-                        <div class="product-overlay"></div>
-
-                        <span class="product-category">
-                            {{ machine.category.name }}
-                        </span>
-
-                    </div>
-
-                    <!-- Product Body -->
-
-                    <div class="product-body">
-
-                        <h3>{{ machine.name }}</h3>
-
-                        <p>
-                            {{ machine.description|truncatewords:18 }}
-                        </p>
-
-                        <div class="product-specs">
-
-                            <div>
-                                <i class="bi bi-cpu"></i>
-                                Industrial Grade
-                            </div>
-
-                            {% if machine.price %}
-                            <div>
-                                <i class="bi bi-currency-rupee"></i>
-                                ₹ {{ machine.price }}
-                            </div>
+            {% if machines %}
+                {% for machine in machines %}
+                <div class="col-lg-4 col-md-6" data-category="{{ machine.category.name|lower|default:'heavy' }}">
+                    <div class="mk-machine-card">
+                        <!-- Machine Thumbnail -->
+                        <div class="mk-machine-thumb">
+                            {% if machine.image %}
+                                <img src="{{ machine.image.url }}" alt="{{ machine.name }}" loading="lazy">
+                            {% else %}
+                                <img src="{% static 'images/Gemini_Generated_Image_c1y30qc1y30qc1y3.png' %}" alt="{{ machine.name }}" loading="lazy">
                             {% endif %}
+                            <span class="mk-machine-badge-cat">
+                                <i class="bi bi-tag-fill me-1"></i>{{ machine.category.name|default:"Heavy Engineering" }}
+                            </span>
+                        </div>
 
-                            {% if machine.brochure %}
-                            <div>
-                                <i class="bi bi-file-earmark-arrow-down"></i>
-                                Brochure Available
+                        <!-- Card Content -->
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">
+                                <a href="{% url 'product_detail' machine.id %}">{{ machine.name }}</a>
+                            </h3>
+
+                            <p class="mk-machine-desc">
+                                {% if machine.short_description %}
+                                    {{ machine.short_description }}
+                                {% else %}
+                                    {{ machine.description|truncatewords:24 }}
+                                {% endif %}
+                            </p>
+
+                            <div class="mk-machine-footer">
+                                <span class="font-monospace small text-secondary">
+                                    <i class="bi bi-gear-fill me-1 text-success"></i>Heavy-Duty
+                                </span>
+                                <a href="{% url 'product_detail' machine.id %}" class="mk-machine-link">
+                                    <span>View Specs</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
                             </div>
-                            {% endif %}
-
                         </div>
-
-                        <div class="product-footer">
-
-                            <a href="{% url 'product_detail' machine.id %}"
-                               class="product-btn">
-
-                                View Details
-
-                                <i class="bi bi-arrow-right"></i>
-
-                            </a>
-
-                        </div>
-
                     </div>
-
                 </div>
-
-            </div>
-
-            {% empty %}
-
-            <div class="col-12">
-
-                <div class="alert alert-info text-center py-4">
-
-                    <h5 class="mb-2">
-                        No Products Available
-                    </h5>
-
-                    <p class="mb-0">
-                        Our industrial machines will be displayed here soon.
-                    </p>
-
+                {% endfor %}
+            {% else %}
+                <!-- Dynamic Fallback Cards if database has 0 items -->
+                <div class="col-lg-4 col-md-6" data-category="corrogation">
+                    <div class="mk-machine-card">
+                        <div class="mk-machine-thumb">
+                            <img src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}" alt="High-Speed Corrugation Machine">
+                            <span class="mk-machine-badge-cat">Corrugation Plant</span>
+                        </div>
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">High-Speed Single Facer Line</h3>
+                            <p class="mk-machine-desc">Engineered for extreme output speeds up to 180 m/min with hydraulic roll stand and micro-gap starch applicator.</p>
+                            <div class="mk-machine-footer">
+                                <span class="font-monospace small text-secondary">Heavy-Duty</span>
+                                <a href="{% url 'product_list' %}" class="mk-machine-link"><span>Explore Fleet</span> <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
-
-            {% endfor %}
-
+                <div class="col-lg-4 col-md-6" data-category="heavy">
+                    <div class="mk-machine-card">
+                        <div class="mk-machine-thumb">
+                            <img src="{% static 'images/Gemini_Generated_Image_c1y30qc1y30qc1y3.png' %}" alt="Rotary Die Cutting Machine">
+                            <span class="mk-machine-badge-cat">Die Cutting</span>
+                        </div>
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">Precision Rotary Die Cutter</h3>
+                            <p class="mk-machine-desc">Equipped with motorized phase adjustment, hardened anvil cylinder, and electronic vacuum lead edge feeder.</p>
+                            <div class="mk-machine-footer">
+                                <span class="font-monospace small text-secondary">High Precision</span>
+                                <a href="{% url 'product_list' %}" class="mk-machine-link"><span>Explore Fleet</span> <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-category="heavy">
+                    <div class="mk-machine-card">
+                        <div class="mk-machine-thumb">
+                            <img src="{% static 'images/about-hero.jpeg' %}" alt="Thin Blade Slitter Scorer">
+                            <span class="mk-machine-badge-cat">Slitting &amp; Scoring</span>
+                        </div>
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">Automatic Thin Blade Slitter Scorer</h3>
+                            <p class="mk-machine-desc">Tungsten carbide alloy blades with automated computerized pneumatic sharpening and zero-tear score profiles.</p>
+                            <div class="mk-machine-footer">
+                                <span class="font-monospace small text-secondary">Automated</span>
+                                <a href="{% url 'product_list' %}" class="mk-machine-link"><span>Explore Fleet</span> <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-
-        <!-- View All Button -->
-
-        {% if machines %}
 
         <div class="text-center mt-5">
-
-            <a href="{% url 'product_list' %}"
-               class="btn btn-outline-custom">
-
-                View All Products
-
-                <i class="bi bi-arrow-right ms-2"></i>
-
+            <a href="{% url 'product_list' %}" class="btn-mk-outline btn-mk-lg">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+                <span>Browse Full Machinery Portfolio</span>
             </a>
-
         </div>
-
-        {% endif %}
-
     </div>
-
 </section>
 
-
 <!-- ==========================================
-            WHY CHOOSE US
-========================================== -->
-
-<section class="why-section">
-
+     ABOUT US SECTION (SPLIT SCREEN)
+=========================================== -->
+<section class="mk-section mk-about-section" id="about">
     <div class="container">
+        <div class="row align-items-center gy-5">
+            <!-- Left Visual -->
+            <div class="col-lg-6">
+                <div class="mk-about-visual-grid">
+                    <div class="mk-about-main-img">
+                        <img src="{% static 'images/about-hero.jpeg' %}"
+                             alt="MK Industries Manufacturing Plant"
+                             loading="lazy">
+                    </div>
+                    <!-- Experience Milestone Badge -->
+                    <div class="mk-about-exp-badge">
+                        <h3>15<span class="text-success">+</span></h3>
+                        <p>Years of Industrial Engineering Excellence</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="row align-items-center">
-
-            <!-- Left Side -->
-
-            <div class="col-lg-5">
-
-                <span class="section-tag">
-
-                    WHY CHOOSE US
-
-                </span>
-
-                <h2 class="section-heading">
-
-                    Engineering Excellence
-                    You Can Trust
-
-                </h2>
-
-                <p class="section-text">
-
-                    We manufacture industrial machinery with
-                    precision engineering, premium materials,
-                    and advanced technology to ensure long-term
-                    performance and customer satisfaction.
-
+            <!-- Right Narrative -->
+            <div class="col-lg-6 ps-lg-5">
+                <span class="mk-section-tag">ESTABLISHED 2010</span>
+                <h2 class="mk-section-heading">Mastering the Art of Heavy Industrial Machinery</h2>
+                <p class="text-light fs-5 mb-3 fw-medium">
+                    At MK Industries, we transform raw alloy steel into ultra-precise production engines that power India's corrugated packaging and industrial manufacturing sector.
+                </p>
+                <p class="mk-section-desc mb-4">
+                    Founded in Punjab with an unwavering commitment to mechanical rigor, we build every machine to withstand decades of intensive, non-stop operation. From custom pneumatic cylinder assemblies to computerized touchscreen operator consoles, our machinery blends traditional metallurgical strength with contemporary automation.
                 </p>
 
-                <a href="{% url 'core:contact' %}"
-                   class="btn btn-primary-custom mt-3">
-
-                    Get Free Consultation
-
-                </a>
-
-            </div>
-
-
-            <!-- Right Side -->
-
-            <div class="col-lg-7">
-
-                <div class="row g-4">
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-award-fill"></i>
-
-                            </div>
-
-                            <h4>
-
-                                Premium Quality
-
-                            </h4>
-
-                            <p>
-
-                                Manufactured using certified materials
-                                with strict quality inspection.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-cpu-fill"></i>
-
-                            </div>
-
-                            <h4>
-
-                                Advanced Technology
-
-                            </h4>
-
-                            <p>
-
-                                Modern manufacturing processes
-                                for superior productivity.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-person-workspace"></i>
-
-                            </div>
-
-                            <h4>
-
-                                Skilled Engineers
-
-                            </h4>
-
-                            <p>
-
-                                Experienced professionals delivering
-                                precision engineering solutions.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-headset"></i>
-
-                            </div>
-
-                            <h4>
-
-                                24×7 Support
-
-                            </h4>
-
-                            <p>
-
-                                Fast installation,
-                                maintenance and technical support.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
+                <ul class="mk-feature-checklist">
+                    <li class="mk-checklist-item">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>ISO 9001:2015 Certified Manufacturing</span>
+                    </li>
+                    <li class="mk-checklist-item">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>Sub-Millimeter CNC Tolerance Standards</span>
+                    </li>
+                    <li class="mk-checklist-item">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>Customized Factory Layout Adaptations</span>
+                    </li>
+                    <li class="mk-checklist-item">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>Direct Factory Spares &amp; Rapid Servicing</span>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{% url 'core:about' %}" class="btn-mk-primary">
+                        <span>Read Our Story</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'core:contact' %}" class="btn-mk-outline">
+                        <span>Schedule Factory Visit</span>
+                    </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- ==========================================
+     STATISTICS COUNTER SECTION
+=========================================== -->
+<section class="mk-stats-section">
+    <div class="container">
+        <div class="mk-stats-grid">
+            <!-- Stat 1 -->
+            <div class="mk-stat-card">
+                <div class="mk-stat-number">
+                    <span class="counter">15</span><span class="counter-suffix">+</span>
+                </div>
+                <div class="mk-stat-title">Years of Experience</div>
+                <p class="mk-stat-desc">Continuous mechanical innovation since 2010</p>
             </div>
 
+            <!-- Stat 2 -->
+            <div class="mk-stat-card">
+                <div class="mk-stat-number">
+                    <span class="counter">350</span><span class="counter-suffix">+</span>
+                </div>
+                <div class="mk-stat-title">Machines Delivered</div>
+                <p class="mk-stat-desc">Deployed across tier-1 packaging hubs</p>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="mk-stat-card">
+                <div class="mk-stat-number">
+                    <span class="counter">250</span><span class="counter-suffix">+</span>
+                </div>
+                <div class="mk-stat-title">Happy Industrial Clients</div>
+                <p class="mk-stat-desc">Long-term partnerships and repeat installations</p>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="mk-stat-card">
+                <div class="mk-stat-number">
+                    <span class="counter">99.8</span><span class="counter-suffix">%</span>
+                </div>
+                <div class="mk-stat-title">Operational Reliability</div>
+                <p class="mk-stat-desc">Calculated across verified continuous runtime</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     WHY CHOOSE US (FEATURE CARDS)
+=========================================== -->
+<section class="mk-section">
+    <div class="container">
+        <div class="mk-section-header text-center">
+            <span class="mk-section-tag">ENGINEERING ADVANTAGE</span>
+            <h2 class="mk-section-heading">Why Leading Manufacturers Partner With Us</h2>
+            <p class="mk-section-desc">
+                From metallurgical grade selection to turnkey commissioning, discover the technical pillars that make MK Industries an industry benchmark.
+            </p>
         </div>
 
+        <div class="mk-features-grid">
+            <!-- Feature 1 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="mk-feature-title">Quality Manufacturing</h3>
+                <p class="mk-feature-text">
+                    Fabricated from certified high-tensile structural steel alloys, dynamically balanced rollers, and surface-hardened chrome wear surfaces for longevity.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-cpu-fill"></i>
+                </div>
+                <h3 class="mk-feature-title">Advanced Engineering</h3>
+                <p class="mk-feature-text">
+                    Full 3D CAD/CAM parametric stress simulation and finite element analysis (FEA) to eliminate vibration harmonics and mechanical fatigue.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-gear-wide-connected"></i>
+                </div>
+                <h3 class="mk-feature-title">Reliable Performance</h3>
+                <p class="mk-feature-text">
+                    Heavy-duty components and oil-bath lubrication gearboxes designed specifically for non-stop round-the-clock factory duty cycles.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-tools"></i>
+                </div>
+                <h3 class="mk-feature-title">Custom Machine Solutions</h3>
+                <p class="mk-feature-text">
+                    Custom roller diameters, motorized phase adjustments, and modular feeding lengths custom-tailored to your exact factory footprint.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+                <h3 class="mk-feature-title">Customer Satisfaction</h3>
+                <p class="mk-feature-text">
+                    Rapid commissioning, on-site operator training, and transparent technical consultation resulting in over 250 verified industrial partnerships.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="mk-feature-card">
+                <div class="mk-feature-icon-box">
+                    <i class="bi bi-headset"></i>
+                </div>
+                <h3 class="mk-feature-title">Technical Expertise</h3>
+                <p class="mk-feature-text">
+                    Over 15 years of mechanical specialization in corrugated packaging systems, backed by dedicated mobile service engineers and genuine spares.
+                </p>
+            </div>
+        </div>
     </div>
-
 </section>
+
 <!-- ==========================================
-            MANUFACTURING PROCESS
-========================================== -->
-
-<section class="process-section">
-
+     MANUFACTURING PROCESS PIPELINE
+=========================================== -->
+<section class="mk-section" style="background: rgba(12, 17, 26, 0.5); border-top: 1px solid var(--mk-border-hairline); border-bottom: 1px solid var(--mk-border-hairline);">
     <div class="container">
-
-        <div class="section-title">
-
-            <span class="section-tag">
-
-                OUR PROCESS
-
-            </span>
-
-            <h2 class="section-heading">
-
-                From Idea to Installation
-
-            </h2>
-
-            <p class="section-text">
-
-                We follow a structured manufacturing process to deliver
-                high-quality industrial machines that meet your exact requirements.
-
+        <div class="mk-section-header text-center">
+            <span class="mk-section-tag">WORKFLOW PIPELINE</span>
+            <h2 class="mk-section-heading">From Blueprint to Factory Floor</h2>
+            <p class="mk-section-desc">
+                A disciplined four-phase engineering methodology guaranteeing flawless execution on every machine project.
             </p>
-
         </div>
 
         <div class="row g-4">
-
-            <!-- Step 1 -->
-
             <div class="col-lg-3 col-md-6">
-
-                <div class="process-card">
-
-                    <div class="process-number">
-
-                        01
-
-                    </div>
-
-                    <div class="process-icon">
-
-                        <i class="bi bi-chat-left-dots-fill"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Consultation
-
-                    </h4>
-
-                    <p>
-
-                        Understanding customer requirements and project goals.
-
-                    </p>
-
+                <div class="mk-feature-card h-100">
+                    <span class="font-monospace text-success fw-bold fs-4 d-block mb-3">01 //</span>
+                    <h4 class="text-white fw-bold mb-2">CAD Simulation</h4>
+                    <p class="text-secondary small">Comprehensive requirement capture, 3D CAD modeling, and parametric kinematic simulation.</p>
                 </div>
-
             </div>
-
-            <!-- Step 2 -->
-
             <div class="col-lg-3 col-md-6">
-
-                <div class="process-card">
-
-                    <div class="process-number">
-
-                        02
-
-                    </div>
-
-                    <div class="process-icon">
-
-                        <i class="bi bi-pencil-square"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Design
-
-                    </h4>
-
-                    <p>
-
-                        Creating detailed engineering drawings and machine layouts.
-
-                    </p>
-
+                <div class="mk-feature-card h-100">
+                    <span class="font-monospace text-success fw-bold fs-4 d-block mb-3">02 //</span>
+                    <h4 class="text-white fw-bold mb-2">Precision Metallurgy</h4>
+                    <p class="text-secondary small">High-tensile plate flame cutting, precision CNC boring, induction hardening, and dynamic balancing.</p>
                 </div>
-
             </div>
-
-            <!-- Step 3 -->
-
             <div class="col-lg-3 col-md-6">
-
-                <div class="process-card">
-
-                    <div class="process-number">
-
-                        03
-
-                    </div>
-
-                    <div class="process-icon">
-
-                        <i class="bi bi-gear-fill"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Manufacturing
-
-                    </h4>
-
-                    <p>
-
-                        Precision fabrication using advanced machinery and technology.
-
-                    </p>
-
+                <div class="mk-feature-card h-100">
+                    <span class="font-monospace text-success fw-bold fs-4 d-block mb-3">03 //</span>
+                    <h4 class="text-white fw-bold mb-2">Mechatronic Assembly</h4>
+                    <p class="text-secondary small">Integration of electric drives, pneumatic cylinders, safety lockouts, and 72-hour continuous test runs.</p>
                 </div>
-
             </div>
-
-            <!-- Step 4 -->
-
             <div class="col-lg-3 col-md-6">
-
-                <div class="process-card">
-
-                    <div class="process-number">
-
-                        04
-
-                    </div>
-
-                    <div class="process-icon">
-
-                        <i class="bi bi-truck"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Delivery
-
-                    </h4>
-
-                    <p>
-
-                        Installation, testing and complete after-sales support.
-
-                    </p>
-
+                <div class="mk-feature-card h-100">
+                    <span class="font-monospace text-success fw-bold fs-4 d-block mb-3">04 //</span>
+                    <h4 class="text-white fw-bold mb-2">On-Site Commissioning</h4>
+                    <p class="text-secondary small">Turnkey factory installation, laser alignment, calibration, and hands-on technician training.</p>
                 </div>
-
             </div>
+        </div>
+    </div>
+</section>
 
+<!-- ==========================================
+     CLIENT TESTIMONIALS / TRUST
+=========================================== -->
+<section class="mk-section">
+    <div class="container">
+        <div class="mk-section-header text-center">
+            <span class="mk-section-tag">VERIFIED ENDORSEMENTS</span>
+            <h2 class="mk-section-heading">Trusted by Industrial Leaders</h2>
+            <p class="mk-section-desc">
+                Hear directly from production directors and plant operators who rely daily on MK machinery.
+            </p>
         </div>
 
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="mk-feature-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="text-warning mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-light fst-italic mb-4">
+                            "The rotary die cutter from MK Industries exceeded our speed expectations. Machine vibrations are practically zero even at full speed. Outstanding build quality."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-top border-secondary">
+                        <div class="text-white fw-bold">Rajesh Kumar</div>
+                        <div class="text-secondary small font-monospace">Director of Operations, Apex Packaging Ltd</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="mk-feature-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="text-warning mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-light fst-italic mb-4">
+                            "We have been running MK corrugation lines across two shifts daily for over 4 years without a single unexpected breakdown. Their prompt support team is second to none."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-top border-secondary">
+                        <div class="text-white fw-bold">Harpreet Singh</div>
+                        <div class="text-secondary small font-monospace">Chief Engineer, Punjab Corrugators</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="mk-feature-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="text-warning mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-light fst-italic mb-4">
+                            "From customized machine width modifications to meticulous on-site calibration, MK Industries demonstrated world-class engineering discipline throughout our project."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-top border-secondary">
+                        <div class="text-white fw-bold">Amit Sharma</div>
+                        <div class="text-secondary small font-monospace">Managing Director, Dynamic Cartons</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </section>
+
 <!-- ==========================================
-                TESTIMONIALS
-========================================== -->
-
-<section class="testimonial-section">
-
+     CALL TO ACTION BANNER
+=========================================== -->
+<section class="mk-cta-section">
     <div class="container">
-
-        <div class="section-title text-center">
-
-            <span class="section-tag">
-
-                CLIENT TESTIMONIALS
-
+        <div class="mk-cta-box">
+            <span class="mk-badge mb-3">
+                <span class="mk-badge-radar"></span>
+                <span>Immediate Engineering Consultation Available</span>
             </span>
-
-            <h2 class="section-heading">
-
-                What Our Clients Say
-
+            <h2 class="mk-cta-title">
+                Ready to Upgrade Your Industrial Production Line?
             </h2>
-
-            <p class="section-text">
-
-                Trusted by industries across India for quality,
-                reliability and professional service.
-
+            <p class="mk-cta-text">
+                Speak directly with MK Industries design engineers to configure machinery matched precisely to your target output, raw material specs, and floor dimensions.
             </p>
-
-        </div>
-
-        <div class="row g-4 mt-4">
-
-            <!-- Testimonial 1 -->
-
-            <div class="col-lg-4">
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-
-                    </div>
-
-                    <p>
-
-                        "Excellent machine quality and outstanding
-                        customer support. The installation process
-                        was smooth and professional."
-
-                    </p>
-
-                    <div class="client-info">
-
-                        <img src="{% static 'images/client1.jpg' %}"
-                             alt="Client">
-
-                        <div>
-
-                            <h5>Rajesh Kumar</h5>
-
-                            <small>Factory Owner</small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Testimonial 2 -->
-
-            <div class="col-lg-4">
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-
-                    </div>
-
-                    <p>
-
-                        "MK Mechanicals delivered exactly what we
-                        needed. Highly recommended for industrial
-                        automation solutions."
-
-                    </p>
-
-                    <div class="client-info">
-
-                        <img src="{% static 'images/client2.jpg' %}"
-                             alt="Client">
-
-                        <div>
-
-                            <h5>Harpreet Singh</h5>
-
-                            <small>Production Manager</small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Testimonial 3 -->
-
-            <div class="col-lg-4">
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-
-                    </div>
-
-                    <p>
-
-                        "Reliable machines, timely delivery and
-                        excellent after-sales support. Great team
-                        to work with."
-
-                    </p>
-
-                    <div class="client-info">
-
-                        <img src="{% static 'images/client3.jpg' %}"
-                             alt="Client">
-
-                        <div>
-
-                            <h5>Amit Sharma</h5>
-
-                            <small>Business Owner</small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ==========================================
-            CALL TO ACTION
-========================================== -->
-
-<section class="cta-section">
-
-    <div class="grid-bg"></div>
-
-    <div class="container">
-
-        <div class="cta-box">
-
-            <h2>
-
-                Ready To Upgrade Your Production?
-
-            </h2>
-
-            <p>
-
-                Contact MK Mechanicals today for high-quality
-                industrial machinery and customized manufacturing
-                solutions.
-
-            </p>
-
-            <div class="mt-4">
-
-                <a href="{% url 'core:contact' %}"
-                   class="btn btn-light btn-lg me-3">
-
-                    Request a Quote
-
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-lg">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>Request Engineering Quote</span>
                 </a>
-
-                <a href="{% url 'product_list' %}"
-                   class="btn btn-outline-light btn-lg">
-
-                    View Products
-
+                <a href="https://wa.me/919876543210?text=Hello%20MK%20Industries,%20I%20would%20like%20to%20discuss%20machine%20specifications."
+                   class="btn-mk-outline btn-mk-lg" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-whatsapp text-success"></i>
+                    <span>Direct WhatsApp Chat</span>
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
 </section>
-
 
 {% endblock %}

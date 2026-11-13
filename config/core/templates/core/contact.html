@@ -1,541 +1,212 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}
-    Contact Us | MK Mechanicals
-{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/products.css' %}">
-    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
-{% endblock %}
+{% block title %}Contact Us | MK Industries - Technical Inquiries & Quotes{% endblock %}
 
 {% block content %}
 
 <!-- ==========================================
-                HERO
-========================================== -->
-
-<section class="hero">
-
-    <div class="grid-bg"></div>
-
-    <div class="wave-wrap">
-        <svg class="wave-back" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-1)" d="M0,120 C200,180 400,60 600,110 C800,160 1000,50 1200,100 C1350,135 1500,90 1600,110 L1600,220 L0,220 Z"></path>
-        </svg>
-        <svg class="wave-mid" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-2)" d="M0,150 C220,90 420,190 640,140 C860,90 1060,180 1280,130 C1400,105 1520,140 1600,130 L1600,220 L0,220 Z"></path>
-        </svg>
-        <svg class="wave-front" viewBox="0 0 1600 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="var(--wave-3)" d="M0,180 C260,140 480,200 700,165 C920,130 1140,190 1360,155 C1450,140 1540,160 1600,150 L1600,220 L0,220 Z"></path>
-        </svg>
-    </div>
-
-    <div class="container">
-
-        <div class="row align-items-center gy-5">
-
-            <div class="col-lg-6">
-
-                <div class="hero-content">
-
-                    <div class="hero-badge">
-
-                        <i class="bi bi-headset"></i>
-
-                        We Reply Within 24 Hours
-
-                    </div>
-
-                    <h1 class="hero-title">
-
-                        Let's Build
-                        <span>Together</span>
-
-                    </h1>
-
-                    <p class="hero-text">
-
-                        Whether you need a new industrial machine,
-                        technical consultation or a customized
-                        manufacturing solution, our experts are
-                        always ready to assist you.
-
-                    </p>
-
-                    <div class="hero-buttons">
-
-                        <a href="#contact-form" class="btn-primary-custom">
-
-                            <i class="bi bi-send-fill me-2"></i>
-
-                            Send Inquiry
-
-                        </a>
-
-                        <a href="tel:+919999999999" class="btn-outline-custom">
-
-                            <i class="bi bi-telephone me-2"></i>
-
-                            Call Now
-
-                        </a>
-
-                    </div>
-
+     PAGE HEADER
+=========================================== -->
+<section class="mk-hero-section" style="min-height: 50vh; padding-top: 130px; padding-bottom: 50px;">
+    <div class="mk-hero-ambient-glow"></div>
+    <div class="container position-relative" style="z-index: 3;">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="mk-badge">
+                    <span class="mk-badge-radar"></span>
+                    <span>Direct Engineering Desk &bull; 24-Hour Turnaround</span>
                 </div>
-
+                <h1 class="mk-hero-title mb-3">
+                    CONNECT WITH OUR <span class="gradient-text">ENGINEERING</span> TEAM.
+                </h1>
+                <p class="mk-hero-lead mb-0">
+                    Whether you require a custom machine proposal, a turnkey corrugation plant quotation, or factory spare parts, our technical specialists are ready to collaborate.
+                </p>
             </div>
-
-            <div class="col-lg-6">
-
-                <div class="hero-right">
-
-                    <div class="hero-machine corner-frame">
-
-                        <img src="{% static 'images\about-hero.jpeg' %}"
-                             class="img-fluid"
-                             alt="MK Mechanicals Contact">
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
-
     </div>
-
 </section>
 
 <!-- ==========================================
-            CONTACT INFO CARDS
-========================================== -->
-
-<section>
-
+     CONTACT INFO CARDS
+=========================================== -->
+<section class="py-5" style="border-bottom: 1px solid var(--mk-border-hairline);">
     <div class="container">
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="mk-contact-card h-100">
+                    <div class="mk-contact-icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div class="mk-contact-card-content">
+                        <h5>Plant &amp; Facility</h5>
+                        <p>Industrial Area, Phase-V, Ludhiana, Punjab, India &ndash; 141003</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="section-title text-center">
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="mk-contact-card h-100">
+                    <div class="mk-contact-icon">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div class="mk-contact-card-content">
+                        <h5>Direct Hotline</h5>
+                        <p>
+                            <a href="tel:+919876543210" class="text-light">+91 98765 43210</a><br>
+                            <a href="tel:+919876543211" class="text-secondary small">+91 98765 43211</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-            <span class="section-tag">GET IN TOUCH</span>
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="mk-contact-card h-100">
+                    <div class="mk-contact-icon">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <div class="mk-contact-card-content">
+                        <h5>Technical Inquiries</h5>
+                        <p>
+                            <a href="mailto:info@mkmechanicals.com" class="text-light">info@mkmechanicals.com</a><br>
+                            <a href="mailto:sales@mkmechanicals.com" class="text-secondary small">sales@mkmechanicals.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-            <h2 class="section-heading">We Are Always Ready To Help</h2>
-
-            <p class="section-text">
-
-                Reach out to us for machine inquiries, technical
-                assistance or customized industrial solutions.
-
-            </p>
-
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="mk-contact-card h-100">
+                    <div class="mk-contact-icon">
+                        <i class="bi bi-clock-fill"></i>
+                    </div>
+                    <div class="mk-contact-card-content">
+                        <h5>Operating Hours</h5>
+                        <p>Monday &ndash; Saturday<br>9:00 AM &ndash; 7:00 PM IST</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="row g-4 mt-4">
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-geo-alt-fill"></i>
-
-                    <h4>Visit Factory</h4>
-
-                    <p>
-
-                        Industrial Area,
-                        Ludhiana, Punjab, India
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-telephone-fill"></i>
-
-                    <h4>Call Us</h4>
-
-                    <p>
-
-                        +91 98765 43210
-                        <br>
-                        +91 98765 43211
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-envelope-fill"></i>
-
-                    <h4>Email</h4>
-
-                    <p>
-
-                        info@mkmechanicals.com
-                        <br>
-                        sales@mkmechanicals.com
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="feature-box">
-
-                    <i class="bi bi-clock-fill"></i>
-
-                    <h4>Working Hours</h4>
-
-                    <p>
-
-                        Monday – Saturday
-                        <br>
-                        9:00 AM – 7:00 PM
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
-
 </section>
 
 <!-- ==========================================
-            CONTACT FORM
-========================================== -->
-
-<section id="contact-form" class="contact-form-section">
-
+     MAIN CONTACT FORM & DETAILS
+=========================================== -->
+<section class="mk-section" id="contact-form">
     <div class="container">
-
-        <div class="row align-items-center g-5">
-
-            <!-- LEFT -->
-
-            <div class="col-lg-7">
-
-                <span class="section-tag">SEND US A MESSAGE</span>
-
-                <h2 class="section-heading">Request a Free Quote</h2>
-
-                <p class="section-text mb-5">
-
-                    Looking for industrial machinery or a customized
-                    solution? Fill out the form below and our experts
-                    will contact you within 24 hours.
-
+        <div class="mk-contact-grid">
+            <!-- Left: Modern Contact Form -->
+            <div class="mk-form-card">
+                <span class="mk-section-tag">PROJECT CONSULTATION</span>
+                <h2 class="mk-form-title text-white">Request a Technical Machine Quotation</h2>
+                <p class="mk-form-subtitle">
+                    Complete the specifications below. Our machine design engineers will prepare a detailed quotation and blueprint layout within 24 hours.
                 </p>
 
-                <form method="POST">
-
+                <form method="POST" action="{% url 'core:contact' %}">
                     {% csrf_token %}
 
-                    <div class="row">
-
-                        <div class="col-md-6 mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="mk-form-label">Full Name *</label>
                             {{ form.full_name }}
                         </div>
 
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-6">
+                            <label class="mk-form-label">Company / Factory Name</label>
                             {{ form.company_name }}
                         </div>
 
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-6">
+                            <label class="mk-form-label">Email Address *</label>
                             {{ form.email }}
                         </div>
 
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-6">
+                            <label class="mk-form-label">Contact Phone / WhatsApp *</label>
                             {{ form.phone }}
                         </div>
 
-                        <div class="col-md-12 mb-4">
+                        <div class="col-12">
+                            <label class="mk-form-label">Target Machine System</label>
                             {{ form.machine }}
                         </div>
 
-                        <div class="col-md-12 mb-4">
+                        <div class="col-12">
+                            <label class="mk-form-label">Requirements &amp; Technical Specifications *</label>
                             {{ form.message }}
                         </div>
 
-                        <div class="col-md-12">
-
-                            <button type="submit" class="btn-primary-custom">
-
-                                Send Inquiry
-
-                                <i class="bi bi-arrow-right ms-2"></i>
-
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn-mk-primary btn-mk-lg w-100">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>
+                                <span>Submit Technical Inquiry</span>
                             </button>
-
                         </div>
-
                     </div>
-
                 </form>
-
             </div>
 
-            <!-- RIGHT -->
-
-            <div class="col-lg-5">
-
-                <div class="factory-image-box corner-frame">
-
-                    <img src="{% static 'images/contact/factory-contact.jpg' %}"
-                         class="img-fluid"
-                         alt="Factory">
-
+            <!-- Right: Direct Channels & Guarantee -->
+            <div class="mk-contact-info-wrap">
+                <!-- WhatsApp Priority Action -->
+                <div class="mk-whatsapp-card">
+                    <div class="mk-whatsapp-info">
+                        <h5>Instant WhatsApp Connect</h5>
+                        <p class="text-secondary small">Direct connection with our on-duty mechanical engineering lead.</p>
+                    </div>
+                    <a href="https://wa.me/919876543210?text=Hello%20MK%20Industries,%20I%20have%20an%20urgent%20machine%20inquiry."
+                       class="btn-mk-primary btn-mk-sm flex-shrink-0" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-whatsapp me-1"></i>Chat Now
+                    </a>
                 </div>
 
-                <div class="mt-4 contact-highlight">
-
-                    <h4>Why Contact MK Mechanicals?</h4>
-
-                    <ul>
-
-                        <li><i class="bi bi-check-circle-fill"></i> Premium Quality Machines</li>
-
-                        <li><i class="bi bi-check-circle-fill"></i> Customized Industrial Solutions</li>
-
-                        <li><i class="bi bi-check-circle-fill"></i> Experienced Engineering Team</li>
-
-                        <li><i class="bi bi-check-circle-fill"></i> Fast Delivery Across India</li>
-
-                        <li><i class="bi bi-check-circle-fill"></i> 24/7 Technical Assistance</li>
-
+                <!-- Industrial Facility Showcase Box -->
+                <div class="mk-feature-card">
+                    <div class="mk-hero-img-wrap mb-4" style="aspect-ratio: 16/9; border-radius: var(--radius-md);">
+                        <img src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}"
+                             alt="MK Industries Industrial Assembly Floor">
+                    </div>
+                    <h4 class="text-white fw-bold mb-3">Our Engineering Commitment</h4>
+                    <ul class="mk-feature-checklist" style="grid-template-columns: 1fr; margin: 0; gap: 0.9rem;">
+                        <li class="mk-checklist-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Direct access to mechanical design engineers</span>
+                        </li>
+                        <li class="mk-checklist-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Transparent bill of materials &amp; timeline</span>
+                        </li>
+                        <li class="mk-checklist-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Comprehensive CAD floor plan integration</span>
+                        </li>
+                        <li class="mk-checklist-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>1-Year comprehensive warranty &amp; lifetime spares</span>
+                        </li>
                     </ul>
-
                 </div>
 
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================================
-            GOOGLE MAP
-========================================== -->
-
-<section class="map-section">
-
-    <div class="container">
-
-        <div class="section-title text-center">
-
-            <span class="section-tag">FIND US</span>
-
-            <h2 class="section-heading">Visit Our Manufacturing Facility</h2>
-
-            <p class="section-text">
-
-                We welcome customers to visit our factory and
-                experience our manufacturing process firsthand.
-
-            </p>
-
-        </div>
-
-        <div class="map-box">
-
-            <iframe
-
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1248.0493020597403!2d74.91064493753909!3d31.616290017288406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39197cdb5b8a85a3%3A0x4dc62c7c74e4b983!2sM.K%20Mechanical%20Works%20-%20Corrugated%20Box%20Making%20Machine%20Manufacturer!5e0!3m2!1sen!2sin!4v1784039822996!5m2!1sen!2sin"
-                width="100%"
-                height="480"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin">
-
-            </iframe>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================================
-            FAQ
-========================================== -->
-
-<section>
-
-    <div class="container">
-
-        <div class="section-title text-center">
-
-            <span class="section-tag">FAQ</span>
-
-            <h2 class="section-heading">Frequently Asked Questions</h2>
-
-        </div>
-
-        <div class="row justify-content-center">
-
-            <div class="col-lg-9">
-
-                <div class="accordion" id="faqAccordion">
-
-                    <div class="accordion-item">
-
-                        <h2 class="accordion-header">
-
-                            <button class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#faq1">
-
-                                Do you manufacture custom machines?
-
-                            </button>
-
-                        </h2>
-
-                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-
-                            <div class="accordion-body">
-
-                                Yes. We manufacture machines according
-                                to your production requirements and
-                                factory layout.
-
-                            </div>
-
+                <!-- Factory Coordinate HUD Badge -->
+                <div class="mk-stat-card py-3 px-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="font-monospace text-success small d-block">FACILITY COORDINATES</span>
+                            <span class="text-white font-monospace fw-bold">30.9010&deg; N, 75.8573&deg; E</span>
                         </div>
-
+                        <i class="bi bi-compass text-secondary fs-3"></i>
                     </div>
-
-                    <div class="accordion-item">
-
-                        <h2 class="accordion-header">
-
-                            <button class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#faq2">
-
-                                Do you provide installation?
-
-                            </button>
-
-                        </h2>
-
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-
-                            <div class="accordion-body">
-
-                                Yes, our engineers provide installation,
-                                testing and operator training.
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="accordion-item">
-
-                        <h2 class="accordion-header">
-
-                            <button class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#faq3">
-
-                                Do you offer after-sales support?
-
-                            </button>
-
-                        </h2>
-
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-
-                            <div class="accordion-body">
-
-                                Yes, we provide spare parts,
-                                maintenance and technical assistance.
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-</section>
-
-<!-- ==========================================
-            CALL TO ACTION
-========================================== -->
-
-<section class="cta-section">
-
-    <div class="grid-bg"></div>
-
-    <div class="container">
-
-        <div class="cta-box">
-
-            <h2>Ready To Start?</h2>
-
-            <p>
-
-                Whether you need a new industrial machine, technical
-                consultation or a customized manufacturing solution,
-                our experienced team is here to help.
-
-            </p>
-
-            <div class="mt-4">
-
-                <a href="#contact-form" class="btn btn-light btn-lg me-3">
-
-                    Request A Quote
-
-                </a>
-
-                <a href="tel:+919999999999" class="btn btn-outline-light btn-lg">
-
-                    Call Our Team
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </section>
 
 {% endblock %}

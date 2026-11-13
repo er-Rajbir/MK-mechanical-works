@@ -1,652 +1,347 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MK Industries | Advanced Industrial Engineering & Heavy Machinery{% endblock %}</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags -->
+    <meta name="description" content="MK Industries - Premier manufacturer of high-precision industrial machinery, corrugation systems, rotary die cutters, and bespoke automated manufacturing solutions.">
+    <meta name="keywords" content="Industrial machinery, corrugation machine manufacturer, rotary die cutter, packaging machines, heavy engineering India">
+    <meta name="theme-color" content="#06080c">
 
-    <title>
-
-        {% block title %}
-
-            MK Mechanicals | Industrial Machine Manufacturer
-
-        {% endblock %}
-
-    </title>
-
-    <!-- Bootstrap -->
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          rel="stylesheet">
+    <!-- Google Fonts: Syne, Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts: Big Shoulders Display (headings) / IBM Plex Sans (body) / IBM Plex Mono (labels) -->
+    <!-- MK Industries Futuristic Design System -->
+    <link rel="stylesheet" href="{% static 'css/futuristic.css' %}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
-          rel="stylesheet">
-
-    <!-- CSS -->
-
-    <link rel="stylesheet"
-          href="{% static 'css/style.css' %}">
-
-    {% block extra_css %}
-
-    {% endblock %}
-
+    {% block extra_css %}{% endblock %}
 </head>
-
 <body>
 
-
-
-<!--=====================================
-            TOP HEADER
-======================================-->
-
-<div class="top-bar">
-
-    <div class="container">
-
-        <div class="row align-items-center">
-
-            <div class="col-lg-7 d-none d-lg-flex">
-
-                <div class="top-info">
-
-                    <span>
-
-                        <i class="bi bi-geo-alt-fill"></i>
-
-                        Punjab, India
-
-                    </span>
-
-                    <span>
-
-                        <i class="bi bi-envelope-fill"></i>
-
-                        mkmechanicals@gmail.com
-
-                    </span>
-
-                    <span>
-
-                        <i class="bi bi-clock-fill"></i>
-
-                        Tue - Sun : 9:00 AM - 7:00 PM
-
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="col-lg-5">
-
-                <div class="top-social">
-
-                    <a href="#">
-
-                        <i class="bi bi-facebook"></i>
-
-                    </a>
-
-                    <a href="https://www.instagram.com/mkmechanicalworks/">
-
-                        <i class="bi bi-instagram"></i>
-
-                    </a>
-
-                    
-
-                   
-                    <a href="{% url 'dashboard:login' %}" class="admin-btn">
-
-    <i class="bi bi-shield-lock"></i>
-
-    
-
-</a>
-
-                </div>
-                
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!--=====================================
-            NAVBAR
-======================================-->
-
-<nav class="navbar navbar-expand-lg custom-navbar">
-    <div class="container">
-
-        <!-- Logo -->
-        <a href="{% url 'core:home' %}" class="navbar-brand">
-            <img src="{% static 'images/logo.png' %}"
-                 alt="MK Mechanicals"
-                 class="brand-logo">
-
-            <span class="brand-text">
-                <strong>MK Mechanicals</strong>
-                <small>Machine Making Solutions</small>
-            </span>
-        </a>
-
-        <!-- Mobile Toggle -->
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarMenu"
-                aria-controls="navbarMenu"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navigation -->
-        <div class="collapse navbar-collapse" id="navbarMenu">
-
-            <ul class="navbar-nav ms-auto align-items-lg-center">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:home' %}">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:about' %}">
-                        About
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'product_list' %}">
-                        Products
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Services
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:gallery' %}">
-                        Gallery
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:contact' %}">
-                        Contact
-                    </a>
-                </li>
-
-                <li class="nav-item quote-item">
-                    <a href="{% url 'core:contact' %}" class="btn-quote">
-                        <i class="bi bi-lightning-fill"></i>
-                        Get Quote
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
-
-
-
-
-
-<!--=====================================
-            MAIN CONTENT
-======================================-->
-
-<main>
-
-    {% block content %}
-
-    {% endblock %}
-
-</main>
-<!--=====================================
-                FOOTER
-======================================-->
-
-<footer class="footer">
-
-    <!-- Top Footer -->
-
-    <div class="container">
-
-        <div class="row gy-5">
-
-            <!-- Company -->
-
-            <div class="col-lg-4">
-
-                <a href="{% url 'core:home' %}" class="footer-brand">
-
-                    <img src="{% static 'images/logo.png' %}"
-                         alt="MK Mechanicals"
-                         class="footer-logo">
-
-                    <div>
-
-                        <h4>MK Mechanicals</h4>
-
-                        <span>Industrial Machine Manufacturer</span>
-
+    <!-- Blueprint Grid Global Background -->
+    <div class="mk-blueprint-grid"></div>
+
+    <!-- ==========================================
+         TOP SYSTEM STATUS BAR
+    =========================================== -->
+    <div class="mk-topbar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 d-none d-lg-block">
+                    <div class="status-pulse">
+                        <span class="pulse-dot"></span>
+                        <span>FACILITY STATUS: 100% OPERATIONAL &bull; LUDHIANA, PB &bull; ISO 9001:2015</span>
                     </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mk-topbar-links">
+                        <a href="tel:+919876543210" class="mk-topbar-link">
+                            <i class="bi bi-telephone-fill text-success"></i>
+                            <span>+91 98765 43210</span>
+                        </a>
+                        <a href="mailto:info@mkmechanicals.com" class="mk-topbar-link">
+                            <i class="bi bi-envelope-fill"></i>
+                            <span>info@mkmechanicals.com</span>
+                        </a>
+                        <a href="{% url 'dashboard:login' %}" class="mk-topbar-link" title="Operator Portal">
+                            <i class="bi bi-shield-lock-fill"></i>
+                            <span>Portal</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- ==========================================
+         FUTURISTIC NAVBAR
+    =========================================== -->
+    <header class="mk-navbar">
+        <div class="container">
+            <div class="mk-nav-inner">
+                <!-- Brand Logo -->
+                <a href="{% url 'core:home' %}" class="mk-brand">
+                    <div class="mk-brand-logo-wrap">
+                        <img src="{% static 'images/logo.png' %}" alt="MK Industries Logo">
+                    </div>
+                    <div class="mk-brand-title">
+                        <div>MK <span class="brand-accent">INDUSTRIES</span></div>
+                        <span class="mk-brand-tagline">Heavy Engineering &bull; Est. 2010</span>
+                    </div>
                 </a>
 
-                <p class="footer-about">
+                <!-- Desktop Navigation Menu -->
+                <nav>
+                    <ul class="mk-nav-menu">
+                        <li>
+                            <a href="{% url 'core:home' %}" class="mk-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'core:about' %}" class="mk-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'product_list' %}" class="mk-nav-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+                                Machinery
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'core:gallery' %}" class="mk-nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
+                                Gallery
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'core:contact' %}" class="mk-nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
-                    MK Mechanicals specializes in manufacturing
-                    high-performance industrial machines designed
-                    for precision, durability and maximum
-                    productivity across various industries.
-
-                </p>
-
-                <div class="social-links">
-
-                    <a href="#">
-
-                        <i class="bi bi-facebook"></i>
-
+                <!-- Actions -->
+                <div class="mk-nav-actions">
+                    <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-sm">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        <span>Request Quote</span>
                     </a>
+                    <!-- Mobile Hamburger -->
+                    <button class="mk-menu-toggle" aria-label="Open Navigation Menu">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-                    <a href="#">
+    <!-- ==========================================
+         RESPONSIVE MOBILE DRAWER
+    =========================================== -->
+    <div class="mk-drawer-overlay"></div>
+    <aside class="mk-mobile-drawer">
+        <div class="mk-drawer-header">
+            <div class="mk-brand">
+                <div class="mk-brand-logo-wrap">
+                    <img src="{% static 'images/logo.png' %}" alt="MK Industries Logo">
+                </div>
+                <div class="mk-brand-title">
+                    <div>MK <span class="brand-accent">INDUSTRIES</span></div>
+                </div>
+            </div>
+            <button class="mk-drawer-close" aria-label="Close Navigation Menu">&times;</button>
+        </div>
 
-                        <i class="bi bi-instagram"></i>
+        <ul class="mk-drawer-nav">
+            <li>
+                <a href="{% url 'core:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                    <span>Home</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'core:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                    <span>About Us</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'product_list' %}" class="{% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+                    <span>Machinery Catalog</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'core:gallery' %}" class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
+                    <span>Industrial Gallery</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'core:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                    <span>Contact &amp; Inquiries</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'dashboard:login' %}">
+                    <span>Staff Portal</span>
+                    <i class="bi bi-shield-lock"></i>
+                </a>
+            </li>
+        </ul>
 
-                    </a>
+        <div class="pt-3 border-top border-secondary">
+            <a href="{% url 'core:contact' %}" class="btn-mk-primary w-100 text-center mb-3">
+                <i class="bi bi-lightning-charge-fill me-2"></i>
+                Get Fast Quote
+            </a>
+            <p class="text-secondary small mb-0 font-monospace">
+                <i class="bi bi-telephone-fill me-2 text-success"></i>+91 98765 43210<br>
+                <i class="bi bi-envelope-fill me-2"></i>info@mkmechanicals.com
+            </p>
+        </div>
+    </aside>
 
-                    <a href="#">
+    <!-- ==========================================
+         DJANGO MESSAGES FLASH NOTIFICATIONS
+    =========================================== -->
+    {% if messages %}
+    <div class="container position-relative" style="z-index: 1040; margin-top: 100px;">
+        {% for message in messages %}
+        <div class="alert alert-dismissible fade show d-flex align-items-center gap-3 p-3 mb-3 border"
+             style="background: rgba(14, 21, 32, 0.95); backdrop-filter: blur(12px); border-color: {% if message.tags == 'success' %}var(--mk-lime){% else %}var(--mk-border-medium){% endif %} !important; border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill text-success fs-4{% else %}bi-info-circle-fill text-info fs-4{% endif %}"></i>
+            <div class="text-light fw-medium">{{ message }}</div>
+            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-                        <i class="bi bi-linkedin"></i>
+    <!-- ==========================================
+         MAIN CONTENT AREA
+    =========================================== -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-                    </a>
-
-                    <a href="#">
-
-                        <i class="bi bi-youtube"></i>
-
-                    </a>
-
+    <!-- ==========================================
+         FUTURISTIC INDUSTRIAL FOOTER
+    =========================================== -->
+    <footer class="mk-footer">
+        <div class="container">
+            <div class="mk-footer-grid">
+                <!-- Brand Manifesto -->
+                <div>
+                    <div class="mk-brand mk-footer-brand">
+                        <div class="mk-brand-logo-wrap">
+                            <img src="{% static 'images/logo.png' %}" alt="MK Industries Logo">
+                        </div>
+                        <div class="mk-brand-title">
+                            <div>MK <span class="brand-accent">INDUSTRIES</span></div>
+                            <span class="mk-brand-tagline">Engineered for Extremes</span>
+                        </div>
+                    </div>
+                    <p class="mk-footer-about">
+                        Pioneering high-precision industrial machine manufacturing since 2010. We engineer heavy-duty corrugation lines, rotary die cutters, and bespoke automated production systems with sub-millimeter tolerances.
+                    </p>
+                    <div class="mk-footer-social">
+                        <a href="https://www.instagram.com/mkmechanicalworks/" target="_blank" class="mk-social-btn" aria-label="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="mk-social-btn" aria-label="Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="mk-social-btn" aria-label="LinkedIn">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="mk-social-btn" aria-label="YouTube">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
                 </div>
 
-            </div>
-
-
-
-            <!-- Quick Links -->
-
-            <div class="col-lg-2 col-md-6">
-
-                <h5>
-
-                    Quick Links
-
-                </h5>
-
-                <ul class="footer-links">
-
-                    <li>
-
-                        <a href="{% url 'core:home' %}">
-
-                            Home
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'core:about' %}">
-
-                            About
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'product_list' %}">
-
-                            Products
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="#">
-
-                            Gallery
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'core:contact' %}">
-
-                            Contact
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-
-            <!-- Services -->
-
-            <div class="col-lg-3 col-md-6">
-
-                <h5>
-
-                    Our Services
-
-                </h5>
-
-                <ul class="footer-links">
-
-                    <li>
-
-                        Industrial Machines
-
-                    </li>
-
-                    <li>
-
-                        Machine Installation
-
-                    </li>
-
-                    <li>
-
-                        Preventive Maintenance
-
-                    </li>
-
-                    <li>
-
-                        Custom Fabrication
-
-                    </li>
-
-                    <li>
-
-                        Technical Support
-
-                    </li>
-
-                    <li>
-
-                        Spare Parts Supply
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-
-            <!-- Contact -->
-
-            <div class="col-lg-3">
-
-                <h5>
-
-                    Contact Us
-
-                </h5>
-
-                <div class="footer-contact">
-
-                    <div>
-
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="mk-footer-heading">Architecture</h4>
+                    <ul class="mk-footer-links">
+                        <li><a href="{% url 'core:home' %}"><i class="bi bi-chevron-right text-success"></i>Home</a></li>
+                        <li><a href="{% url 'core:about' %}"><i class="bi bi-chevron-right text-success"></i>About Engineering</a></li>
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-chevron-right text-success"></i>Machinery Showcase</a></li>
+                        <li><a href="{% url 'core:gallery' %}"><i class="bi bi-chevron-right text-success"></i>Factory Gallery</a></li>
+                        <li><a href="{% url 'core:contact' %}"><i class="bi bi-chevron-right text-success"></i>Contact Desk</a></li>
+                    </ul>
+                </div>
+
+                <!-- Industrial Solutions -->
+                <div>
+                    <h4 class="mk-footer-heading">Solutions</h4>
+                    <ul class="mk-footer-links">
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-gear-wide-connected text-success"></i>Corrugation Plants</a></li>
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-gear-wide-connected text-success"></i>Rotary Die Cutters</a></li>
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-gear-wide-connected text-success"></i>Automatic Slitters</a></li>
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-gear-wide-connected text-success"></i>Custom Automation</a></li>
+                        <li><a href="{% url 'product_list' %}"><i class="bi bi-gear-wide-connected text-success"></i>Retrofitting &amp; Spares</a></li>
+                    </ul>
+                </div>
+
+                <!-- Factory Contact Desk & Newsletter -->
+                <div>
+                    <h4 class="mk-footer-heading">Facility HQ</h4>
+                    <div class="mk-footer-contact-item">
                         <i class="bi bi-geo-alt-fill"></i>
-
-                        <span>
-
-                            Punjab, India
-
-                        </span>
-
+                        <span>Industrial Area, Phase-V, Ludhiana, Punjab, India - 141003</span>
                     </div>
-
-                    <div>
-
-                        <i class="bi bi-envelope-fill"></i>
-
-                        <span>
-
-                            info@mkmechanicals.com
-
-                        </span>
-
-                    </div>
-
-                    <div>
-
+                    <div class="mk-footer-contact-item">
                         <i class="bi bi-telephone-fill"></i>
-
-                        <span>
-
-                            +91 XXXXX XXXXX
-
-                        </span>
-
+                        <span>+91 98765 43210 / +91 98765 43211</span>
+                    </div>
+                    <div class="mk-footer-contact-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>info@mkmechanicals.com</span>
                     </div>
 
-                    <div>
-
-                        <i class="bi bi-clock-fill"></i>
-
-                        <span>
-
-                            Mon – Sat : 9:00 AM – 7:00 PM
-
-                        </span>
-
+                    <div class="mt-4">
+                        <span class="d-block text-white fw-bold small mb-2 font-monospace">STAY UPDATED</span>
+                        <form class="mk-newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to MK Industries technical bulletins!');">
+                            <input type="email" class="mk-newsletter-input" placeholder="Enter business email" required>
+                            <button type="submit" class="btn-mk-primary btn-mk-sm" aria-label="Subscribe">
+                                <i class="bi bi-send-fill"></i>
+                            </button>
+                        </form>
                     </div>
-
                 </div>
-
             </div>
 
-        </div>
-
-    </div>
-
-
-
-    <!-- Newsletter -->
-
-    <div class="footer-newsletter">
-
-        <div class="container">
-
-            <div class="row align-items-center gy-3">
-
-                <div class="col-lg-6">
-
-                    <h4>
-
-                        Stay Updated
-
-                    </h4>
-
-                    <p>
-
-                        Subscribe to receive updates about new
-                        industrial machines and company news.
-
-                    </p>
-
+            <!-- Footer Bottom Bar -->
+            <div class="mk-footer-bottom">
+                <div>
+                    &copy; 2026 MK Industries &bull; All Rights Reserved. ISO 9001:2015 Certified Manufacturing.
                 </div>
-
-                <div class="col-lg-6">
-
-                    <form class="newsletter-form">
-
-                        <input type="email"
-
-                               placeholder="Enter your email address">
-
-                        <button type="submit">
-
-                            Subscribe
-
-                        </button>
-
-                    </form>
-
+                <div class="mk-developer-credit">
+                    Developed by <strong>Er. Rajbir</strong> &bull; <a href="mailto:anandrajbir13@gmail.com">anandrajbir13@gmail.com</a>
                 </div>
-
             </div>
-
         </div>
+    </footer>
 
-    </div>
+    <!-- ==========================================
+         FLOATING ACTION BUTTONS
+    =========================================== -->
+    <!-- WhatsApp Direct Float -->
+    <a href="https://wa.me/919876543210?text=Hello%20MK%20Industries,%20I%20am%20interested%20in%20your%20industrial%20machinery."
+       class="mk-floating-whatsapp"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Direct WhatsApp Consultation"
+       title="Chat with MK Engineers on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
+    <!-- Back to Top Button -->
+    <button id="mkBackToTop" class="mk-back-top" aria-label="Back To Top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
 
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bottom Footer -->
+    <!-- MK Industries Futuristic Scripts -->
+    <script src="{% static 'js/futuristic.js' %}"></script>
 
-    <div class="footer-bottom">
-
-        <div class="container">
-
-            <div class="row align-items-center">
-
-                <div class="col-md-6">
-
-                    <p>
-
-                        © 2026 MK Mechanicals. All Rights Reserved.
-
-                    </p>
-
-                </div>
-
-                <div class="col-md-6 text-md-end">
-
-                    <p>
-
-                        developed by  Er.Rajbir</p>
-                        contact us: anandrajbir13@gmail.com</p>
-
-            
-
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
-<!--=====================================
-        WHATSAPP FLOAT BUTTON
-======================================-->
-
-<a href="https://wa.me/91XXXXXXXXXX"
-   class="whatsapp-btn"
-   target="_blank"
-   aria-label="WhatsApp">
-
-    <i class="bi bi-whatsapp"></i>
-
-</a>
-
-
-
-<!--=====================================
-        BACK TO TOP
-======================================-->
-
-<button id="backToTop"
-        class="back-top"
-        aria-label="Back To Top">
-
-    <i class="bi bi-arrow-up"></i>
-
-</button>
-
-
-
-<!--=====================================
-        LOADER (Optional)
-======================================-->
-
-<div class="page-loader">
-
-    <div class="loader-circle"></div>
-
-</div>
-
-
-
-<!--=====================================
-        BOOTSTRAP JS
-======================================-->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
-<!--=====================================
-        CUSTOM JS
-======================================-->
-
-<script src="{% static 'js/scripts.js' %}"></script>
-
-{% block extra_js %}
-
-{% endblock %}
-
+    {% block extra_js %}{% endblock %}
 </body>
-
 </html>

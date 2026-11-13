@@ -1,835 +1,281 @@
-{% extends "core/base.html" %}
+{% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}
-{{ machine.name }} | MK Mechanicals
-{% endblock %}
+{% block title %}{{ machine.name }} | Technical Dossier &amp; Specifications | MK Industries{% endblock %}
 
 {% block content %}
 
-<style>
-/* =========================================================
-   MK MECHANICALS — ADVANCED CYBERNETIC MACHINE DETAIL PAGE
-========================================================= */
-.machine-detail-page {
-    --navy: #08233f;
-    --navy-2: #0d355c;
-    --blue: #1479d1;
-    --blue-dark: #075ca8;
-    --blue-light: #eaf5ff;
-    --blue-soft: #f4f9fe;
-    --neon-cyan: #0ff0fc;
-    --neon-green: #19a765;
-    
-    --text: #102a43;
-    --muted: #61758a;
-    --line: rgba(20, 121, 209, 0.18);
-
-    background: radial-gradient(circle at 50% -20%, #0d355c 0%, #08233f 45%, #051424 100%);
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
-    min-height: 100vh;
-    font-family: "Inter", "Segoe UI", sans-serif;
-}
-
-/* CYBERNETIC GRID BACKGROUND */
-.machine-detail-page::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.35;
-    background: 
-        linear-gradient(rgba(20, 121, 209, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20, 121, 209, 0.12) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: 1;
-}
-
-/* AMBIENT GLOW ORBS */
-.ambient-glow {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(20, 121, 209, 0.22) 0%, transparent 70%);
-    top: -100px;
-    right: -200px;
-    z-index: 1;
-    pointer-events: none;
-    animation: pulseGlow 8s ease-in-out infinite alternate;
-}
-
-@keyframes pulseGlow {
-    0% { transform: scale(1); opacity: 0.4; }
-    100% { transform: scale(1.2); opacity: 0.8; }
-}
-
-.machine-detail-container {
-    width: min(1320px, calc(100% - 40px));
-    margin: auto;
-    position: relative;
-    z-index: 3;
-    padding: 40px 0 90px;
-}
-
-/* BACK BUTTON */
-.machine-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: #8ca0b2;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 25px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.machine-back:hover {
-    color: var(--neon-cyan);
-    transform: translateX(-5px);
-}
-
-/* MAIN LAYOUT GRID */
-.machine-main-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: 45px;
-    align-items: center;
-}
-
-/* HOVER-LIFT GALLERY CARD */
-.machine-gallery-card {
-    position: relative;
-    background: rgba(13, 53, 92, 0.65);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(85, 182, 255, 0.3);
-    border-radius: 26px;
-    padding: 18px;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
-}
-.machine-gallery-card:hover {
-    box-shadow: 0 40px 80px rgba(20, 121, 209, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* VIEWER CONTAINER */
-.machine-image-viewer {
-    position: relative;
-    height: 480px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: radial-gradient(circle at center, #0d355c 0%, #06192e 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#machineMainImage {
-    position: relative;
-    z-index: 2;
-    max-width: 86%;
-    max-height: 86%;
-    object-fit: contain;
-    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-}
-.machine-image-viewer:hover #machineMainImage {
-    transform: scale(1.06);
-}
-
-/* ANIMATED DATA STREAM LINES OVER IMAGE */
-.cyber-stream-lines {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    background-image: radial-gradient(circle, var(--neon-cyan) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.15;
-    animation: panGrid 20s linear infinite;
-}
-@keyframes panGrid {
-    0% { background-position: 0 0; }
-    100% { background-position: 40px 40px; }
-}
-
-/* GALLERY CONTROLS */
-.machine-gallery-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 46px;
-    height: 46px;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50%;
-    background: rgba(8, 35, 63, 0.85);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 5;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-}
-.machine-gallery-btn:hover {
-    background: var(--blue);
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 15px rgba(15, 240, 252, 0.5);
-    transform: translateY(-50%) scale(1.1);
-}
-.machine-prev { left: 16px; }
-.machine-next { right: 16px; }
-
-.machine-image-counter {
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-    z-index: 5;
-    padding: 6px 14px;
-    border-radius: 30px;
-    background: rgba(8, 35, 63, 0.85);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: var(--neon-cyan);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .05em;
-}
-
-/* PULSING STATUS BADGE */
-.machine-status {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 5;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 14px;
-    border-radius: 30px;
-    background: rgba(8, 35, 63, 0.9);
-    border: 1px solid rgba(25, 167, 101, 0.4);
-    color: var(--neon-green);
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(25, 167, 101, 0.2);
-}
-.machine-status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--neon-green);
-    box-shadow: 0 0 12px var(--neon-green);
-    animation: pulseDot 2s infinite;
-}
-@keyframes pulseDot {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 167, 101, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(25, 167, 101, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(25, 167, 101, 0); }
-}
-
-/* THUMBNAILS */
-.machine-thumbnails {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 16px 2px 4px;
-}
-.machine-thumbnails::-webkit-scrollbar { height: 5px; }
-.machine-thumbnails::-webkit-scrollbar-thumb { background: rgba(20, 121, 209, 0.4); border-radius: 20px; }
-
-.machine-thumbnail {
-    width: 80px;
-    height: 66px;
-    flex: 0 0 80px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    background: #06192e;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 2px;
-}
-.machine-thumbnail:hover {
-    border-color: var(--blue);
-    transform: translateY(-3px);
-}
-.machine-thumbnail.active {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 15px rgba(15, 240, 252, 0.4);
-}
-
-/* INFORMATION SIDE */
-.machine-info { padding-top: 4px; }
-
-.machine-category {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border-radius: 10px;
-    background: rgba(20, 121, 209, 0.15);
-    border: 1px solid rgba(85, 182, 255, 0.3);
-    color: #5fc1ff;
-    font-size: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    margin-bottom: 16px;
-    backdrop-filter: blur(4px);
-}
-
-.machine-info h1 {
-    margin: 0 0 16px;
-    color: #ffffff;
-    font-size: clamp(2.2rem, 3.8vw, 3.5rem);
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -.03em;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-.machine-short-description {
-    color: #b0c4de;
-    font-size: 16px;
-    line-height: 1.75;
-    margin-bottom: 25px;
-}
-
-/* ACTION BUTTONS WITH NEON GLOW */
-.machine-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 30px;
-}
-.machine-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 50px;
-    padding: 0 24px;
-    border-radius: 14px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-}
-.machine-btn-primary {
-    background: linear-gradient(135deg, #1479d1 0%, #075ca8 100%);
-    color: #ffffff;
-    box-shadow: 0 10px 25px rgba(20, 121, 209, 0.4);
-    border: 1px solid rgba(85, 182, 255, 0.4);
-}
-.machine-btn-primary:hover {
-    color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(15, 240, 252, 0.3);
-    border-color: var(--neon-cyan);
-}
-.machine-btn-outline {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(13, 53, 92, 0.4);
-    color: #ffffff;
-    backdrop-filter: blur(6px);
-}
-.machine-btn-outline:hover {
-    color: var(--neon-cyan);
-    border-color: var(--neon-cyan);
-    background: rgba(13, 53, 92, 0.8);
-    transform: translateY(-3px);
-    box-shadow: 0 0 20px rgba(15, 240, 252, 0.2);
-}
-
-/* QUICK INFO MATRIX */
-.machine-quick-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 1px solid rgba(85, 182, 255, 0.2);
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(13, 53, 92, 0.45);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-.machine-quick-item {
-    padding: 18px 20px;
-    border-bottom: 1px solid rgba(85, 182, 255, 0.15);
-    border-right: 1px solid rgba(85, 182, 255, 0.15);
-    transition: background 0.3s ease;
-}
-.machine-quick-item:hover {
-    background: rgba(20, 121, 209, 0.15);
-}
-.machine-quick-item:nth-child(even) { border-right: none; }
-.machine-quick-item:nth-last-child(-n+2) { border-bottom: none; }
-
-.machine-quick-label {
-    display: block;
-    color: #7995b2;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    margin-bottom: 6px;
-}
-.machine-quick-value {
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-}
-
-/* LOWER CONTENT & SPECIFICATIONS */
-.machine-details-section {
-    margin-top: 65px;
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
-    gap: 30px;
-}
-
-.machine-content-card {
-    background: rgba(13, 53, 92, 0.5);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(85, 182, 255, 0.2);
-    border-radius: 24px;
-    padding: 35px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
-}
-
-.machine-section-heading {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-}
-.machine-section-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    background: rgba(20, 121, 209, 0.25);
-    border: 1px solid rgba(85, 182, 255, 0.4);
-    color: var(--neon-cyan);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-.machine-section-heading h2 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 23px;
-    font-weight: 800;
-}
-
-.machine-description {
-    color: #b0c4de;
-    line-height: 1.85;
-    font-size: 15px;
-    white-space: pre-line;
-}
-
-/* SPECIFICATIONS PANEL */
-.machine-spec-card {
-    background: linear-gradient(145deg, #0d355c 0%, #06192e 100%);
-    border-radius: 24px;
-    padding: 32px;
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(85, 182, 255, 0.3);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-}
-.machine-spec-card::after {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    right: -80px;
-    top: -80px;
-    background: radial-gradient(circle, rgba(15, 240, 252, 0.18), transparent 70%);
-}
-.machine-spec-card h2 {
-    position: relative;
-    z-index: 2;
-    margin: 0 0 20px;
-    font-size: 22px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.machine-spec-card h2 i { color: var(--neon-cyan); }
-
-.machine-specification {
-    position: relative;
-    z-index: 2;
-    color: #c8dced;
-    line-height: 1.85;
-    font-size: 14px;
-    white-space: pre-line;
-}
-
-/* BROCHURE DOWNLOAD BOX */
-.machine-brochure {
-    margin-top: 22px;
-    padding: 22px;
-    border-radius: 18px;
-    background: rgba(13, 53, 92, 0.6);
-    border: 1px solid rgba(85, 182, 255, 0.25);
-    backdrop-filter: blur(10px);
-}
-.machine-brochure-title {
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 800;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.machine-brochure-title i { color: var(--neon-cyan); }
-
-.machine-brochure-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 13px 18px;
-    border-radius: 12px;
-    background: rgba(20, 121, 209, 0.2);
-    border: 1px solid rgba(85, 182, 255, 0.4);
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-}
-.machine-brochure-btn:hover {
-    background: var(--blue);
-    border-color: var(--neon-cyan);
-    color: #ffffff;
-    box-shadow: 0 0 20px rgba(15, 240, 252, 0.3);
-}
-
-/* BOTTOM CTA BANNER */
-.machine-cta {
-    margin-top: 60px;
-    padding: 40px 45px;
-    border-radius: 26px;
-    background: linear-gradient(135deg, #0d355c 0%, #051424 100%);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(85, 182, 255, 0.3);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-}
-.machine-cta::before {
-    content: "";
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    right: -100px;
-    top: -150px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(15, 240, 252, 0.15), transparent 70%);
-}
-.machine-cta-content { position: relative; z-index: 2; }
-.machine-cta h2 { margin: 0 0 8px; font-size: 26px; font-weight: 800; }
-.machine-cta p { margin: 0; color: #a1b8d0; font-size: 14px; }
-.machine-cta .machine-btn {
-    position: relative;
-    z-index: 2;
-    background: #ffffff;
-    color: var(--navy);
-    white-space: nowrap;
-    border: none;
-}
-.machine-cta .machine-btn:hover {
-    background: var(--neon-cyan);
-    color: var(--navy);
-    box-shadow: 0 0 25px rgba(15, 240, 252, 0.5);
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 1000px) {
-    .machine-main-grid { grid-template-columns: 1fr; gap: 35px; }
-    .machine-image-viewer { height: 420px; }
-    .machine-details-section { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 700px) {
-    .machine-detail-container { width: min(100% - 24px, 1240px); padding-top: 25px; }
-    .machine-gallery-card { padding: 10px; border-radius: 18px; }
-    .machine-image-viewer { height: 320px; border-radius: 14px; }
-    .machine-info h1 { font-size: 2.1rem; }
-    .machine-quick-info { grid-template-columns: 1fr; }
-    .machine-quick-item { border-right: none !important; border-bottom: 1px solid rgba(85, 182, 255, 0.15) !important; }
-    .machine-quick-item:last-child { border-bottom: none !important; }
-    .machine-content-card, .machine-spec-card { padding: 24px; }
-    .machine-cta { padding: 30px 24px; flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 480px) {
-    .machine-image-viewer { height: 260px; }
-    .machine-gallery-btn { width: 38px; height: 38px; font-size: 16px; }
-    .machine-actions { flex-direction: column; }
-    .machine-btn { width: 100%; }
-}
-</style>
-
-<section class="machine-detail-page">
-    <div class="ambient-glow"></div>
-
-    <div class="machine-detail-container">
-
-        <!-- BACK BUTTON -->
-        <a href="{% url 'product_list' %}" class="machine-back">
-            <i class="bi bi-arrow-left"></i> Back to Machines
-        </a>
-
-        <!-- MAIN MACHINE AREA -->
-        <div class="machine-main-grid">
-
-            <!-- IMAGE / GALLERY CARD -->
-            <div class="machine-gallery-card">
-                <div class="machine-image-viewer">
-                    <div class="cyber-stream-lines"></div>
-
-                    {% if machine.image %}
-                        <img id="machineMainImage" src="{{ machine.image.url }}" alt="{{ machine.name }}">
-                    {% else %}
-                        <div class="text-center text-muted">
-                            <i class="bi bi-image" style="font-size:60px; color: #5fc1ff;"></i>
-                            <p class="mt-2 mb-0" style="color: #a1b8d0;">Machine image unavailable</p>
-                        </div>
-                    {% endif %}
-
-                    <!-- Status Badge -->
-                    <div class="machine-status">
-                        <span class="machine-status-dot"></span>
-                        Available
-                    </div>
-
-                    <!-- Previous / Next Gallery Controls -->
-                    {% if machine.gallery.all %}
-                        <button type="button" class="machine-gallery-btn machine-prev" onclick="changeMachineImage(-1)" aria-label="Previous image">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        <button type="button" class="machine-gallery-btn machine-next" onclick="changeMachineImage(1)" aria-label="Next image">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    {% endif %}
-
-                    <!-- Counter -->
-                    <div class="machine-image-counter">
-                        <span id="machineCurrentImage">1</span> / <span id="machineTotalImages">{{ machine.gallery.count|add:"1" }}</span>
-                    </div>
-                </div>
-
-                <!-- THUMBNAILS -->
-                <div class="machine-thumbnails">
-                    {% if machine.image %}
-                        <img src="{{ machine.image.url }}" alt="{{ machine.name }}" class="machine-thumbnail active" onclick="selectMachineImage(this)">
-                    {% endif %}
-                    {% for gallery_image in machine.gallery.all %}
-                        <img src="{{ gallery_image.image.url }}" alt="{{ machine.name }} gallery image" class="machine-thumbnail" onclick="selectMachineImage(this)" loading="lazy">
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- MACHINE INFORMATION -->
-            <div class="machine-info">
-                {% if machine.category %}
-                    <div class="machine-category">
-                        <i class="bi bi-diagram-3-fill"></i> {{ machine.category.name }}
-                    </div>
-                {% endif %}
-
-                <h1>{{ machine.name }}</h1>
-
-                {% if machine.short_description %}
-                    <p class="machine-short-description">{{ machine.short_description }}</p>
-                {% endif %}
-
-                <!-- ACTIONS -->
-                <div class="machine-actions">
-                    {% if machine.brochure %}
-                        <a href="{{ machine.brochure.url }}" target="_blank" rel="noopener" class="machine-btn machine-btn-primary">
-                            <i class="bi bi-file-earmark-pdf-fill"></i> View Brochure
-                        </a>
-                    {% endif %}
-                    <a href="{% url 'product_list' %}" class="machine-btn machine-btn-outline">
-                        <i class="bi bi-grid-3x3-gap"></i> More Machines
-                    </a>
-                </div>
-
-                <!-- QUICK INFORMATION MATRIX -->
-                <div class="machine-quick-info">
-                    <div class="machine-quick-item">
-                        <span class="machine-quick-label">Category</span>
-                        <span class="machine-quick-value">
-                            {% if machine.category %}{{ machine.category.name }}{% else %}Industrial Machinery{% endif %}
-                        </span>
-                    </div>
-                    <div class="machine-quick-item">
-                        <span class="machine-quick-label">Machine Status</span>
-                        <span class="machine-quick-value" style="color: var(--neon-green);">Available</span>
-                    </div>
-                    <div class="machine-quick-item">
-                        <span class="machine-quick-label">Added</span>
-                        <span class="machine-quick-value">{{ machine.created_at|date:"d M Y" }}</span>
-                    </div>
-                    <div class="machine-quick-item">
-                        <span class="machine-quick-label">Gallery</span>
-                        <span class="machine-quick-value">{{ machine.gallery.count|add:"1" }} Images</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- DESCRIPTION + SPECIFICATION SECTION -->
-        <div class="machine-details-section">
-
-            <!-- MACHINE OVERVIEW -->
-            <div class="machine-content-card">
-                <div class="machine-section-heading">
-                    <div class="machine-section-icon">
-                        <i class="bi bi-info-lg"></i>
-                    </div>
-                    <h2>Machine Overview</h2>
-                </div>
-                {% if machine.description %}
-                    <div class="machine-description">{{ machine.description }}</div>
-                {% else %}
-                    <div class="machine-description">Detailed information about this machine will be available soon.</div>
-                {% endif %}
-            </div>
-
-            <!-- SPECIFICATIONS PANEL -->
-            <div>
-                <div class="machine-spec-card">
-                    <h2><i class="bi bi-sliders2"></i> Specifications</h2>
-                    {% if machine.specification %}
-                        <div class="machine-specification">{{ machine.specification }}</div>
-                    {% else %}
-                        <div class="machine-specification">Specifications will be provided on request.</div>
-                    {% endif %}
-                </div>
-
-                {% if machine.brochure %}
-                    <div class="machine-brochure">
-                        <div class="machine-brochure-title">
-                            <i class="bi bi-file-earmark-text"></i> Technical Documentation
-                        </div>
-                        <a href="{{ machine.brochure.url }}" target="_blank" rel="noopener" class="machine-brochure-btn">
-                            <i class="bi bi-download"></i> Open Machine Brochure
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-
-        </div>
-
-        <!-- BOTTOM CTA -->
-        <div class="machine-cta">
-            <div class="machine-cta-content">
-                <h2>Interested in this machine?</h2>
-                <p>Contact MK Mechanicals for machine details, availability and technical information.</p>
-            </div>
-            <a href="{% url 'product_list' %}" class="machine-btn">
-                Explore More Machines <i class="bi bi-arrow-right"></i>
-            </a>
-        </div>
-
+<!-- ==========================================
+     MACHINE DOSSIER HERO / BREADCRUMB
+=========================================== -->
+<section class="mk-hero-section" style="min-height: auto; padding-top: 130px; padding-bottom: 30px;">
+    <div class="mk-hero-ambient-glow"></div>
+    <div class="container position-relative" style="z-index: 3;">
+        <!-- Breadcrumb Navigation -->
+        <nav class="d-flex align-items-center gap-2 font-monospace small mb-4 text-secondary">
+            <a href="{% url 'core:home' %}" class="text-secondary hover-lime">HOME</a>
+            <span>/</span>
+            <a href="{% url 'product_list' %}" class="text-secondary hover-lime">MACHINERY</a>
+            <span>/</span>
+            <span class="text-success fw-bold">{{ machine.name|upper }}</span>
+        </nav>
     </div>
 </section>
 
-<script>
-/* =========================================================
-   ADVANCED GALLERY & CARD INTERACTION SCRIPT
-========================================================= */
-document.addEventListener("DOMContentLoaded", function () {
-    const mainImage = document.getElementById("machineMainImage");
-    const thumbnails = Array.from(document.querySelectorAll(".machine-thumbnail"));
-    const currentCounter = document.getElementById("machineCurrentImage");
-    const galleryCard = document.querySelector(".machine-gallery-card");
+<!-- ==========================================
+     MACHINE PRIMARY SPECIFICATION STAGE
+=========================================== -->
+<section class="py-4">
+    <div class="container">
+        <div class="row g-5 align-items-start">
+            <!-- Left: Visual Showcase & Gallery -->
+            <div class="col-lg-7">
+                <div class="mk-hero-visual-card mb-4">
+                    <div class="mk-hud-corner mk-hud-tl"></div>
+                    <div class="mk-hud-corner mk-hud-tr"></div>
+                    <div class="mk-hud-corner mk-hud-bl"></div>
+                    <div class="mk-hud-corner mk-hud-br"></div>
 
-    if (!mainImage || thumbnails.length === 0) return;
+                    <!-- Main Large Image View -->
+                    <div class="mk-hero-img-wrap" style="aspect-ratio: 16/11;">
+                        {% if machine.image %}
+                            <img id="mainMachineDisplay"
+                                 src="{{ machine.image.url }}"
+                                 alt="{{ machine.name }}"
+                                 class="w-100 h-100 object-fit-cover">
+                        {% else %}
+                            <img id="mainMachineDisplay"
+                                 src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}"
+                                 alt="{{ machine.name }}"
+                                 class="w-100 h-100 object-fit-cover">
+                        {% endif %}
+                    </div>
 
-    window.selectMachineImage = function (thumbnail) {
-        const index = thumbnails.indexOf(thumbnail);
-        if (index === -1) return;
+                    <!-- Spec Badge Pill -->
+                    <div class="mk-hero-floating-pill">
+                        <i class="bi bi-shield-check mk-pill-icon"></i>
+                        <div>
+                            <div class="mk-pill-title">Verified Industrial Build</div>
+                            <div class="mk-pill-desc">Heavy-Duty Flame-Cut Alloy Frame</div>
+                        </div>
+                    </div>
+                </div>
 
-        mainImage.style.opacity = "0";
-        mainImage.style.transform = "scale(0.95)";
+                <!-- Gallery Thumbnails (if any extra images exist) -->
+                {% if machine.gallery.all %}
+                <div class="d-flex gap-3 overflow-x-auto pb-2 pt-1">
+                    {% if machine.image %}
+                    <div class="rounded border p-1 cursor-pointer bg-dark flex-shrink-0"
+                         style="width: 90px; height: 65px; border-color: var(--mk-lime) !important;"
+                         onclick="document.getElementById('mainMachineDisplay').src='{{ machine.image.url }}'">
+                        <img src="{{ machine.image.url }}" alt="Primary View" class="w-100 h-100 object-fit-cover rounded">
+                    </div>
+                    {% endif %}
 
-        setTimeout(function () {
-            mainImage.src = thumbnail.src;
-            mainImage.alt = thumbnail.alt;
-            mainImage.style.opacity = "1";
-            mainImage.style.transform = "scale(1)";
-        }, 150);
+                    {% for sub in machine.gallery.all %}
+                    <div class="rounded border border-secondary p-1 cursor-pointer bg-dark flex-shrink-0"
+                         style="width: 90px; height: 65px; transition: border-color 0.2s;"
+                         onmouseover="this.style.borderColor='var(--mk-lime)'"
+                         onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'"
+                         onclick="document.getElementById('mainMachineDisplay').src='{{ sub.image.url }}'">
+                        <img src="{{ sub.image.url }}" alt="Sub View" class="w-100 h-100 object-fit-cover rounded">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
 
-        thumbnails.forEach(item => item.classList.remove("active"));
-        thumbnail.classList.add("active");
+            <!-- Right: Technical Details & Actions -->
+            <div class="col-lg-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="mk-badge mb-0">
+                        <span class="mk-badge-radar"></span>
+                        <span>{{ machine.category.name|default:"Industrial Machine" }}</span>
+                    </span>
+                    <span class="font-monospace small text-secondary">SERIES // 2026</span>
+                </div>
 
-        if (currentCounter) {
-            currentCounter.textContent = index + 1;
-        }
-    };
+                <h1 class="mk-section-heading mb-3" style="font-size: clamp(2rem, 3vw, 2.75rem);">
+                    {{ machine.name }}
+                </h1>
 
-    window.changeMachineImage = function (direction) {
-        const activeIndex = thumbnails.findIndex(item => item.classList.contains("active"));
-        let nextIndex = activeIndex + direction;
+                <p class="text-light fs-6 mb-4 leading-relaxed">
+                    {% if machine.short_description %}
+                        {{ machine.short_description }}
+                    {% else %}
+                        {{ machine.description|truncatewords:40 }}
+                    {% endif %}
+                </p>
 
-        if (nextIndex < 0) nextIndex = thumbnails.length - 1;
-        if (nextIndex >= thumbnails.length) nextIndex = 0;
+                <!-- Spec Grid Tags -->
+                <div class="p-3 rounded mb-4" style="background: var(--mk-bg-card); border: 1px solid var(--mk-border-hairline);">
+                    <div class="row g-3 font-monospace small">
+                        <div class="col-6">
+                            <span class="text-secondary d-block">CATEGORY</span>
+                            <span class="text-white fw-bold">{{ machine.category.name }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary d-block">TOLERANCE SPEC</span>
+                            <span class="text-success fw-bold">&lt; 0.05 mm CNC</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary d-block">DUTY CYCLE</span>
+                            <span class="text-white fw-bold">24/7 Continuous</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary d-block">WARRANTY</span>
+                            <span class="text-white fw-bold">1-Year Comprehensive</span>
+                        </div>
+                    </div>
+                </div>
 
-        selectMachineImage(thumbnails[nextIndex]);
-    };
+                <!-- Call to Action Buttons -->
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-lg w-100">
+                        <i class="bi bi-lightning-charge-fill me-2"></i>
+                        <span>Request Official Quotation</span>
+                    </a>
 
-    /* 3D TILT EFFECT ON GALLERY CARD */
-    if (galleryCard) {
-        galleryCard.addEventListener("mousemove", (e) => {
-            const rect = galleryCard.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            const dx = (x - xc) / xc;
-            const dy = (y - yc) / yc;
+                    <div class="d-flex gap-3">
+                        <a href="https://wa.me/919876543210?text=Hello%20MK%20Industries,%20I%20am%20inquiring%20about%20the%20machine:%20{{ machine.name|urlencode }}."
+                           class="btn-mk-outline flex-grow-1 text-center" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-whatsapp text-success me-2"></i>
+                            <span>WhatsApp Specs</span>
+                        </a>
 
-            galleryCard.style.transform = `perspective(1000px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) translateY(-4px)`;
-        });
+                        {% if machine.brochure %}
+                        <a href="{{ machine.brochure.url }}" target="_blank" class="btn-mk-outline flex-grow-1 text-center">
+                            <i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i>
+                            <span>Brochure</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
 
-        galleryCard.addEventListener("mouseleave", () => {
-            galleryCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)";
-        });
-    }
+                <!-- Verified Support Guarantee -->
+                <div class="border-top border-secondary pt-3">
+                    <div class="d-flex align-items-center gap-3 text-secondary small font-monospace">
+                        <i class="bi bi-shield-check text-success fs-5"></i>
+                        <span>Factory Commissioning &amp; Operator Training Included Across India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    /* KEYBOARD NAVIGATION */
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowLeft") changeMachineImage(-1);
-        if (event.key === "ArrowRight") changeMachineImage(1);
-    });
-});
-</script>
+<!-- ==========================================
+     DEEP DIVE SPECIFICATIONS & DESCRIPTION
+=========================================== -->
+<section class="mk-section" style="background: rgba(12, 17, 26, 0.4); border-top: 1px solid var(--mk-border-hairline);">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Full Description -->
+            <div class="col-lg-7">
+                <span class="mk-section-tag">ENGINEERING DOSSIER</span>
+                <h3 class="text-white fw-bold mb-4">Comprehensive System Overview</h3>
+                <div class="text-secondary leading-relaxed fs-6" style="white-space: pre-line;">
+                    {{ machine.description }}
+                </div>
+
+                <!-- Core Engineering Highlights -->
+                <div class="row g-4 mt-4">
+                    <div class="col-sm-6">
+                        <div class="mk-feature-card h-100 py-3 px-4">
+                            <div class="text-success fw-bold font-monospace small mb-1">// TRANSMISSION</div>
+                            <h5 class="text-white fw-bold mb-1">Hardened Gearbox</h5>
+                            <p class="text-secondary small mb-0">High-grade alloy steel gears in an enclosed oil-bath lubrication system for smooth, quiet rotation.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mk-feature-card h-100 py-3 px-4">
+                            <div class="text-success fw-bold font-monospace small mb-1">// DYNAMICS</div>
+                            <h5 class="text-white fw-bold mb-1">Laser Balancing</h5>
+                            <p class="text-secondary small mb-0">Rollers dynamically calibrated to ensure absolute concentricity under heavy high-speed web tension.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Specification Matrix -->
+            <div class="col-lg-5">
+                <div class="mk-form-card p-4">
+                    <span class="mk-section-tag">PARAMETRIC DATA</span>
+                    <h4 class="text-white fw-bold mb-3">Technical Specifications</h4>
+
+                    {% if machine.specification %}
+                    <div class="font-monospace small text-light p-3 rounded"
+                         style="background: #090c12; border: 1px solid var(--mk-border-hairline); white-space: pre-line; line-height: 1.8;">
+                        {{ machine.specification }}
+                    </div>
+                    {% else %}
+                    <!-- Standard Industrial Matrix -->
+                    <div class="table-responsive">
+                        <table class="table table-dark table-borderless font-monospace small mb-0">
+                            <tbody>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="text-secondary py-2">Structural Frame</td>
+                                    <td class="text-white text-end py-2">Heavy Plate Cast/Steel</td>
+                                </tr>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="text-secondary py-2">Drive Motor</td>
+                                    <td class="text-white text-end py-2">Variable Frequency Drive</td>
+                                </tr>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="text-secondary py-2">Operating Voltage</td>
+                                    <td class="text-white text-end py-2">415V, 3 Phase, 50Hz</td>
+                                </tr>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="text-secondary py-2">Control Architecture</td>
+                                    <td class="text-white text-end py-2">Digital Pushbutton / PLC</td>
+                                </tr>
+                                <tr class="border-bottom border-secondary">
+                                    <td class="text-secondary py-2">Lubrication</td>
+                                    <td class="text-white text-end py-2">Centralized Lubrication</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-secondary py-2">Inspection Standard</td>
+                                    <td class="text-success text-end py-2">ISO 9001:2015 Approved</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4 pt-3 border-top border-secondary text-center">
+                        <p class="text-secondary small mb-3">Custom dimensional adjustments available upon request.</p>
+                        <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-sm w-100">
+                            <i class="bi bi-sliders me-1"></i>
+                            <span>Configure Custom Parameters</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     CALL TO ACTION
+=========================================== -->
+<section class="mk-cta-section">
+    <div class="container">
+        <div class="mk-cta-box">
+            <h2 class="mk-cta-title">Ready to Integrate {{ machine.name }} Into Your Plant?</h2>
+            <p class="mk-cta-text">
+                Speak directly with an MK Industries technical application engineer for pricing, factory delivery schedules, and foundation drawings.
+            </p>
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-lg">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>Contact Engineering Desk</span>
+                </a>
+                <a href="{% url 'product_list' %}" class="btn-mk-outline btn-mk-lg">
+                    <span>Back to Fleet Catalog</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

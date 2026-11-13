@@ -1,393 +1,166 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}
-    Our Products | MK Mechanicals
-{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/products.css' %}">
-{% endblock %}
+{% block title %}Machinery Fleet &amp; Specifications | MK Industries{% endblock %}
 
 {% block content %}
 
 <!-- ==========================================
-            PAGE HEADER
-========================================== -->
-
-<section class="page-header">
-
-    <div class="grid-bg"></div>
-
-    <div class="container">
-
-        <span class="section-tag">OUR PRODUCTS</span>
-
-        <h1 class="hero-title" style="font-size:48px;">
-
-            Industrial Machines <span>Built To Perform</span>
-
-        </h1>
-
-        <p class="hero-text">
-
-            Explore our complete range of industrial machinery,
-            engineered for precision, durability and maximum
-            productivity across every production line.
-
-        </p>
-
-        <div class="breadcrumb-mk">
-
-            <a href="{% url 'home' %}">Home</a>
-
-            <i class="bi bi-chevron-right"></i>
-
-            <span>Products</span>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================================
-            PRODUCTS GRID
-========================================== -->
-
-<section class="products-section">
-
-    <div class="container">
-
-        <div class="products-toolbar">
-
-            <span class="products-count">
-
-                Showing <strong>{{ machines|length }}</strong> machines
-
-            </span>
-
-            <div class="search-box">
-
-                <i class="bi bi-search"></i>
-
-                <input type="text"
-                       id="productSearch"
-                       placeholder="Search machines...">
-
-            </div>
-
-        </div>
-
-        <div class="row g-4" id="productGrid">
-
-            {% for machine in machines %}
-
-            <div class="col-lg-4 col-md-6 product-item">
-
-                <div class="product-card">
-
-                    <!-- Product Image -->
-
-                    <div class="product-image">
-
-                        {% if machine.image %}
-
-                            <img src="{{ machine.image.url }}"
-                                 alt="{{ machine.name }}">
-
-                        {% else %}
-
-                            <img src="{% static 'images/default-machine.jpg' %}"
-                                 alt="Machine">
-
-                        {% endif %}
-
-                    </div>
-
-                    <!-- Product Body -->
-
-                    <div class="product-body">
-
-                        <span class="product-badge">
-
-                            Industrial Machine
-
-                        </span>
-
-                        <h4>
-
-                            {{ machine.name }}
-
-                        </h4>
-
-                        <p>
-
-                            {{ machine.description|truncatewords:20 }}
-
-                        </p>
-
-                        <div class="product-footer d-flex align-items-center justify-content-between">
-
-                            <span class="product-price">
-
-                                &#8377; {{ machine.price }}
-
-                            </span>
-
-                            <a href="{% url 'product_detail' machine.id %}"
-                               class="btn-primary-custom">
-
-                                View Details
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {% empty %}
-
-            <div class="col-12">
-
-                <div class="empty-state">
-
-                    <i class="bi bi-inboxes"></i>
-
-                    <h4>No Products Available Yet</h4>
-
-                    <p>
-
-                        We're updating our catalogue — please check
-                        back soon or contact us directly.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================================
-            WHY OUR MACHINES
-========================================== -->
-
-<section class="why-section">
-
-    <div class="container">
-
+     CATALOG PAGE HERO
+=========================================== -->
+<section class="mk-hero-section" style="min-height: 52vh; padding-top: 130px; padding-bottom: 50px;">
+    <div class="mk-hero-ambient-glow"></div>
+    <div class="container position-relative" style="z-index: 3;">
         <div class="row align-items-center">
-
-            <div class="col-lg-5">
-
-                <span class="section-tag">MACHINE QUALITY</span>
-
-                <h2 class="section-heading">
-
-                    Every Machine Meets
-                    Strict Standards
-
-                </h2>
-
-                <p class="section-text">
-
-                    From raw material selection to final testing,
-                    every machine that leaves our facility is built
-                    to run reliably in demanding production
-                    environments.
-
-                </p>
-
-                <a href="{% url 'contact' %}" class="btn-primary-custom mt-3">
-
-                    Request A Custom Quote
-
-                </a>
-
-            </div>
-
-            <div class="col-lg-7">
-
-                <div class="row g-4">
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-award-fill"></i>
-
-                            </div>
-
-                            <h4>Premium Materials</h4>
-
-                            <p>
-
-                                Certified raw materials with strict
-                                quality inspection at every stage.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-tools"></i>
-
-                            </div>
-
-                            <h4>Custom Fabrication</h4>
-
-                            <p>
-
-                                Machines tailored to your exact
-                                production requirements and layout.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-truck"></i>
-
-                            </div>
-
-                            <h4>Fast Delivery</h4>
-
-                            <p>
-
-                                Efficient production planning ensures
-                                on-time delivery across India.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="why-card">
-
-                            <div class="why-icon">
-
-                                <i class="bi bi-headset"></i>
-
-                            </div>
-
-                            <h4>After-Sales Support</h4>
-
-                            <p>
-
-                                Installation, maintenance and spare
-                                parts support whenever you need it.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
+            <div class="col-lg-8">
+                <div class="mk-badge">
+                    <span class="mk-badge-radar"></span>
+                    <span>Industrial Machinery Fleet &bull; Precision Engineered</span>
                 </div>
-
+                <h1 class="mk-hero-title mb-3">
+                    ADVANCED INDUSTRIAL <span class="gradient-text">MACHINERY</span> CATALOG.
+                </h1>
+                <p class="mk-hero-lead mb-0">
+                    Engineered for maximum throughput, low energy consumption, and decades of relentless service. Explore our production lines, single facers, and rotary converters.
+                </p>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 <!-- ==========================================
-            CALL TO ACTION
-========================================== -->
-
-<section class="cta-section">
-
-    <div class="grid-bg"></div>
-
+     MACHINERY LISTING & SEARCH
+=========================================== -->
+<section class="mk-section" style="padding-top: 40px;">
     <div class="container">
-
-        <div class="cta-box">
-
-            <h2>
-
-                Can't Find The Right Machine?
-
-            </h2>
-
-            <p>
-
-                Talk to our engineering team — we design and build
-                custom industrial machinery to match your exact
-                production needs.
-
-            </p>
-
-            <div class="mt-4">
-
-                <a href="{% url 'contact' %}"
-                   class="btn btn-light btn-lg me-3">
-
-                    Request a Quote
-
-                </a>
-
-                <a href="tel:+919999999999"
-                   class="btn btn-outline-light btn-lg">
-
-                    Call Our Team
-
-                </a>
-
+        <!-- Search and Filter Bar -->
+        <div class="row align-items-center justify-content-between g-3 mb-5">
+            <div class="col-lg-6">
+                <div class="mk-showcase-filter mb-0 justify-content-start">
+                    <button class="mk-filter-btn active" data-filter="all">All Machinery ({{ machines.count }})</button>
+                    <button class="mk-filter-btn" data-filter="corrogation">Corrugation Lines</button>
+                    <button class="mk-filter-btn" data-filter="heavy">Heavy Converting</button>
+                </div>
             </div>
 
+            <div class="col-lg-4">
+                <div class="position-relative">
+                    <input type="text"
+                           id="machineSearchInput"
+                           class="mk-input"
+                           placeholder="Search machine models or specs..."
+                           aria-label="Search Machines"
+                           style="padding-left: 42px;">
+                    <i class="bi bi-search position-absolute text-secondary" style="top: 15px; left: 16px;"></i>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <!-- Machine Cards Grid -->
+        <div class="row g-4" id="machineGrid">
+            {% if machines %}
+                {% for machine in machines %}
+                <div class="col-lg-4 col-md-6 machine-card-col" data-category="{{ machine.category.name|lower|default:'heavy' }}">
+                    <div class="mk-machine-card">
+                        <!-- Machine Thumbnail -->
+                        <div class="mk-machine-thumb">
+                            {% if machine.image %}
+                                <img src="{{ machine.image.url }}" alt="{{ machine.name }}" loading="lazy">
+                            {% else %}
+                                <img src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}" alt="{{ machine.name }}" loading="lazy">
+                            {% endif %}
+                            <span class="mk-machine-badge-cat">
+                                <i class="bi bi-gear-fill me-1"></i>{{ machine.category.name|default:"Industrial Machine" }}
+                            </span>
+                        </div>
 
+                        <!-- Card Content -->
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">
+                                <a href="{% url 'product_detail' machine.id %}">{{ machine.name }}</a>
+                            </h3>
+
+                            <p class="mk-machine-desc">
+                                {% if machine.short_description %}
+                                    {{ machine.short_description }}
+                                {% else %}
+                                    {{ machine.description|truncatewords:26 }}
+                                {% endif %}
+                            </p>
+
+                            <div class="mk-machine-footer">
+                                <a href="{% url 'core:contact' %}" class="btn-mk-outline btn-mk-sm">
+                                    <i class="bi bi-chat-dots me-1"></i>Inquire
+                                </a>
+                                <a href="{% url 'product_detail' machine.id %}" class="mk-machine-link">
+                                    <span>Full Specs</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 border border-secondary rounded" style="background: var(--mk-bg-card);">
+                        <i class="bi bi-cpu text-success fs-1 mb-3 d-block"></i>
+                        <h4 class="text-white">Machinery Catalog Synchronizing</h4>
+                        <p class="text-secondary">Our machine models are currently being updated in the central registry. Contact our engineering desk for immediate technical specifications.</p>
+                        <a href="{% url 'core:contact' %}" class="btn-mk-primary mt-2">Contact Engineering Desk</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     CUSTOM FABRICATION BANNER
+=========================================== -->
+<section class="mk-cta-section">
+    <div class="container">
+        <div class="mk-cta-box">
+            <span class="mk-badge mb-3">
+                <span class="mk-badge-radar"></span>
+                <span>Custom Machine Engineering</span>
+            </span>
+            <h2 class="mk-cta-title">Require a Custom-Engineered Machine?</h2>
+            <p class="mk-cta-text">
+                If your packaging production requires bespoke roller widths, specialized heating flutes, or unique mechanical configurations, our Punjab engineering center designs and fabricates custom turnkey machines.
+            </p>
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-lg">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>Consult Custom Machinery Team</span>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Simple client-side search filter for the products grid
-    document.addEventListener('DOMContentLoaded', function () {
-        var input = document.getElementById('productSearch');
-        if (!input) return;
-        input.addEventListener('input', function () {
-            var term = this.value.trim().toLowerCase();
-            document.querySelectorAll('.product-item').forEach(function (item) {
-                var name = item.querySelector('h4') ? item.querySelector('h4').textContent.toLowerCase() : '';
-                item.style.display = name.indexOf(term) !== -1 ? '' : 'none';
+    const searchInput = document.getElementById('machineSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.machine-card-col');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.mk-machine-title')?.textContent.toLowerCase() || '';
+                const desc = card.querySelector('.mk-machine-desc')?.textContent.toLowerCase() || '';
+                const cat = card.getAttribute('data-category')?.toLowerCase() || '';
+
+                if (title.includes(query) || desc.includes(query) || cat.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
-    });
+    }
 </script>
 {% endblock %}

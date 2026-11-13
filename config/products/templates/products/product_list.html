@@ -1,605 +1,167 @@
-{% extends "core/base.html" %}
+{% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Our Machines | MK Mechanicals{% endblock %}
+{% block title %}Machinery Fleet &amp; Specifications | MK Industries{% endblock %}
 
 {% block content %}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-/*==========================================================
-  MK MECHANICALS — MACHINE CATALOG
-  Token system
-  --navy-900 #0A1F38   deep navy — headline text
-  --navy-700 #123A63   brand navy (from logo)
-  --blue-500 #1C7ED6   action blue — CTAs, links, active states
-  --blue-100 #E8F2FC   light tint — chips, hovers, section washes
-  --paper    #F7FAFC   page background
-  --slate    #5B7085   muted body text
-  --line     #DCE6F0   hairline borders
-  Type: Sora (display/labels) + Inter (body)
-  Signature: riveted "spec plate" cards — machinery nameplate motif
-==========================================================*/
-
-.mk-products-page{
-    --navy-900:#0A1F38;
-    --navy-700:#123A63;
-    --blue-500:#1C7ED6;
-    --blue-100:#E8F2FC;
-    --paper:#F7FAFC;
-    --slate:#5B7085;
-    --line:#DCE6F0;
-
-    font-family:'Inter',sans-serif;
-    background:var(--paper);
-    color:var(--navy-900);
-    position:relative;
-    overflow:hidden;
-}
-
-.mk-products-page *{
-    box-sizing:border-box;
-}
-
-/*==========================
-  BLUEPRINT BACKDROP
-==========================*/
-
-.mk-blueprint{
-    position:absolute;
-    inset:0;
-    background:
-        repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(18,58,99,.055) 40px),
-        repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(18,58,99,.055) 40px);
-    pointer-events:none;
-}
-
-.mk-blueprint::after{
-    content:"";
-    position:absolute;
-    width:640px;
-    height:640px;
-    right:-220px;
-    top:-260px;
-    border-radius:50%;
-    background:radial-gradient(circle,var(--blue-100) 0%,transparent 68%);
-    animation:mk-drift 18s ease-in-out infinite;
-}
-
-@keyframes mk-drift{
-    0%,100%{ transform:translate(0,0) scale(1); }
-    50%{ transform:translate(-30px,25px) scale(1.06); }
-}
-
-.mk-container{
-    position:relative;
-    z-index:2;
-    width:92%;
-    max-width:1280px;
-    margin:0 auto;
-    padding:110px 0 70px;
-}
-
-/*==========================
-  HERO
-==========================*/
-
-.mk-hero{
-    text-align:center;
-    margin-bottom:56px;
-}
-
-.mk-eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:var(--blue-500);
-    letter-spacing:3px;
-    text-transform:uppercase;
-    font-family:'Sora',sans-serif;
-    font-size:12.5px;
-    font-weight:700;
-}
-
-.mk-eyebrow::before,
-.mk-eyebrow::after{
-    content:"";
-    width:26px;
-    height:2px;
-    background:var(--blue-500);
-    border-radius:2px;
-}
-
-.mk-hero h1{
-    margin-top:18px;
-    font-family:'Sora',sans-serif;
-    font-weight:800;
-    font-size:clamp(34px,5vw,54px);
-    color:var(--navy-900);
-    letter-spacing:-.5px;
-}
-
-.mk-hero p{
-    max-width:680px;
-    margin:20px auto 0;
-    color:var(--slate);
-    font-size:16.5px;
-    line-height:1.75;
-}
-
-/*==========================
-  SEARCH
-==========================*/
-
-.mk-search{
-    max-width:600px;
-    margin:38px auto 0;
-    display:flex;
-    align-items:center;
-    background:#fff;
-    border:1.5px solid var(--line);
-    border-radius:14px;
-    padding:6px 6px 6px 20px;
-    box-shadow:0 10px 30px -14px rgba(10,31,56,.18);
-    transition:.3s;
-}
-
-.mk-search:focus-within{
-    border-color:var(--blue-500);
-    box-shadow:0 10px 30px -12px rgba(28,126,214,.3);
-}
-
-.mk-search svg{
-    flex-shrink:0;
-    color:var(--slate);
-}
-
-.mk-search input{
-    flex:1;
-    border:none;
-    outline:none;
-    background:transparent;
-    padding:14px 14px;
-    font-family:'Inter',sans-serif;
-    font-size:15px;
-    color:var(--navy-900);
-}
-
-.mk-search input::placeholder{
-    color:#9AAAB9;
-}
-
-.mk-search button{
-    border:none;
-    cursor:pointer;
-    background:var(--blue-500);
-    color:#fff;
-    font-family:'Sora',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    padding:13px 26px;
-    border-radius:10px;
-    transition:.3s;
-}
-
-.mk-search button:hover{
-    background:var(--navy-700);
-}
-
-/*==========================
-  CATEGORY FILTERS
-==========================*/
-
-.mk-filters{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-    margin:44px 0 52px;
-}
-
-.mk-filters button{
-    padding:10px 24px;
-    background:#fff;
-    color:var(--navy-700);
-    border:1.5px solid var(--line);
-    border-radius:40px;
-    cursor:pointer;
-    font-family:'Sora',sans-serif;
-    font-weight:600;
-    font-size:13.5px;
-    transition:.25s;
-}
-
-.mk-filters button:hover{
-    border-color:var(--blue-500);
-    color:var(--blue-500);
-}
-
-.mk-filters button.active{
-    background:var(--navy-700);
-    border-color:var(--navy-700);
-    color:#fff;
-}
-
-/*==========================
-  PRODUCT GRID — SPEC PLATE CARDS
-==========================*/
-
-.mk-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:30px;
-}
-
-.mk-card{
-    position:relative;
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:16px;
-    overflow:hidden;
-    opacity:0;
-    transform:translateY(40px);
-    transition:opacity .7s, transform .7s, box-shadow .35s, border-color .35s;
-}
-
-.mk-card.mk-show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.mk-card:hover{
-    border-color:var(--blue-500);
-    box-shadow:0 22px 44px -20px rgba(10,31,56,.28);
-}
-
-/* rivet corners — the nameplate signature */
-.mk-card::before,
-.mk-card::after,
-.mk-rivet-tl,
-.mk-rivet-tr{
-    content:"";
-    position:absolute;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:var(--line);
-    z-index:3;
-    transition:background .3s;
-}
-
-.mk-card::before{ top:12px; left:12px; }
-.mk-card::after{ top:12px; right:12px; }
-.mk-rivet-tl{ bottom:12px; left:12px; }
-.mk-rivet-tr{ bottom:12px; right:12px; }
-
-.mk-card:hover::before,
-.mk-card:hover::after,
-.mk-card:hover .mk-rivet-tl,
-.mk-card:hover .mk-rivet-tr{
-    background:var(--blue-500);
-}
-
-.mk-image{
-    position:relative;
-    height:210px;
-    overflow:hidden;
-    background:var(--blue-100);
-}
-
-.mk-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .9s cubic-bezier(.2,.8,.2,1);
-}
-
-.mk-card:hover .mk-image img{
-    transform:scale(1.08);
-}
-
-.mk-badge{
-    position:absolute;
-    top:16px;
-    left:16px;
-    background:rgba(10,31,56,.85);
-    backdrop-filter:blur(4px);
-    color:#fff;
-    font-family:'Sora',sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    padding:6px 12px;
-    border-radius:6px;
-}
-
-.mk-content{
-    padding:24px 22px 22px;
-}
-
-.mk-content h3{
-    font-family:'Sora',sans-serif;
-    font-size:19px;
-    font-weight:700;
-    color:var(--navy-900);
-    margin-bottom:10px;
-}
-
-.mk-content p{
-    color:var(--slate);
-    font-size:14.5px;
-    line-height:1.65;
-    margin-bottom:20px;
-}
-
-.mk-footer{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-top:16px;
-    border-top:1px dashed var(--line);
-}
-
-.mk-spec{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    font-family:'Sora',sans-serif;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:.5px;
-    text-transform:uppercase;
-    color:var(--slate);
-}
-
-.mk-spec svg{ color:var(--blue-500); }
-
-.mk-details-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    text-decoration:none;
-    color:var(--blue-500);
-    font-family:'Sora',sans-serif;
-    font-weight:700;
-    font-size:13.5px;
-    transition:.25s;
-}
-
-.mk-details-btn svg{
-    transition:transform .25s;
-}
-
-.mk-details-btn:hover{
-    color:var(--navy-700);
-}
-
-.mk-details-btn:hover svg{
-    transform:translateX(4px);
-}
-
-/*==========================
-  EMPTY STATE
-==========================*/
-
-.mk-empty{
-    grid-column:1/-1;
-    text-align:center;
-    padding:70px 20px;
-    background:#fff;
-    border:1.5px dashed var(--line);
-    border-radius:18px;
-}
-
-.mk-empty img{
-    width:150px;
-    opacity:.7;
-    margin-bottom:20px;
-}
-
-.mk-empty h2{
-    font-family:'Sora',sans-serif;
-    color:var(--navy-900);
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.mk-empty p{
-    color:var(--slate);
-    font-size:14.5px;
-}
-
-/*==========================
-  WAVE DIVIDER
-==========================*/
-
-.mk-waves{
-    position:relative;
-    width:100%;
-    height:90px;
-    margin-top:60px;
-    line-height:0;
-}
-
-.mk-waves svg{
-    position:absolute;
-    width:100%;
-    height:100%;
-}
-
-.mk-wave-1{ opacity:.35; animation:mk-wave-move 9s ease-in-out infinite; }
-.mk-wave-2{ opacity:.55; animation:mk-wave-move 7s ease-in-out infinite reverse; }
-.mk-wave-3{ opacity:.9; animation:mk-wave-move 11s ease-in-out infinite; }
-
-@keyframes mk-wave-move{
-    0%,100%{ transform:translateX(0); }
-    50%{ transform:translateX(-3%); }
-}
-
-/*==========================
-  RESPONSIVE
-==========================*/
-
-@media(max-width:768px){
-    .mk-hero h1{ font-size:32px; }
-    .mk-search{ flex-wrap:wrap; border-radius:16px; }
-    .mk-search input{ width:100%; }
-    .mk-search button{ width:100%; margin-top:8px; }
-}
-
-/* Reduced motion */
-@media(prefers-reduced-motion:reduce){
-    .mk-card, .mk-image img, .mk-details-btn svg,
-    .mk-blueprint::after, .mk-wave-1, .mk-wave-2, .mk-wave-3{
-        animation:none !important;
-        transition:none !important;
-    }
-}
-</style>
-
-<section class="mk-products-page">
-
-    <div class="mk-blueprint"></div>
-
-    <div class="mk-container">
-
-        <div class="mk-hero">
-            <span class="mk-eyebrow">MK Mechanicals</span>
-            <h1>Industrial Machinery Collection</h1>
-            <p>
-                Precision-engineered machines built for performance, durability and
-                uptime. Every unit leaving our floor is manufactured with
-                high-grade materials to hold up in demanding industrial environments.
-            </p>
-
-            <div class="mk-search">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="mkSearchInput" placeholder="Search machines by name or type…">
-                <button type="button">Search</button>
-            </div>
-        </div>
-
-        <div class="mk-filters">
-            <button class="active">All</button>
-            <button>Mixing</button>
-            <button>Packing</button>
-            <button>Conveyor</button>
-            <button>Crusher</button>
-            <button>Dryer</button>
-        </div>
-
-        <div class="mk-grid">
-            {% for machine in machines %}
-
-            <div class="mk-card">
-                <span class="mk-rivet-tl"></span>
-                <span class="mk-rivet-tr"></span>
-
-                <div class="mk-image">
-                    {% if machine.image %}
-                        <img src="{{ machine.image.url }}" alt="{{ machine.name }}">
-                    {% else %}
-                        <img src="{% static 'images/no-image.png' %}" alt="No Image">
-                    {% endif %}
-
-                    <span class="mk-badge category">{{ machine.category.name }}</span>
+<!-- ==========================================
+     CATALOG PAGE HERO
+=========================================== -->
+<section class="mk-hero-section" style="min-height: 52vh; padding-top: 130px; padding-bottom: 50px;">
+    <div class="mk-hero-ambient-glow"></div>
+    <div class="container position-relative" style="z-index: 3;">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="mk-badge">
+                    <span class="mk-badge-radar"></span>
+                    <span>Industrial Machinery Fleet &bull; Precision Engineered</span>
                 </div>
-
-                <div class="mk-content">
-                    <h3>{{ machine.name }}</h3>
-
-                    <p>
-                        {% if machine.short_description %}
-                            {{ machine.short_description|truncatewords:18 }}
-                        {% else %}
-                            {{ machine.description|truncatewords:18 }}
-                        {% endif %}
-                    </p>
-
-                    <div class="mk-footer">
-                        <span class="mk-spec">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            {{ machine.category.name }}
-                        </span>
-
-                        <a href="{% url 'product_detail' machine.id %}" class="mk-details-btn">
-                            View Details
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
-                    </div>
-                </div>
+                <h1 class="mk-hero-title mb-3">
+                    ADVANCED INDUSTRIAL <span class="gradient-text">MACHINERY</span> CATALOG.
+                </h1>
+                <p class="mk-hero-lead mb-0">
+                    Engineered for maximum throughput, low energy consumption, and decades of relentless service. Explore our production lines, single facers, and rotary converters.
+                </p>
             </div>
-
-            {% empty %}
-
-            <div class="mk-empty">
-                <img src="{% static 'images/empty-machine.svg' %}" alt="">
-                <h2>No Machines Available</h2>
-                <p>Products added from the dashboard will appear here.</p>
-            </div>
-
-            {% endfor %}
         </div>
-
     </div>
-
-    <div class="mk-waves">
-        <svg class="mk-wave-3" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#123A63" d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z"></path>
-        </svg>
-        <svg class="mk-wave-2" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#1C7ED6" d="M0,60 C240,20 480,90 720,55 C960,20 1200,80 1440,45 L1440,100 L0,100 Z"></path>
-        </svg>
-        <svg class="mk-wave-1" viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#E8F2FC" d="M0,70 C240,40 480,95 720,65 C960,35 1200,85 1440,60 L1440,100 L0,100 Z"></path>
-        </svg>
-    </div>
-
 </section>
 
-<script>
-(function(){
-    const searchInput = document.getElementById("mkSearchInput");
-    const cards = document.querySelectorAll(".mk-card");
+<!-- ==========================================
+     MACHINERY LISTING & SEARCH
+=========================================== -->
+<section class="mk-section" style="padding-top: 40px;">
+    <div class="container">
+        <!-- Search and Filter Bar -->
+        <div class="row align-items-center justify-content-between g-3 mb-5">
+            <div class="col-lg-6">
+                <div class="mk-showcase-filter mb-0 justify-content-start">
+                    <button class="mk-filter-btn active" data-filter="all">All Machinery ({{ machines.count }})</button>
+                    <button class="mk-filter-btn" data-filter="corrogation">Corrugation Lines</button>
+                    <button class="mk-filter-btn" data-filter="heavy">Heavy Converting</button>
+                </div>
+            </div>
 
-    if(searchInput){
-        searchInput.addEventListener("keyup", function(){
-            const value = this.value.toLowerCase();
+            <div class="col-lg-4">
+                <div class="position-relative">
+                    <input type="text"
+                           id="machineSearchInput"
+                           class="mk-input"
+                           placeholder="Search machine models or specs..."
+                           aria-label="Search Machines"
+                           style="padding-left: 42px;">
+                    <i class="bi bi-search position-absolute text-secondary" style="top: 15px; left: 16px;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Machine Cards Grid -->
+        <div class="row g-4" id="machineGrid">
+            {% if machines %}
+                {% for machine in machines %}
+                <div class="col-lg-4 col-md-6 machine-card-col" data-category="{{ machine.category.name|lower|default:'heavy' }}">
+                    <div class="mk-machine-card">
+                        <!-- Machine Thumbnail -->
+                        <div class="mk-machine-thumb">
+                            {% if machine.image %}
+                                <img src="{{ machine.image.url }}" alt="{{ machine.name }}" loading="lazy">
+                            {% else %}
+                                <img src="{% static 'images/Gemini_Generated_Image_kgnq6kgnq6kgnq6k.png' %}" alt="{{ machine.name }}" loading="lazy">
+                            {% endif %}
+                            <span class="mk-machine-badge-cat">
+                                <i class="bi bi-gear-fill me-1"></i>{{ machine.category.name|default:"Industrial Machine" }}
+                            </span>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="mk-machine-body">
+                            <h3 class="mk-machine-title">
+                                <a href="{% url 'product_detail' machine.id %}">{{ machine.name }}</a>
+                            </h3>
+
+                            <p class="mk-machine-desc">
+                                {% if machine.short_description %}
+                                    {{ machine.short_description }}
+                                {% else %}
+                                    {{ machine.description|truncatewords:26 }}
+                                {% endif %}
+                            </p>
+
+                            <div class="mk-machine-footer">
+                                <a href="{% url 'core:contact' %}" class="btn-mk-outline btn-mk-sm">
+                                    <i class="bi bi-chat-dots me-1"></i>Inquire
+                                </a>
+                                <a href="{% url 'product_detail' machine.id %}" class="mk-machine-link">
+                                    <span>Full Specs</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 border border-secondary rounded" style="background: var(--mk-bg-card);">
+                        <i class="bi bi-cpu text-success fs-1 mb-3 d-block"></i>
+                        <h4 class="text-white">Machinery Catalog Synchronizing</h4>
+                        <p class="text-secondary">Our machine models are currently being updated in the central registry. Contact our engineering desk for immediate technical specifications.</p>
+                        <a href="{% url 'core:contact' %}" class="btn-mk-primary mt-2">Contact Engineering Desk</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     CUSTOM FABRICATION BANNER
+=========================================== -->
+<section class="mk-cta-section">
+    <div class="container">
+        <div class="mk-cta-box">
+            <span class="mk-badge mb-3">
+                <span class="mk-badge-radar"></span>
+                <span>Custom Machine Engineering</span>
+            </span>
+            <h2 class="mk-cta-title">Require a Custom-Engineered Machine?</h2>
+            <p class="mk-cta-text">
+                If your packaging production requires bespoke roller widths, specialized heating flutes, or unique mechanical configurations, our Punjab engineering center designs and fabricates custom turnkey machines.
+            </p>
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'core:contact' %}" class="btn-mk-primary btn-mk-lg">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>Consult Custom Machinery Team</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Live Client-Side Machine Search Filter
+    const searchInput = document.getElementById('machineSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.machine-card-col');
+
             cards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(value) ? "" : "none";
+                const title = card.querySelector('.mk-machine-title')?.textContent.toLowerCase() || '';
+                const desc = card.querySelector('.mk-machine-desc')?.textContent.toLowerCase() || '';
+                const cat = card.getAttribute('data-category')?.toLowerCase() || '';
+
+                if (title.includes(query) || desc.includes(query) || cat.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
     }
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                entry.target.classList.add("mk-show");
-            }
-        });
-    }, { threshold: .15 });
-
-    cards.forEach(card => observer.observe(card));
-
-    document.querySelectorAll(".mk-filters button").forEach(button => {
-        button.addEventListener("click", function(){
-            document.querySelector(".mk-filters .active")?.classList.remove("active");
-            this.classList.add("active");
-
-            const category = this.innerText.toLowerCase();
-
-            cards.forEach(card => {
-                const badge = card.querySelector(".mk-badge");
-                const cardCategory = badge ? badge.innerText.toLowerCase() : "";
-                card.style.display = (category === "all" || cardCategory === category) ? "" : "none";
-            });
-        });
-    });
-})();
 </script>
-
 {% endblock %}
